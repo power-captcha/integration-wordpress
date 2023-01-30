@@ -2,12 +2,14 @@
 
 add_action( 'wpforms_wp_footer_end', 'powercaptcha_wpforms_enqueue_scripts', 10, 0 );
 function powercaptcha_wpforms_enqueue_scripts( ) {
- //TODO script url! als konstante?
+    if (!powercaptcha()->is_wpforms_integration_enabled()) {
+        return;
+    }
+
+    powercaptcha_echo_javascript_tags();
 ?>
-<!-- <script src="https://cdn.power-captcha.com/v1/uii-catpcha-lib.iife.js" type="text/javascript"></script> -->
-<script src="http://localhost/captcha-js/uii-catpcha-lib.iife.js" type="text/javascript"></script>
 <script type="text/javascript">
-// https://causier.co.uk/2021/02/04/hooking-into-wpforms-ajax-submission-workflow-for-custom-event-handling/
+
 jQuery(function($){
     let captchaInstance;
     $(document).ready(function(){
@@ -20,6 +22,7 @@ jQuery(function($){
         captchaInstance = window.uiiCaptcha.captcha({});
     });
 
+    // based on https://causier.co.uk/2021/02/04/hooking-into-wpforms-ajax-submission-workflow-for-custom-event-handling/
     $('form.wpforms-form').append('<input type="hidden" name="pc-token" value =""/>');
     $('form.wpforms-form').on('wpformsBeforeFormSubmit', function(event) {
         const wpform = $(this);
@@ -29,8 +32,8 @@ jQuery(function($){
             console.log('tokenField is empty. preventing submit and showing captcha.');
             event.preventDefault();
             captchaInstance.check({
-                apiKey: '<?php echo PowerCaptcha_WP::instance()->get_api_key(); ?>',
-                backendUrl: '<?php echo PowerCaptcha_WP::instance()->get_endpoint_url(); ?>',
+                apiKey: '<?php echo powercaptcha()->get_api_key(); ?>',
+                backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>', 
                 user: '',
                 callback: ''
             }, 
@@ -38,12 +41,19 @@ jQuery(function($){
                 console.log('captcha solved with token: '+token+'. setting value to tokenField.');
                 tokenField.val(token);
                 console.log('resubmitting form.');
-                wpform.submit();
+                wpform.submit(); // TODO jquery
                 //$('#wpforms-form-9').submit();
             });
         } else {
             console.log('token already exists. no captcha has to be shown. form can be submitted.');
         }
+    });
+    $('form.wpforms-form').on('wpformsAjaxSubmitFailed wpformsAjaxSubmitActionRequired wpformsAjaxSubmitError', function (event) {
+        // clear token field after submit failed
+        const wpform = $(this);
+        console.log('clearing token field after submit failed');
+        const tokenField = wpform.children('input[name="pc-token"]:first');
+        tokenField.val("");
     });
 });
  </script>
@@ -61,16 +71,20 @@ jQuery(function($){
  */
 add_action( 'wpforms_process', 'powercaptcha_wpforms_verification', 10, 3 );
 function powercaptcha_wpforms_verification( $fields, $entry, $form_data ) {
+    if (!powercaptcha()->is_wpforms_integration_enabled()) {
+        return;
+    }
+
     $form_id = $form_data['id'];
     $pcToken = powercaptcha_get_token_from_post_request();
 
-    if($pcToken === false) {
-        wpforms()->process->errors[ $form_id ] [ 'header' ] = esc_html__(powercaptcha_error_message(), 'powercaptcha' ); 
-        wpforms_log(
-            //@param string $title   Title of a log message.
-            esc_html__( 'Power-Captcha: Spam detected' ) . uniqid(), 
-            //@param mixed  $message Content of a log message.
-            ["Power-Captcha token was not present in post request.", $entry], 
+    if($pcToken === FALSE) {
+        wpforms()->process->errors[ $form_id ] [ 'header' ] = esc_html__(powercaptcha_user_error_message(), 'powercaptcha' ); 
+        wpforms_log( //TODO wpforms_log
+            //@param string $title   Title of a log error_message.
+            esc_html__( 'POWER CAPTCHA: Spam detected' ) . uniqid(), 
+            //@param mixed  $error_message Content of a log error_message.
+            ["POWER CAPTCHA token was not present in post request.", $entry], 
             // @param array  $args    Expected keys: form_id, meta, parent.
             [ 
                 'type'    => ['spam'], // types: spam, security ? TODO
@@ -79,11 +93,12 @@ function powercaptcha_wpforms_verification( $fields, $entry, $form_data ) {
         );
     } else {
         $verification = powercaptcha_verify_token($pcToken);
-        if(!$verification["success"]) {
-            wpforms()->process->errors[ $form_id ] [ 'header' ] = esc_html__(powercaptcha_error_message(), 'powercaptcha' ); 
-            wpforms_log(
-                esc_html__( 'Power-Captcha: Spam detected' ) . uniqid(),
-                [ "Power-Captcha token verification failed.", $verification , $entry],
+        if($verification['success'] !== TRUE) {
+            wpforms()->process->errors[ $form_id ] [ 'header' ] = esc_html__(powercaptcha_user_error_message(), 'powercaptcha' ); 
+            $entry['pc_token'] = "";
+            wpforms_log( //TODO wpforms_log
+                esc_html__( 'POWER CAPTCHA: Spam detected' ) . uniqid(),
+                [ "POWER CAPTCHA token verification failed.", $verification , $entry],
                 [
                     'type'    => [ 'spam' ], // TODO type?
                     'form_id' => $form_id,
@@ -92,34 +107,6 @@ function powercaptcha_wpforms_verification( $fields, $entry, $form_data ) {
         }
     }
 }
-
-function powercaptcha_get_token_from_post_request() {
-    if(isset($_POST["pc-token"])) {
-        return sanitize_text_field($_POST["pc-token"]);
-    } else {
-        return false;
-    }
-}
-
-//TODO outsource function
-function powercaptcha_verify_token($token) {
-    $verification_result = array();
-    $verification_result["success"] = false;
-
-    if(empty($token)) {
-        $verification_result["error"] = "Token was empty.";
-    } else {
-        // TODO verifiy with captcha api -> see friendly-captcha/includes/verification.php (frcaptcha_verify_captcha_solution)
-        $verification_result["success"] = true;
-    }
-    return $verification_result;
-}
-
-function powercaptcha_error_message() {
-    return __('Der Anti-Spam-Schutz hat die Übertragung des Formulars verhindert. Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.');
-    // The anti-spam protection has prevented the form from being submitted. Please try again at a later time.
-}
-
 
 
 

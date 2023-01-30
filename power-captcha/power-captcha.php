@@ -14,4 +14,18 @@
  */
  
 
-require plugin_dir_path(__FILE__) . 'core.php';
+
+// Init core
+require plugin_dir_path( __FILE__ ) . 'core/PowerCaptcha.php';
+require plugin_dir_path( __FILE__ ) . 'core/functions.php';
+require plugin_dir_path( __FILE__ ) . 'widgets.php';
+
+// Init integrations
+if(powercaptcha()->is_configured()) {
+    if (powercaptcha()->is_wpforms_integration_enabled()) {
+        require plugin_dir_path( __FILE__ ) . 'integrations/wpforms/wpforms.php';
+    }
+}
+
+// Init admin settings
+require plugin_dir_path( __FILE__ ) . 'admin/settings.php';

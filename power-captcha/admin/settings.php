@@ -1,16 +1,14 @@
 <?php
-    require_once('core.php');
-
     if(is_admin()) {
 
         add_action( 'admin_menu', 'powercaptcha_admin_menu' );
         function powercaptcha_admin_menu() {
             // https://codex.wordpress.org/Administration_Menus
             add_options_page(
-                'Power-Captcha Settings', // page_title
-                'Power-Captcha', // menu_title
+                'POWER CAPTCHA Settings', // page_title
+                'POWER CAPTCHA', // menu_title
                 'manage_options', // capability
-                PowerCaptcha_WP::$setting_page, // menu_slug
+                powercaptcha()::SETTING_PAGE, // menu_slug
                 'powercaptcha_admin_page_content',
                 30 // icon_url (or icon id?) TODO
             );
@@ -29,8 +27,8 @@
                     // TODO hide on update? https://developer.wordpress.org/reference/functions/settings_errors/
                     // if not hide on update the success message is displayed twice.
                     
-                    settings_fields(PowerCaptcha_WP::$setting_group_name);
-                    do_settings_sections(PowerCaptcha_WP::$setting_page);
+                    settings_fields(powercaptcha()::SETTING_GROUP_NAME);
+                    do_settings_sections(powercaptcha()::SETTING_PAGE);
                     submit_button();
                     ?>
                 </form>
@@ -45,67 +43,76 @@
             // https://developer.wordpress.org/reference/functions/register_setting/
 
             // general settings
+            register_setting(
+                powercaptcha()::SETTING_GROUP_NAME,
+                powercaptcha()::SETTING_NAME_API_KEY,
+                ['default' => ''] // args (data used to describe settings when registered) type, description, santizize_callback, show_in_rest, default; TODO is this needed? also for the other options?
+            );
             
             register_setting(
-                PowerCaptcha_WP::$setting_group_name,
-                PowerCaptcha_WP::$setting_name_api_key,
-                ['default' => ''] // args (data used to describe settings when registered) type, description, santizize_callback, show_in_rest, default; TODO is this needed?
+                powercaptcha()::SETTING_GROUP_NAME,
+                powercaptcha()::SETTING_NAME_SECRET_KEY
             );
 
             // integration settings
             register_setting(
-                PowerCaptcha_WP::$setting_group_name, // option group name TODO outsource to class
-                PowerCaptcha_WP::$setting_name_wpforms_integration, // option_name TODO outsource to class
-                ['default' => ''] // args (data used to describe settings when registered) type, description, santizize_callback, show_in_rest, default; TODO is this needed?
+                powercaptcha()::SETTING_GROUP_NAME,
+                powercaptcha()::SETTING_NAME_WPFORMS_INTEGRATION
             );
 
             // enterprise settings
 
             register_setting(
-                PowerCaptcha_WP::$setting_group_name, // option group name TODO outsource to class
-                PowerCaptcha_WP::$setting_name_endpoint_url, // option_name TODO outsource to class
-                ['default' => 'https://api.power-captcha.com/'] 
-                // args (data used to describe settings when registered) type, description, santizize_callback, show_in_rest, default; TODO is this needed?
+                powercaptcha()::SETTING_GROUP_NAME,
+                powercaptcha()::SETTING_NAME_ENDPOINT_BASE_URL
             );
             
             // https://developer.wordpress.org/reference/functions/add_settings_section/
 
             // general settings section
-            add_settings_section( PowerCaptcha_WP::$setting_section_general, 'General settings', 'powercaptcha_setting_section_general_description', PowerCaptcha_WP::$setting_page );
+            add_settings_section( powercaptcha()::SETTING_SECTION_GENERAL, 'General settings', 'powercaptcha_setting_section_general_description', powercaptcha()::SETTING_PAGE );
         
             // integration setting section
-            add_settings_section( PowerCaptcha_WP::$setting_section_integration, 'Integration settings', 'powercaptcha_setting_section_integration_description', PowerCaptcha_WP::$setting_page );
+            add_settings_section( powercaptcha()::SETTING_SECTION_INTEGRATION, 'Integration settings', 'powercaptcha_setting_section_integration_description', powercaptcha()::SETTING_PAGE );
     
             // enterprise settings section
-            add_settings_section( PowerCaptcha_WP::$setting_section_enterprise, 'Enterpise settings', 'powercaptcha_setting_section_enterprise_description', PowerCaptcha_WP::$setting_page );
+            add_settings_section( powercaptcha()::SETTING_SECTION_ENTERPRISE, 'Enterpise settings', 'powercaptcha_setting_section_enterprise_description', powercaptcha()::SETTING_PAGE );
 
             // https://developer.wordpress.org/reference/functions/add_settings_field/
 
             // general settings fields
             powercaptcha_setting_add_default_field(
-                PowerCaptcha_WP::$setting_section_general,
-                PowerCaptcha_WP::$setting_name_api_key,
+                powercaptcha()::SETTING_SECTION_GENERAL,
+                powercaptcha()::SETTING_NAME_API_KEY,
                 'text',
                 'API Key',
-                'Enter your Power-Captcha API Key. You can manage your API keys on <a href="https://power-catpcha.com">power-catpcha.com</a> (TODO better description)' // TODO better description
+                'Enter your POWER CAPTCHA API Key. You can manage your keys on <a href="https://power-catpcha.com">power-catpcha.com</a> (TODO better description)' // TODO better description
+            );
+
+            powercaptcha_setting_add_default_field(
+                powercaptcha()::SETTING_SECTION_GENERAL,
+                powercaptcha()::SETTING_NAME_SECRET_KEY,
+                'text',
+                'Secret Key',
+                'Enter your POWER CAPTCHA Secret Key. You can manage your keys on <a href="https://power-catpcha.com">power-catpcha.com</a> (TODO better description)' // TODO better description
             );
 
             // integration settings fields
             powercaptcha_setting_add_default_field(
-                PowerCaptcha_WP::$setting_section_integration,
-                PowerCaptcha_WP::$setting_name_wpforms_integration,
+                powercaptcha()::SETTING_SECTION_INTEGRATION,
+                powercaptcha()::SETTING_NAME_WPFORMS_INTEGRATION,
                 'checkbox',
                 'WPForms',
-                'Secure <a href="https://wordpress.org/plugins/wpforms/" target="_blank">WPForms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/" target="_blank">WPForms lite</a> with Power-Captcha.' // TODO better description
+                'Secure <a href="https://wordpress.org/plugins/wpforms/" target="_blank">WPForms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/" target="_blank">WPForms lite</a> with POWER CAPTCHA.' // TODO better description
             );
 
             // enterprise settings fields
             powercaptcha_setting_add_default_field( //TODO we have to validate if the endpoint url is valid, before saving the setting!
-                PowerCaptcha_WP::$setting_section_enterprise,
-                PowerCaptcha_WP::$setting_name_endpoint_url,
+                powercaptcha()::SETTING_SECTION_ENTERPRISE,
+                powercaptcha()::SETTING_NAME_ENDPOINT_BASE_URL,
                 'text',
-                'Endpoint URL',
-                '(optional) Only needed if you have a selfhosted Power-Captcha endpoint (TODO better description)' // TODO better description
+                'Endpoint base URL',
+                '(optional) Only needed if you have a selfhosted POWER CAPTCHA endpoint (TODO better description)' // TODO better description
             );
         }
         
@@ -114,7 +121,7 @@
         }
 
         function powercaptcha_setting_section_integration_description() {
-            echo "<p>Choose for which plugin or part of the website you want to secure with Power-Captcha.</p>"; //TODO better description
+            echo "<p>Choose for which plugin or part of the website you want to secure with POWER CAPTCHA.</p>"; //TODO better description
         }
         
         function powercaptcha_setting_section_enterprise_description() {
@@ -134,7 +141,7 @@
                 $field_id, 
                 $title, 
                 'powercatpcha_setting_render_default_field', // callback function to display the field
-                PowerCaptcha_WP::$setting_page, 
+                powercaptcha()::SETTING_PAGE, 
                 $section,
                 $render_args
             );
