@@ -10,7 +10,7 @@ namespace PowerCaptcha_WP {
     
         const PLUGIN_NAME = 'powercaptcha'; 
         const DEFAULT_ENDPOINT_BASE_URL = 'https://api.power-captcha.com/';
-        const DEFAULT_JAVASCRIPT_URL = 'https://cdn.power-captcha.com/' . self::JS_VERSION . '/uii-catpcha-lib.iife.js';
+        const DEFAULT_JAVASCRIPT_URL = 'https://cdn.power-captcha.com/';
     
         // settings
         const SETTING_PAGE = 'powercaptcha_admin';
@@ -28,6 +28,7 @@ namespace PowerCaptcha_WP {
         // enterprise settings
         const SETTING_SECTION_ENTERPRISE = 'powercaptcha_setting_section_enterprise';
         const SETTING_NAME_ENDPOINT_BASE_URL = 'powercaptcha_endpoint_base_url';
+        const SETTING_NAME_JAVASCRIPT_BASE_URL = 'powercaptcha_javascript_base_url';
     
         public static function instance() {
             if(self::$instance === null || !self::$instance instanceof self) {
@@ -67,12 +68,17 @@ namespace PowerCaptcha_WP {
             return $this->get_endpoint_base_url() . '/pcu/' . self::API_VERSION . '/verify'; 
         }
     
-        public function get_javascript_url() {
-            $javascript_url = ''; // TODO let the user customize javascript url via settings?
+        public function get_javascript_base_url() {
+            $javascript_url = self::get_setting_text(self::SETTING_NAME_JAVASCRIPT_BASE_URL);
             if(empty($javascript_url)) {
                 return self::DEFAULT_JAVASCRIPT_URL;
             }
-            return $javascript_url;
+            return untrailingslashit($javascript_url);
+        }
+
+        public function get_javascript_url()
+        {
+            return $this->get_javascript_base_url() . '/' . self::JS_VERSION . '/uii-catpcha-lib.iife.js';
         }
     
         public function is_wpforms_integration_enabled() {

@@ -66,6 +66,11 @@
                 powercaptcha()::SETTING_GROUP_NAME,
                 powercaptcha()::SETTING_NAME_ENDPOINT_BASE_URL
             );
+
+            register_setting(
+                powercaptcha()::SETTING_GROUP_NAME,
+                powercaptcha()::SETTING_NAME_JAVASCRIPT_BASE_URL
+            );
             
             // https://developer.wordpress.org/reference/functions/add_settings_section/
 
@@ -113,6 +118,14 @@
                 'text',
                 'Endpoint base URL',
                 '(optional) Only needed if you have a selfhosted POWER CAPTCHA endpoint (TODO better description)' // TODO better description
+            );
+
+            powercaptcha_setting_add_default_field( //TODO we have to validate if the endpoint url is valid, before saving the setting!
+                powercaptcha()::SETTING_SECTION_ENTERPRISE,
+                powercaptcha()::SETTING_NAME_JAVASCRIPT_BASE_URL,
+                'text',
+                'JavaScript base URL',
+                '(optional) Only needed if you have a selfhosted POWER CAPTCHA JavaScript (TODO better description)' // TODO better description
             );
         }
         

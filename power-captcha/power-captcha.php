@@ -18,7 +18,7 @@
 // Init core
 require plugin_dir_path( __FILE__ ) . 'core/PowerCaptcha.php';
 require plugin_dir_path( __FILE__ ) . 'core/functions.php';
-require plugin_dir_path( __FILE__ ) . 'widgets.php';
+//require plugin_dir_path( __FILE__ ) . 'widgets.php';
 
 // Init integrations
 if(powercaptcha()->is_configured()) {
