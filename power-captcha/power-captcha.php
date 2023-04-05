@@ -8,7 +8,7 @@
  * Version:     0.0.1-alpha
  * Author:      Uniique AG
  * Author URI:  https://power-captcha.com
- * Text Domain: powercaptcha (? TODO)
+ * Text Domain: power-captcha
  * License:     (TODO)
  * License URI: (TODO)
  */

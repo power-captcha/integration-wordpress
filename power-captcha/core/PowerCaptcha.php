@@ -24,6 +24,7 @@ namespace PowerCaptcha_WP {
         // integration settings
         const SETTING_SECTION_INTEGRATION = 'powercaptcha_setting_section_integration';
         const SETTING_NAME_WPFORMS_INTEGRATION = 'powercaptcha_wpforms_integration';
+        // TODO Setting for exluding forms!
     
         // enterprise settings
         const SETTING_SECTION_ENTERPRISE = 'powercaptcha_setting_section_enterprise';
