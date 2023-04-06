@@ -6,14 +6,14 @@ function powercaptcha_wpforms_enqueue_scripts( ) {
         return;
     }
 
-    powercaptcha_echo_javascript_tags();
+    powercaptcha_javascript_tags();
 ?>
 
 
 <script type="text/javascript">
-
+// TODO move this script to javascript file. note parameters must be transferred like: apiKey: '<?php //echo powercaptcha()->get_api_key(); ?>',
 jQuery(function($){
-
+    
     $(document).ready(function(){
         // destory auto instance
         if(window.uiiCaptcha && window.uiiCaptcha.autoInstance) {
@@ -35,7 +35,7 @@ jQuery(function($){
         wpform.append('<input type="hidden" name="pc-token" value =""/>');
 
         // create instance for the wpfrom
-        const captchaInstance = window.uiiCaptcha.captcha({id: 'pc-'+wpformId});
+        const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wpformId});
 
         // register before submit listener
         wpform.on('wpformsBeforeFormSubmit', function(event) {
@@ -125,13 +125,6 @@ function powercaptcha_wpforms_verification( $fields, $entry, $form_data ) {
     if (!powercaptcha()->is_wpforms_integration_enabled()) {
         return;
     }
-
-
-    trigger_error("Form Data: ".var_export($form_data, true));
-    trigger_error("Fields: ".var_export($fields, true));
-    trigger_error("Entry: ".var_export($entry, true));
-    trigger_error("Post: ".var_export($_POST, true));
-
 
     $pcUsername = null;
     // find the username field by css class

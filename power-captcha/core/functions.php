@@ -107,10 +107,14 @@ function powercaptcha_user_error_message() {
 }
 
 
-function powercaptcha_echo_javascript_tags() {
+function powercaptcha_javascript_tags($display = true) {
     if(!powercaptcha()->is_configured()) {
         return;
     }
-
-    echo '<script src="'. powercaptcha()->get_javascript_url() .'" type="text/javascript"></script>';
+    $javascript_tag = '<script src="'. powercaptcha()->get_javascript_url() .'" type="text/javascript"></script>';
+    if($display) {
+        echo $javascript_tag;
+    } else {
+        return $javascript_tag;
+    }
 }

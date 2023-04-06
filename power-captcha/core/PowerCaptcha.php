@@ -9,8 +9,8 @@ namespace PowerCaptcha_WP {
         private static $instance;
     
         const PLUGIN_NAME = 'powercaptcha'; 
-        const DEFAULT_ENDPOINT_BASE_URL = 'https://api.power-captcha.com/';
-        const DEFAULT_JAVASCRIPT_URL = 'https://cdn.power-captcha.com/';
+        const DEFAULT_ENDPOINT_BASE_URL = 'https://api.power-captcha.com';
+        const DEFAULT_JAVASCRIPT_URL = 'https://cdn.power-captcha.com';
     
         // settings
         const SETTING_PAGE = 'powercaptcha_admin';
@@ -69,12 +69,13 @@ namespace PowerCaptcha_WP {
             return $this->get_endpoint_base_url() . '/pcu/' . self::API_VERSION . '/verify'; 
         }
     
-        public function get_javascript_base_url() {
+        private function get_javascript_base_url() {
             $javascript_url = self::get_setting_text(self::SETTING_NAME_JAVASCRIPT_BASE_URL);
             if(empty($javascript_url)) {
-                return self::DEFAULT_JAVASCRIPT_URL;
+                // using default
+                $javascript_url = self::DEFAULT_JAVASCRIPT_URL;
             }
-            return untrailingslashit($javascript_url);
+            return untrailingslashit($javascript_url); // return without trailing slash
         }
 
         public function get_javascript_url()
