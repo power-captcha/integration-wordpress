@@ -1,16 +1,14 @@
 <?php
 /**
- * Power Captcha
+ * POWER CAPTCHA WordPress Integration
  * 
- * Plugin Name: Power Captcha
- * Plugin URI:  https://power-captcha.com/TODO
- * Description: TODO
+ * Plugin Name: POWER CAPTCHA
+ * Plugin URI:  https://power-captcha.com/
+ * Description: POWER CAPTCHA protects WordPress and several WordPress form plugins against bots and hackers.
  * Version:     0.0.1-alpha
- * Author:      Uniique AG
- * Author URI:  https://power-captcha.com
+ * Author:      POWER CAPTCHA
+ * Author URI:  https://power-captcha.com/
  * Text Domain: power-captcha
- * License:     (TODO)
- * License URI: (TODO)
  */
  
 
