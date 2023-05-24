@@ -5,8 +5,8 @@
         function powercaptcha_admin_menu() {
             // https://codex.wordpress.org/Administration_Menus
             add_options_page(
-                'POWER CAPTCHA Settings', // page_title
-                'POWER CAPTCHA', // menu_title
+                __('POWER CAPTCHA Settings', 'power-captcha'), // page_title
+                __('POWER CAPTCHA Settings', 'power-captcha'), // menu_title
                 'manage_options', // capability
                 powercaptcha()::SETTING_PAGE, // menu_slug
                 'powercaptcha_admin_page_content',
@@ -79,13 +79,13 @@
             // https://developer.wordpress.org/reference/functions/add_settings_section/
 
             // general settings section
-            add_settings_section( powercaptcha()::SETTING_SECTION_GENERAL, 'General settings', 'powercaptcha_setting_section_general_description', powercaptcha()::SETTING_PAGE );
+            add_settings_section( powercaptcha()::SETTING_SECTION_GENERAL, __('General settings', 'power-captcha'), 'powercaptcha_setting_section_general_description', powercaptcha()::SETTING_PAGE );
         
             // integration setting section
-            add_settings_section( powercaptcha()::SETTING_SECTION_INTEGRATION, 'Integration settings', 'powercaptcha_setting_section_integration_description', powercaptcha()::SETTING_PAGE );
+            add_settings_section( powercaptcha()::SETTING_SECTION_INTEGRATION, __('Integration settings', 'power-captcha'), 'powercaptcha_setting_section_integration_description', powercaptcha()::SETTING_PAGE );
     
             // enterprise settings section
-            add_settings_section( powercaptcha()::SETTING_SECTION_ENTERPRISE, 'Enterpise settings', 'powercaptcha_setting_section_enterprise_description', powercaptcha()::SETTING_PAGE );
+            add_settings_section( powercaptcha()::SETTING_SECTION_ON_PREMISES, __('On-premises settings', 'power-captcha'), 'powercaptcha_setting_section_on_premises_description', powercaptcha()::SETTING_PAGE );
 
             // https://developer.wordpress.org/reference/functions/add_settings_field/
 
@@ -94,16 +94,24 @@
                 powercaptcha()::SETTING_SECTION_GENERAL,
                 powercaptcha()::SETTING_NAME_API_KEY,
                 'text',
-                'API Key',
-                'Enter your POWER CAPTCHA API Key. You can manage your keys on <a href="https://power-catpcha.com">power-catpcha.com</a> (TODO better description)' // TODO better description
+                __('API Key', 'power-captcha'),
+                sprintf(
+                    /** translators %s: url to power captcha API Key management page */
+                    __('Enter your POWER CAPTCHA API Key. You can find your API Key in the <a href="%s" target="_blank">API Key management</a> page.', 'power-captcha'),
+                    powercaptcha()::API_KEY_MANAGEMENT_URL
+                )
             );
 
             powercaptcha_setting_add_default_field(
                 powercaptcha()::SETTING_SECTION_GENERAL,
                 powercaptcha()::SETTING_NAME_SECRET_KEY,
                 'text',
-                'Secret Key',
-                'Enter your POWER CAPTCHA Secret Key. You can manage your keys on <a href="https://power-catpcha.com">power-catpcha.com</a> (TODO better description)' // TODO better description
+                __('Secret Key', 'power-captcha'),
+                sprintf(
+                    /** translators %s: url to power captcha API Key management page */
+                    __('Enter your POWER CAPTCHA Secret Key. You can find your Secret Key on the <a href="%s" target="_blank">API Key Management</a> page.', 'power-captcha'),
+                    powercaptcha()::API_KEY_MANAGEMENT_URL
+                )
             );
 
             // integration settings fields
@@ -111,46 +119,60 @@
                 powercaptcha()::SETTING_SECTION_INTEGRATION,
                 powercaptcha()::SETTING_NAME_WORDPRESS_INTEGRATION,
                 'checkbox',
-                'WordPress',
-                'Secure WordPress Login with POWER CAPTCHA.' // TODO better description
+                __('WordPress protection', 'power-captcha'),
+                __('Enable protection for the WordPress login and registration form and for comment function.', 'power-captcha'), 
             );
 
             powercaptcha_setting_add_default_field(
                 powercaptcha()::SETTING_SECTION_INTEGRATION,
                 powercaptcha()::SETTING_NAME_WPFORMS_INTEGRATION,
                 'checkbox',
-                'WPForms',
-                'Secure <a href="https://wordpress.org/plugins/wpforms/" target="_blank">WPForms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/" target="_blank">WPForms lite</a> with POWER CAPTCHA.' // TODO better description
+                __('WPForms protection', 'power-captcha'),
+                __('Enable protection for <a href="https://wordpress.org/plugins/wpforms/" target="_blank">WPForms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/" target="_blank">WPForms lite</a> plugin.', 'power-captcha')
             );
 
-            // enterprise settings fields
+            // on premise settings fields
             powercaptcha_setting_add_default_field( //TODO we have to validate if the endpoint url is valid, before saving the setting!
-                powercaptcha()::SETTING_SECTION_ENTERPRISE,
+                powercaptcha()::SETTING_SECTION_ON_PREMISES,
                 powercaptcha()::SETTING_NAME_ENDPOINT_BASE_URL,
                 'text',
-                'Endpoint base URL',
-                '(optional) Only needed if you have a selfhosted POWER CAPTCHA endpoint (TODO better description)' // TODO better description
+                __('Endpoint base URL (optional)', 'power-captcha'),
+                __('Only required if you have an on-premises version with self-hosted POWER CAPTCHA endpoint.')
             );
 
             powercaptcha_setting_add_default_field( //TODO we have to validate if the endpoint url is valid, before saving the setting!
-                powercaptcha()::SETTING_SECTION_ENTERPRISE,
+                powercaptcha()::SETTING_SECTION_ON_PREMISES,
                 powercaptcha()::SETTING_NAME_JAVASCRIPT_BASE_URL,
                 'text',
-                'JavaScript base URL',
-                '(optional) Only needed if you have a selfhosted POWER CAPTCHA JavaScript (TODO better description)' // TODO better description
+                __('JavaScript base URL (optional)', 'power-captcha'),
+                __('Only required if you have an on-premises version with self-hosted POWER CAPTCHA JavaScript.', 'power-captcha')
             );
         }
         
         function powercaptcha_setting_section_general_description() {
-            echo "<p>TODO description for general section</p>"; //TODO better description
+            echo '<p>'.
+                sprintf(
+                    /** translators %s: url to power captcha API Key management page */
+                    __('The API Key and the Secret Key must be provided for the POWER CAPTCHA to activate. Both keys can be found on the <a href="%s" target="_blank">API Key Management</a> page.', 'power-captcha'),
+                    powercaptcha()::API_KEY_MANAGEMENT_URL
+                ).'</p>';
+            echo '<p>'.sprintf(
+                /** translators %s: url to power captcha Shop page */
+                __('If you don\'t have an API Key yet, you can create one for free on <a href="%s" target="_blank">POWER CAPTCHA</a>.', 'power-captcha'),
+                powercaptcha()::SHOP_URL
+            ).'</p>';
         }
 
         function powercaptcha_setting_section_integration_description() {
-            echo "<p>Choose for which plugin or part of the website you want to secure with POWER CAPTCHA.</p>"; //TODO better description
+            echo '<p>'.
+                __('Specify which sections or plugins should be protected with POWER CAPTCHA.', 'power-captcha')
+                .'</p>';
         }
         
-        function powercaptcha_setting_section_enterprise_description() {
-            echo "<p>TODO description for enterprise section</p>"; //TODO better description
+        function powercaptcha_setting_section_on_premises_description() {
+            echo '<p>'.
+                __('These settings are only relevant if you are running a self-hosted POWER CAPTCHA instance. Otherwise you can leave these settings empty.', 'power-captcha')
+            .'</p>';
         }
 
         // util

@@ -8,6 +8,9 @@ namespace PowerCaptcha_WP {
         // Singelton instance
         private static $instance;
 
+        const SHOP_URL = 'https://power-captcha.com/power-captcha-shop/';
+        const API_KEY_MANAGEMENT_URL = 'https://power-captcha.com/mein-konto/api-keys/';
+
         const DEFAULT_ENDPOINT_BASE_URL = 'https://api.power-captcha.com';
         const DEFAULT_JAVASCRIPT_URL = 'https://cdn.power-captcha.com';
         const JAVASCRIPT_HANDLE = 'powercaptcha-js';
@@ -34,8 +37,8 @@ namespace PowerCaptcha_WP {
         const SETTING_NAME_WORDPRESS_INTEGRATION = 'powercaptcha_wordpress_integration';
         // TODO Setting for exluding forms!
     
-        // enterprise settings
-        const SETTING_SECTION_ENTERPRISE = 'powercaptcha_setting_section_enterprise';
+        // on premises settings
+        const SETTING_SECTION_ON_PREMISES = 'powercaptcha_setting_section_on_premises';
         const SETTING_NAME_ENDPOINT_BASE_URL = 'powercaptcha_endpoint_base_url';
         const SETTING_NAME_JAVASCRIPT_BASE_URL = 'powercaptcha_javascript_base_url';
     
