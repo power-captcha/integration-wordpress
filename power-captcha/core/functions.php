@@ -1,4 +1,3 @@
-
 <?php
 function powercaptcha_get_token_from_post_request() {
     if(isset($_POST["pc-token"])) {
@@ -18,13 +17,14 @@ function powercaptcha_get_username_from_post_request() {
 
 function powercaptcha_verify_token($token, $username = null, $ip = null) {
     if( empty ( $token ) ) {
-        $error_message = "POWER CAPTCHA token is empty.";
+        $log_message = "POWER CAPTCHA token is empty.";
+        $error_code = powercaptcha()::ERROR_CODE_MISSING_TOKEN;
         if(WP_DEBUG) {
-            trigger_error($error_message, E_USER_NOTICE);
+            trigger_error($log_message, E_USER_NOTICE);
         }
         return array(
             "success" => FALSE,
-            "reason" => $error_message
+            "error_code" => $error_code
         );
     } 
 
@@ -59,13 +59,14 @@ function powercaptcha_verify_token($token, $username = null, $ip = null) {
 
     if($response_code == 200 && isset($response_body['success'])) {
         $verified = boolval($response_body['success']);
+        $error_code = ($verified ? NULL : powercaptcha()::ERROR_CODE_TOKEN_NOT_VERIFIED);
         if(WP_DEBUG) {
             $verified_text = $verified ? 'Token is valid' : 'Token is invalid';
             trigger_error("POWER CAPTCHA token was verified sucessfully. Result: $verified_text / Token: $token", E_USER_NOTICE);
         }
         return [
             'success' => $verified,
-            'reason' => "Token validtated succesfully."
+            'error_code' => $error_code
         ];
     } 
   
@@ -79,31 +80,58 @@ function powercaptcha_verify_token($token, $username = null, $ip = null) {
         // PC_OFFLINE = POWER CAPTCHA API is offline
         if(isset($response_body['errors']) 
             && (in_array('MISSING_SECRET', $response_body['errors']) || in_array('INVALID_SECRET', $response_body['errors'])) ) {
-            $error_message = "POWER CAPTCHA secret key is invalid or missing.";
-            trigger_error($error_message, E_USER_ERROR);
+            $log_message = "POWER CAPTCHA secret key is invalid or missing.";
+            $error_code = powercaptcha()::ERROR_CODE_INVALID_SECRET;
+            trigger_error($log_message, E_USER_WARNING);
         } else {
-            $error_message = "POWER CAPTCHA token is invalid or empty.";
+            $log_message = "POWER CAPTCHA token is invalid or empty.";
+            $error_code = powercaptcha()::ERROR_CODE_INVALID_TOKEN;
             if(WP_DEBUG) {
-                trigger_error($error_message, E_USER_NOTICE);
+                trigger_error($log_message, E_USER_NOTICE);
             }
         } 
     } else if( is_wp_error ( $response )) {
-        $error_message = "Could not connnect to POWER CAPTCHA API. WordPress error errormessage: {$response->get_error_message()}";
-        trigger_error($error_message, E_USER_ERROR);
+        $log_message = "Could not connnect to POWER CAPTCHA API. WordPress error errormessage: {$response->get_error_message()}";
+        $error_code = powercaptcha()::ERROR_CODE_API_ERROR;
+        trigger_error($log_message, E_USER_WARNING);
     } else {
-        $error_message = "Unknown response from POWER CAPTCHA API. Response code: $response_code / Response body: $response_body";
-        trigger_error($error_message, E_USER_ERROR);
+        $log_message = "Unknown response from POWER CAPTCHA API. Response code: $response_code / Response body: $response_body";
+        $error_code = powercaptcha()::ERROR_CODE_API_ERROR;
+        trigger_error($log_message, E_USER_WARNING);
     }
 
     return [
         'success' => FALSE,
-        'reason' => $error_message
+        'error_code' => $error_code
     ];
 }
 
-function powercaptcha_user_error_message() {
-    return __('Die Übertragung des Formulars wurde von POWER CAPTCHA verhindert. Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.'); // TODO erromessage?
-    // The anti-spam protection has prevented the form from being submitted. Please try again at a later time.
+function powercaptcha_user_error_message($error_code = NULL) {
+    $output = __('Submission of the form was blocked by POWER CAPTCHA. Please try again later.' , 'power-captcha');
+    if($error_code !== NULL) {
+        if($error_code === powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD) {
+            $error_message = __('The form does not contain a token field.', 'power-captcha');
+        } else if($error_code === powercaptcha()::ERROR_CODE_MISSING_TOKEN) {
+            $error_message = __('The token is empty.', 'power-captcha');
+        } else if($error_code === powercaptcha()::ERROR_CODE_INVALID_TOKEN) {
+            $error_message = __('The token is invalid.', 'power-captcha');
+        } else if($error_code === powercaptcha()::ERROR_CODE_TOKEN_NOT_VERIFIED) {
+            $error_message = __('The token has not been verified.', 'power-captcha');
+        } else if($error_code === powercaptcha()::ERROR_CODE_INVALID_SECRET) {
+            $error_message = __('The secret key is missing or invalid.', 'power-captcha');
+        } else if($error_code === powercaptcha()::ERROR_CODE_API_ERROR) {
+            $error_message = __('Error connecting to the API.', 'power-captcha');
+        } else {
+            $error_message = $error_code; // fallback
+        }
+
+        $output .= ' '.sprintf(
+            /** translators %s: The error message */
+            __('Error message: %s', 'power-captcha'),
+            $error_message
+        );
+    }
+    return $output;
 }
 
 
@@ -117,4 +145,17 @@ function powercaptcha_javascript_tags($display = true) {
     } else {
         return $javascript_tag;
     }
+}
+
+function powercaptcha_enqueue_javascript() {
+    if(!powercaptcha()->is_configured()) {
+        return;
+    }
+
+    wp_enqueue_script(powercaptcha()::JAVASCRIPT_HANDLE, powercaptcha()->get_javascript_url());
+}
+
+
+function powercaptcha_enqueue_jquery() {
+    wp_enqueue_script('jquery');    
 }

@@ -7,10 +7,17 @@ namespace PowerCaptcha_WP {
 
         // Singelton instance
         private static $instance;
-    
-        const PLUGIN_NAME = 'powercaptcha'; 
+
         const DEFAULT_ENDPOINT_BASE_URL = 'https://api.power-captcha.com';
         const DEFAULT_JAVASCRIPT_URL = 'https://cdn.power-captcha.com';
+        const JAVASCRIPT_HANDLE = 'powercaptcha-js';
+
+        const ERROR_CODE_NO_TOKEN_FIELD = 'powercaptcha_error_no_token_field';
+        const ERROR_CODE_MISSING_TOKEN = 'powercaptcha_error_missing_token';
+        const ERROR_CODE_INVALID_TOKEN = 'powercaptcha_error_invalid_token';
+        const ERROR_CODE_TOKEN_NOT_VERIFIED = 'powercaptcha_error_token_not_verified';
+        const ERROR_CODE_INVALID_SECRET = 'powercaptcha_error_invalid_secret';
+        const ERROR_CODE_API_ERROR = 'powercaptcha_api_error';
     
         // settings
         const SETTING_PAGE = 'powercaptcha_admin';
@@ -24,6 +31,7 @@ namespace PowerCaptcha_WP {
         // integration settings
         const SETTING_SECTION_INTEGRATION = 'powercaptcha_setting_section_integration';
         const SETTING_NAME_WPFORMS_INTEGRATION = 'powercaptcha_wpforms_integration';
+        const SETTING_NAME_WORDPRESS_INTEGRATION = 'powercaptcha_wordpress_integration';
         // TODO Setting for exluding forms!
     
         // enterprise settings
@@ -85,6 +93,10 @@ namespace PowerCaptcha_WP {
     
         public function is_wpforms_integration_enabled() {
             return $this->is_configured() && self::get_setting_bool(self::SETTING_NAME_WPFORMS_INTEGRATION);
+        }
+
+        public function is_wordpress_integration_enabled() {
+            return $this->is_configured() && self::get_setting_bool(self::SETTING_NAME_WORDPRESS_INTEGRATION);
         }
     
         private static function get_setting_bool($setting_name) {

@@ -11,16 +11,16 @@ function powercaptcha_wpforms_enqueue_scripts( ) {
 
 
 <script type="text/javascript">
-// TODO move this script to javascript file. note parameters must be transferred like: apiKey: '<?php //echo powercaptcha()->get_api_key(); ?>',
+// TODO move this script to javascript file. note parameters like apiKey and secretKey must be injected
 jQuery(function($){
     
     $(document).ready(function(){
         // destory auto instance
         if(window.uiiCaptcha && window.uiiCaptcha.autoInstance) {
             window.uiiCaptcha.autoInstance.destroy();
-            console.log('auto instance destroyed');
+            console.debug('auto instance destroyed');
         } else {
-            console.log('no auto instance is present');
+            console.debug('no auto instance is present');
         }
     });
 
@@ -39,34 +39,34 @@ jQuery(function($){
 
         // register before submit listener
         wpform.on('wpformsBeforeFormSubmit', function(event) {
-            console.log('beforeSubmitEvent for wpform #'+wpformId);
+            console.debug('beforeSubmitEvent for wpform #'+wpformId);
 
             const tokenField = wpform.find('input[name="pc-token"]').eq(0);
             if(tokenField.length === 0) {
-                console.warn('no token field found in wpform #'+wpformId+' before submit.');
+                console.warn('No pc-token field found in wpform #'+wpformId+' before submit.');
                 return; // exit
             }
 
             if(tokenField.val() === "") {
-                console.log('tokenField is empty. preventing submit and showing captcha.');
+                console.debug('pc-token field empty. preventing form submit and requesting token.');
                 event.preventDefault();
 
                 let userName = '';
                 const fieldContainer = wpform.find('[class*="pc-user-"]').eq(0);
                 if(fieldContainer.length === 0) {
-                    console.log('no container found with pc-user-* class in wpform #'+wpformId);
+                    console.debug('no container found with pc-user-* class in wpform #'+wpformId);
                 } else {
                     var fieldPosition = fieldContainer.attr('class').match(/pc-user-([0-9]+)/)[1];
                     const userNameField = fieldContainer.find('input').eq(fieldPosition);
                     if(userNameField.length === 0) {
-                        console.log('no pc-user field found with index '+fieldPosition+' in container #'+fieldContainer.attr('id')+' of wpform #'+wpformId);
+                        console.debug('no pc-user field found with index '+fieldPosition+' in container #'+fieldContainer.attr('id')+' of wpform #'+wpformId);
                     } else {
                         userName = userNameField.val();
-                        console.log('username val: '+userNameField.val());
+                        console.debug('userName val: '+userNameField.val());
 
                         const pcUserName = wpform.find('input[name="pc-username"]').eq(0);
                         if(pcUserName === 0) {
-                            console.log('no pc-username field found in wpform #'+wpformId);
+                            console.warn('no pc-username field found in wpform #'+wpformId);
                         } else {
                             pcUserName.val(userName);
                         }
@@ -80,14 +80,14 @@ jQuery(function($){
                     callback: ''
                 }, 
                 function(token) {
-                    console.log('captcha solved with token: '+token+'. setting value to tokenField.');
+                    console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
                     tokenField.val(token);
-                    console.log('resubmitting form.');
+                    console.debug('resubmitting form.');
                     wpform.submit(); // TODO jquery
                     //$('#wpforms-form-9').submit();
                 });
             } else {
-                console.log('token already exists. no captcha has to be shown. form can be submitted.');
+                console.debug('token already exists. no captcha has to be shown. form can be submitted.');
             }
         });
 
@@ -96,7 +96,7 @@ jQuery(function($){
         wpform.on('wpformsAjaxSubmitFailed wpformsAjaxSubmitActionRequired wpformsAjaxSubmitError', function (event) {
             // clear token field after submit failed
             const wpform = $(this);
-            console.log('clearing token field after submit failed');
+            console.debug('clearing token field after submit failed');
             const tokenField = wpform.find('input[name="pc-token"]').eq(0);
             if(tokenField.length === 0) {
                 console.warn('no token field found in wpform #'+wpform.attr('id')+' after submit failed.');
@@ -148,31 +148,30 @@ function powercaptcha_wpforms_verification( $fields, $entry, $form_data ) {
 
     $form_id = $form_data['id'];
     $pcToken = powercaptcha_get_token_from_post_request();
-    //$pcUsername = powercaptcha_get_username_from_post_request();
 
     if($pcToken === FALSE) {
-        wpforms()->process->errors[ $form_id ] [ 'header' ] = esc_html__(powercaptcha_user_error_message(), 'power-captcha' ); 
-        wpforms_log( //TODO wpforms_log
+        wpforms()->process->errors[ $form_id ] [ 'header' ] = esc_html(powercaptcha_user_error_message(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD)); 
+        wpforms_log( // TODO better message for wpforms_log
             //@param string $title   Title of a log error_message.
-            esc_html__( 'POWER CAPTCHA: Spam detected' ) . uniqid(), 
+            esc_html__( 'POWER CAPTCHA: Spam detected' , 'power-captcha' ) . uniqid(), 
             //@param mixed  $error_message Content of a log error_message.
             ["POWER CAPTCHA token was not present in post request.", $entry], 
             // @param array  $args    Expected keys: form_id, meta, parent.
             [ 
-                'type'    => ['spam'], // types: spam, security ? TODO
+                'type'    => ['spam'],
                 'form_id' => $form_id,
             ]
         );
     } else {
         $verification = powercaptcha_verify_token($pcToken, $pcUsername);
         if($verification['success'] !== TRUE) {
-            wpforms()->process->errors[ $form_id ] [ 'header' ] = esc_html__(powercaptcha_user_error_message(), 'power-captcha' ); 
+            wpforms()->process->errors[ $form_id ] [ 'header' ] = esc_html__(powercaptcha_user_error_message($verification['error_code']), 'power-captcha' ); 
             $entry['pc_token'] = "";
-            wpforms_log( //TODO wpforms_log
-                esc_html__( 'POWER CAPTCHA: Spam detected' ) . uniqid(),
-                [ "POWER CAPTCHA token verification failed.", $verification , $entry],
+            wpforms_log( // TODO better message for wpforms_log
+                esc_html__( 'POWER CAPTCHA: Spam detected' , 'power-captcha' ) . uniqid(),
+                [ "POWER CAPTCHA token invalid.", $verification , $entry],
                 [
-                    'type'    => [ 'spam' ], // TODO type?
+                    'type'    => ['spam'],
                     'form_id' => $form_id,
                 ]
             );

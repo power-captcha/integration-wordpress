@@ -57,11 +57,15 @@
             // integration settings
             register_setting(
                 powercaptcha()::SETTING_GROUP_NAME,
+                powercaptcha()::SETTING_NAME_WORDPRESS_INTEGRATION
+            );
+
+            register_setting(
+                powercaptcha()::SETTING_GROUP_NAME,
                 powercaptcha()::SETTING_NAME_WPFORMS_INTEGRATION
             );
 
             // enterprise settings
-
             register_setting(
                 powercaptcha()::SETTING_GROUP_NAME,
                 powercaptcha()::SETTING_NAME_ENDPOINT_BASE_URL
@@ -103,6 +107,14 @@
             );
 
             // integration settings fields
+            powercaptcha_setting_add_default_field(
+                powercaptcha()::SETTING_SECTION_INTEGRATION,
+                powercaptcha()::SETTING_NAME_WORDPRESS_INTEGRATION,
+                'checkbox',
+                'WordPress',
+                'Secure WordPress Login with POWER CAPTCHA.' // TODO better description
+            );
+
             powercaptcha_setting_add_default_field(
                 powercaptcha()::SETTING_SECTION_INTEGRATION,
                 powercaptcha()::SETTING_NAME_WPFORMS_INTEGRATION,
