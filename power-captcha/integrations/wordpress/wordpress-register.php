@@ -1,18 +1,13 @@
 <?php
 
 if(powercaptcha()->is_enabled(powercaptcha()::WORDPRESS_REGISTER_INTEGRATION)) {
-    // power captcha js
-    // note: Despite the name, 'login_enqueue_scripts' is used for enqueuing both scripts and styles, on all login and registration related screens.
-    add_action('login_enqueue_scripts', 'powercaptcha_enqueue_javascript' );
-
     // integration js
     // note: Despite the name, 'login_enqueue_scripts' is used for enqueuing both scripts and styles, on all login and registration related screens.
-    add_action('login_enqueue_scripts', 'powercaptcha_enqueue_jquery' );
+    add_action('login_enqueue_scripts', 'powercaptcha_enqueue_jquery' ); // we need jquery for the integration.
     add_action('register_form', 'powercaptcha_wordpress_register_integration_javascript');
 
     // token verification
     add_action('register_post', 'powercaptcha_wordpress_register_verification', 10, 3);
-    //add_filter('registration_errors', 'powercaptcha_wordpress_register_verification', 1, 3);
 }
 
 
@@ -21,6 +16,7 @@ function powercaptcha_wordpress_register_integration_javascript() {
         return;
     }
 
+    powercaptcha_javascript_tags();
 ?>
 <script type="text/javascript">
 // TODO move this script to javascript file. note parameters like apiKey and secretKey must be injected
@@ -32,7 +28,7 @@ jQuery(function($){
         // append hidden input for token
         wpRegisterForm.append('<input type="hidden" name="pc-token" value =""/>');
         
-        // create instance for the login form
+        // create instance for the register form
         const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wpRegisterFormId});
 
         // register submit listener
@@ -63,7 +59,7 @@ jQuery(function($){
                 function(token) {
                     console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
                     tokenField.val(token);
-                    console.debug('resubmitting login form.');
+                    console.debug('resubmitting register form.');
                     wpRegisterForm.trigger("submit");
                 });
             } else {

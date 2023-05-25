@@ -1,13 +1,9 @@
 <?php
 
 if(powercaptcha()->is_enabled(powercaptcha()::WORDPRESS_LOGIN_INTEGRATION)) {
-    // power captcha js
-    // note: Despite the name, 'login_enqueue_scripts' is used for enqueuing both scripts and styles, on all login and registration related screens.
-    add_action('login_enqueue_scripts', 'powercaptcha_enqueue_javascript' );
-
     // integration js
     // note: Despite the name, 'login_enqueue_scripts' is used for enqueuing both scripts and styles, on all login and registration related screens.
-    add_action('login_enqueue_scripts', 'powercaptcha_enqueue_jquery' );
+    add_action('login_enqueue_scripts', 'powercaptcha_enqueue_jquery' ); // we need jquery for the integration.
     add_action('login_form', 'powercaptcha_wordpress_login_integration_javascript');
 
     // token verification
@@ -20,6 +16,7 @@ function powercaptcha_wordpress_login_integration_javascript() {
         return;
     }
 
+    powercaptcha_javascript_tags();
 ?>
 <script type="text/javascript">
 // TODO move this script to javascript file. note parameters like apiKey and secretKey must be injected
