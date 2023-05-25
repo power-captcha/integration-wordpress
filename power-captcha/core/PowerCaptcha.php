@@ -40,6 +40,7 @@ namespace PowerCaptcha_WP {
         const WPFORMS_INTEGRATION = 'wpforms';
         const WORDPRESS_LOGIN_INTEGRATION = 'wordpress_login';
         const WORDPRESS_REGISTER_INTEGRATION = 'wordpress_register';
+        const WORDPRESS_LOST_PASSWORD_INTEGRATION = 'wordpress_lost_password';
 
         // TODO Setting for exluding forms!
     
@@ -81,6 +82,13 @@ namespace PowerCaptcha_WP {
                 __('WordPress Registration', 'power-captcha'),
                 __('Enable protection for the WordPress registration form.', 'power-captcha'), 
                 'integrations/wordpress/wordpress-register.php'
+            );
+
+            $this->register_integration(
+                self::WORDPRESS_LOST_PASSWORD_INTEGRATION,
+                __('WordPress Lost Password', 'power-captcha'),
+                __('Enable protection for the WordPress lost/reset password form.', 'power-captcha'), 
+                'integrations/wordpress/wordpress-lost-password.php'
             );
         }
 
