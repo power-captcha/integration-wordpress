@@ -14,16 +14,16 @@
 // Init core
 require plugin_dir_path( __FILE__ ) . 'core/PowerCaptcha.php';
 require plugin_dir_path( __FILE__ ) . 'core/functions.php';
-//require plugin_dir_path( __FILE__ ) . 'widgets.php';
 
 // Init integrations
 if(powercaptcha()->is_configured()) {
-    if (powercaptcha()->is_wpforms_integration_enabled()) {
-        require plugin_dir_path( __FILE__ ) . 'integrations/wpforms/wpforms.php';
-    }
-
-    if(powercaptcha()->is_wordpress_integration_enabled()) {
-        require plugin_dir_path( __FILE__ ) . 'integrations/wordpress/wordpress-login.php';
+    foreach(powercaptcha()->get_integrations() as $key => $integration) {
+        /** @var string $key */
+        /** @var PowerCaptcha_WP\PowerCaptchaIntegration $integration */
+        if($integration->is_enabled()) {
+            $full_path = plugin_dir_path( __FILE__ ) . $integration->get_file_path();
+            require_once $full_path;
+        }
     }
 }
 

@@ -54,17 +54,6 @@
                 powercaptcha()::SETTING_NAME_SECRET_KEY
             );
 
-            // integration settings
-            register_setting(
-                powercaptcha()::SETTING_GROUP_NAME,
-                powercaptcha()::SETTING_NAME_WORDPRESS_INTEGRATION
-            );
-
-            register_setting(
-                powercaptcha()::SETTING_GROUP_NAME,
-                powercaptcha()::SETTING_NAME_WPFORMS_INTEGRATION
-            );
-
             // enterprise settings
             register_setting(
                 powercaptcha()::SETTING_GROUP_NAME,
@@ -115,21 +104,26 @@
             );
 
             // integration settings fields
-            powercaptcha_setting_add_default_field(
-                powercaptcha()::SETTING_SECTION_INTEGRATION,
-                powercaptcha()::SETTING_NAME_WORDPRESS_INTEGRATION,
-                'checkbox',
-                __('WordPress protection', 'power-captcha'),
-                __('Enable protection for the WordPress login and registration form and for comment function.', 'power-captcha'), 
-            );
+            // integration settings
+            foreach(powercaptcha()->get_integrations() as $key => $integration) {
+                /** @var string $key */
+                /** @var PowerCaptcha_WP\PowerCaptchaIntegration $integration */
+                
+                // register integration setting
+                register_setting(
+                    powercaptcha()::SETTING_GROUP_NAME,
+                    $integration->get_setting_name()
+                );
 
-            powercaptcha_setting_add_default_field(
-                powercaptcha()::SETTING_SECTION_INTEGRATION,
-                powercaptcha()::SETTING_NAME_WPFORMS_INTEGRATION,
-                'checkbox',
-                __('WPForms protection', 'power-captcha'),
-                __('Enable protection for <a href="https://wordpress.org/plugins/wpforms/" target="_blank">WPForms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/" target="_blank">WPForms lite</a> plugin.', 'power-captcha')
-            );
+                // add setting field
+                powercaptcha_setting_add_default_field(
+                    powercaptcha()::SETTING_SECTION_INTEGRATION,
+                    $integration->get_setting_name(),
+                    'checkbox',
+                    $integration->get_setting_title(),
+                    $integration->get_setting_description() 
+                );
+            }
 
             // on premise settings fields
             powercaptcha_setting_add_default_field( //TODO we have to validate if the endpoint url is valid, before saving the setting!

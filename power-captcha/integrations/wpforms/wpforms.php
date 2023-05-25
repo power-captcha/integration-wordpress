@@ -2,7 +2,7 @@
 
 add_action( 'wpforms_wp_footer_end', 'powercaptcha_wpforms_enqueue_scripts', 10, 0 );
 function powercaptcha_wpforms_enqueue_scripts( ) {
-    if (!powercaptcha()->is_wpforms_integration_enabled()) {
+    if (!powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
         return;
     }
 
@@ -122,7 +122,7 @@ jQuery(function($){
  */
 add_action( 'wpforms_process', 'powercaptcha_wpforms_verification', 10, 3 );
 function powercaptcha_wpforms_verification( $fields, $entry, $form_data ) {
-    if (!powercaptcha()->is_wpforms_integration_enabled()) {
+    if (!powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
         return;
     }
 
