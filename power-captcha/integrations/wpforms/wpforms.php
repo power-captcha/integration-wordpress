@@ -1,7 +1,14 @@
 <?php
 
-add_action( 'wpforms_wp_footer_end', 'powercaptcha_wpforms_enqueue_scripts', 10, 0 );
-function powercaptcha_wpforms_enqueue_scripts( ) {
+if (powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
+    // integration js
+    add_action( 'wpforms_wp_footer_end', 'powercaptcha_wpforms_integration_javascript', 10, 0 );
+
+    // token verification
+    add_action( 'wpforms_process', 'powercaptcha_wpforms_verification', 10, 3 );
+}
+
+function powercaptcha_wpforms_integration_javascript( ) {
     if (!powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
         return;
     }
@@ -13,17 +20,6 @@ function powercaptcha_wpforms_enqueue_scripts( ) {
 <script type="text/javascript">
 // TODO move this script to javascript file. note parameters like apiKey and secretKey must be injected
 jQuery(function($){
-    
-    $(document).ready(function(){
-        // destory auto instance
-        if(window.uiiCaptcha && window.uiiCaptcha.autoInstance) {
-            window.uiiCaptcha.autoInstance.destroy();
-            console.debug('auto instance destroyed');
-        } else {
-            console.debug('no auto instance is present');
-        }
-    });
-
     // based on https://causier.co.uk/2021/02/04/hooking-into-wpforms-ajax-submission-workflow-for-custom-event-handling/
 
     // for each form
@@ -120,7 +116,6 @@ jQuery(function($){
  * @param  array  $entry     Original $_POST global.
  * @param  array  $form_data Form data and settings.
  */
-add_action( 'wpforms_process', 'powercaptcha_wpforms_verification', 10, 3 );
 function powercaptcha_wpforms_verification( $fields, $entry, $form_data ) {
     if (!powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
         return;
@@ -150,7 +145,7 @@ function powercaptcha_wpforms_verification( $fields, $entry, $form_data ) {
     $pcToken = powercaptcha_get_token_from_post_request();
 
     if($pcToken === FALSE) {
-        wpforms()->process->errors[ $form_id ] [ 'header' ] = esc_html(powercaptcha_user_error_message(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD)); 
+        wpforms()->process->errors[ $form_id ] [ 'header' ] = powercaptcha_user_error_message(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD); 
         wpforms_log( // TODO better message for wpforms_log
             //@param string $title   Title of a log error_message.
             esc_html__( 'POWER CAPTCHA: Spam detected' , 'power-captcha' ) . uniqid(), 
@@ -165,7 +160,7 @@ function powercaptcha_wpforms_verification( $fields, $entry, $form_data ) {
     } else {
         $verification = powercaptcha_verify_token($pcToken, $pcUsername);
         if($verification['success'] !== TRUE) {
-            wpforms()->process->errors[ $form_id ] [ 'header' ] = esc_html__(powercaptcha_user_error_message($verification['error_code']), 'power-captcha' ); 
+            wpforms()->process->errors[ $form_id ] [ 'header' ] = powercaptcha_user_error_message($verification['error_code']); 
             $entry['pc_token'] = "";
             wpforms_log( // TODO better message for wpforms_log
                 esc_html__( 'POWER CAPTCHA: Spam detected' , 'power-captcha' ) . uniqid(),
