@@ -43,6 +43,7 @@ namespace PowerCaptcha_WP {
         const WORDPRESS_LOST_PASSWORD_INTEGRATION = 'wordpress_lost_password';
 
         const WOOCOMMERCE_LOGIN_INTEGRATION = 'woocommerce_login';
+        const WOOCOMMERCE_REGISTER_INTEGRATION = 'woocommerce_register';
 
         // TODO Setting for exluding forms!
     
@@ -101,6 +102,13 @@ namespace PowerCaptcha_WP {
                 __('Enable protection for the WooCommerce My Account login form.', 'power-captcha'), 
                 'integrations/woocommerce/woocommerce-login.php'
             );
+            $this->register_integration(
+                self::WOOCOMMERCE_REGISTER_INTEGRATION,
+                __('WooCommerce Registration', 'power-captcha'),
+                __('Enable protection for the WooCommerce My Account register form.', 'power-captcha'), 
+                'integrations/woocommerce/woocommerce-register.php'
+            );
+
 
 
         }
