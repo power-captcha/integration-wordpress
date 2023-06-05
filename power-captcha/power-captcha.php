@@ -21,8 +21,10 @@ if(powercaptcha()->is_configured()) {
         /** @var string $key */
         /** @var PowerCaptcha_WP\PowerCaptchaIntegration $integration */
         if($integration->is_enabled()) {
-            $full_path = plugin_dir_path( __FILE__ ) . $integration->get_file_path();
-            require_once $full_path;
+            foreach($integration->get_file_paths() as $file_path) {
+                $full_path = plugin_dir_path( __FILE__ ) . $file_path;
+                require_once $full_path;
+            }
         }
     }
 }

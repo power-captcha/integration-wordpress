@@ -71,7 +71,7 @@ namespace PowerCaptcha_WP {
                 self::WPFORMS_INTEGRATION,
                 __('WPForms', 'power-captcha'),
                 __('Enable protection for <a href="https://wordpress.org/plugins/wpforms/" target="_blank">WPForms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/" target="_blank">WPForms lite</a> plugin.', 'power-captcha'),
-                'integrations/wpforms/wpforms.php'
+                ['integrations/wpforms/wpforms.php']
             );
 
             // Wordpress integrations
@@ -79,19 +79,22 @@ namespace PowerCaptcha_WP {
                 self::WORDPRESS_LOGIN_INTEGRATION,
                 __('WordPress Login', 'power-captcha'),
                 __('Enable protection for the WordPress login form.', 'power-captcha'), 
-                'integrations/wordpress/wordpress-login.php'
+                ['integrations/wordpress/wordpress-login.php']
             );
             $this->register_integration(
                 self::WORDPRESS_REGISTER_INTEGRATION,
                 __('WordPress Registration', 'power-captcha'),
                 __('Enable protection for the WordPress registration form.', 'power-captcha'), 
-                'integrations/wordpress/wordpress-register.php'
+                ['integrations/wordpress/wordpress-register.php']
             );
             $this->register_integration(
                 self::WORDPRESS_LOST_PASSWORD_INTEGRATION,
-                __('WordPress Lost Password', 'power-captcha'),
-                __('Enable protection for the WordPress lost/reset password form.', 'power-captcha'), 
-                'integrations/wordpress/wordpress-lost-password.php'
+                __('WordPress / WooCommerce Lost Password', 'power-captcha'),
+                __('Enable protection for the WordPress and WooCommerce lost/reset password form.', 'power-captcha'), 
+                [
+                    'integrations/wordpress/wordpress-lost-password.php',
+                    'integrations/woocommerce/woocommerce-lost-password.php'
+                ]
             );
             // TODO Wordpress Comments
 
@@ -100,20 +103,20 @@ namespace PowerCaptcha_WP {
                 self::WOOCOMMERCE_LOGIN_INTEGRATION,
                 __('WooCommerce Login', 'power-captcha'),
                 __('Enable protection for the WooCommerce My Account login form.', 'power-captcha'), 
-                'integrations/woocommerce/woocommerce-login.php'
+                ['integrations/woocommerce/woocommerce-login.php']
             );
             $this->register_integration(
                 self::WOOCOMMERCE_REGISTER_INTEGRATION,
                 __('WooCommerce Registration', 'power-captcha'),
                 __('Enable protection for the WooCommerce My Account register form.', 'power-captcha'), 
-                'integrations/woocommerce/woocommerce-register.php'
+                ['integrations/woocommerce/woocommerce-register.php']
             );
 
 
 
         }
 
-        private function register_integration(string $key, string $setting_title, string $setting_description, string $file_path) {
+        private function register_integration(string $key, string $setting_title, string $setting_description, array $file_paths) {
             if(array_key_exists($key, $this->integrations)) {
                 throw new \RuntimeException("Integration with key '$key' was already registered. Integration keys have to be unique.");
             }
@@ -122,7 +125,7 @@ namespace PowerCaptcha_WP {
                 $key, 
                 $setting_title, 
                 $setting_description, 
-                $file_path
+                $file_paths
             );
         }
 
@@ -204,13 +207,13 @@ namespace PowerCaptcha_WP {
         private string $setting_title;
         private string $setting_description;
 
-        private string $file_path;
+        private array $file_paths;
 
-        public function __construct(string $integration_key, string $setting_title, string $setting_description, string $file_path) {
+        public function __construct(string $integration_key, string $setting_title, string $setting_description, array $file_paths) {
             $this->integration_key = $integration_key;
             $this->setting_title = $setting_title;
             $this->setting_description = $setting_description;
-            $this->file_path = $file_path;
+            $this->file_paths = $file_paths;
         }
 
         public function get_key() : string {
@@ -229,8 +232,8 @@ namespace PowerCaptcha_WP {
             return $this->setting_description;
         }
 
-        public function get_file_path() : string {
-            return $this->file_path;
+        public function get_file_paths() : array {
+            return $this->file_paths;
         }
 
         public function is_enabled() {
