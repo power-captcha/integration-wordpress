@@ -106,9 +106,13 @@ function powercaptcha_verify_token($token, $username = null, $ip = null) {
     ];
 }
 
-function powercaptcha_user_error_message($error_code = NULL) {
-    $output = __('<strong>Error:</strong>', 'power-captcha');
-    $output .= ' ' . __('Submission of the form was blocked by POWER CAPTCHA. Please try again later.' , 'power-captcha');
+function powercaptcha_user_error_message($error_code = NULL, $prefix = true) {
+    $output = '';
+    if($prefix) {
+        $output .= __('<strong>Error:</strong>', 'power-captcha').' ';
+    }
+    
+    $output .= __('Submission of the form was blocked by POWER CAPTCHA. Please try again later.' , 'power-captcha');
     if($error_code !== NULL) {
         if($error_code === powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD) {
             $error_message = __('The form does not contain a token field.', 'power-captcha');
