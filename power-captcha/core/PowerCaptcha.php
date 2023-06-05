@@ -42,6 +42,8 @@ namespace PowerCaptcha_WP {
         const WORDPRESS_REGISTER_INTEGRATION = 'wordpress_register';
         const WORDPRESS_LOST_PASSWORD_INTEGRATION = 'wordpress_lost_password';
 
+        const WOOCOMMERCE_LOGIN_INTEGRATION = 'woocommerce_login';
+
         // TODO Setting for exluding forms!
     
         // on premises settings
@@ -63,6 +65,7 @@ namespace PowerCaptcha_WP {
         }
 
         private function __construct() {
+            // WPForms integration
             $this->register_integration(
                 self::WPFORMS_INTEGRATION,
                 __('WPForms', 'power-captcha'),
@@ -70,26 +73,36 @@ namespace PowerCaptcha_WP {
                 'integrations/wpforms/wpforms.php'
             );
 
+            // Wordpress integrations
             $this->register_integration(
                 self::WORDPRESS_LOGIN_INTEGRATION,
                 __('WordPress Login', 'power-captcha'),
                 __('Enable protection for the WordPress login form.', 'power-captcha'), 
                 'integrations/wordpress/wordpress-login.php'
             );
-
             $this->register_integration(
                 self::WORDPRESS_REGISTER_INTEGRATION,
                 __('WordPress Registration', 'power-captcha'),
                 __('Enable protection for the WordPress registration form.', 'power-captcha'), 
                 'integrations/wordpress/wordpress-register.php'
             );
-
             $this->register_integration(
                 self::WORDPRESS_LOST_PASSWORD_INTEGRATION,
                 __('WordPress Lost Password', 'power-captcha'),
                 __('Enable protection for the WordPress lost/reset password form.', 'power-captcha'), 
                 'integrations/wordpress/wordpress-lost-password.php'
             );
+            // TODO Wordpress Comments
+
+            // WooCommerce integration
+            $this->register_integration(
+                self::WOOCOMMERCE_LOGIN_INTEGRATION,
+                __('WooCommerce Login', 'power-captcha'),
+                __('Enable protection for the WooCommerce My Account login form.', 'power-captcha'), 
+                'integrations/woocommerce/woocommerce-login.php'
+            );
+
+
         }
 
         private function register_integration(string $key, string $setting_title, string $setting_description, string $file_path) {
