@@ -44,6 +44,7 @@ namespace PowerCaptcha_WP {
 
         const WOOCOMMERCE_LOGIN_INTEGRATION = 'woocommerce_login';
         const WOOCOMMERCE_REGISTER_INTEGRATION = 'woocommerce_register';
+        const WOOCOMMERCE_CHECKOUT_INTEGRATION = 'woocommerce_checkout';
 
         // TODO Setting for exluding forms!
     
@@ -111,7 +112,12 @@ namespace PowerCaptcha_WP {
                 __('Enable protection for the WooCommerce My Account register form.', 'power-captcha'), 
                 ['integrations/woocommerce/woocommerce-register.php']
             );
-
+            $this->register_integration(
+                self::WOOCOMMERCE_CHECKOUT_INTEGRATION,
+                __('WooCommerce Checkout', 'power-captcha'),
+                __('Enable protection for the WooCommerce checkout form.', 'power-captcha'), 
+                ['integrations/woocommerce/woocommerce-checkout.php']
+            );
 
 
         }
