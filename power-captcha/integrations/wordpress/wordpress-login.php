@@ -59,11 +59,11 @@ jQuery(function($){
                 function(token) {
                     console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
                     tokenField.val(token);
-                    console.debug('resubmitting login form.');
+                    console.debug('resubmitting wpLoginForm.');
                     wpLoginForm.trigger("submit");
                 });
             } else {
-                console.debug('pc-token already set. no token has to be requested. form can be submitted.');
+                console.debug('pc-token already set. no token has to be requested. wpLoginForm can be submitted.');
             }
         });
     }($));

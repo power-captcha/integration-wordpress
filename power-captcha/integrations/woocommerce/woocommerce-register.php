@@ -66,7 +66,7 @@ function powercaptcha_woocommerce_register_integration_javascript() {
                         wcRegisterForm.submit();
                     });
                 } else {
-                    console.debug('pc-token already set. no token has to be requested. form can be submitted.');
+                    console.debug('pc-token already set. no token has to be requested. wcRegisterForm can be submitted.');
                 }
             });
         });

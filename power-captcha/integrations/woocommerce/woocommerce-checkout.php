@@ -57,7 +57,7 @@ function powercaptcha_woocommerce_checkout_integration_javascript() {
 
                 return false; // stop woocommerce form submit
             } else {
-                console.debug('pc-token already set. no token has to be requested. form can be submitted.');
+                console.debug('pc-token already set. no token has to be requested. wcCheckoutForm can be submitted.');
                 return true; // proceed woocommerce from submit
             }
         }

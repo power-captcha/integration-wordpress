@@ -59,7 +59,7 @@ function powercaptcha_woocommerce_lost_password_integration_javascript() {
                         wcLostPasswordForm.submit();
                     });
                 } else {
-                    console.debug('pc-token already set. no token has to be requested. form can be submitted.');
+                    console.debug('pc-token already set. no token has to be requested. wcLostPasswordForm can be submitted.');
                 }
             });
         });

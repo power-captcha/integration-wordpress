@@ -59,13 +59,13 @@ function powercaptcha_woocommerce_login_integration_javascript() {
                     }, 
                     function(token) {
                         console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
-                        tokenField.value = token; // TODO maybe set attribute?
-                        console.debug('resubmitting login form.');
+                        tokenField.value = token;
+                        console.debug('resubmitting wcLoginForm form.');
 
                         wcLoginForm.submit();
                     });
                 } else {
-                    console.debug('pc-token already set. no token has to be requested. form can be submitted.');
+                    console.debug('pc-token already set. no token has to be requested. wcLoginForm can be submitted.');
                 }
             });
         });
