@@ -1,6 +1,8 @@
 <?php
 namespace PowerCaptcha_WP {
 
+    defined('POWER_CAPTCHA_PATH') || exit;
+    
     use RuntimeException;
 
     final class PowerCaptcha {
@@ -73,7 +75,7 @@ namespace PowerCaptcha_WP {
             $this->register_integration(
                 self::WPFORMS_INTEGRATION,
                 __('WPForms', 'power-captcha'),
-                __('Enable protection for <a href="https://wordpress.org/plugins/wpforms/" target="_blank">WPForms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/" target="_blank">WPForms lite</a> plugin.', 'power-captcha'),
+                __('Enable protection for <a href="https://wordpress.org/plugins/wpforms/" target="_blank">WPForms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/" target="_blank">WPForms lite</a>.', 'power-captcha'),
                 ['integrations/wpforms/wpforms.php']
             );
 

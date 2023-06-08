@@ -1,4 +1,7 @@
 <?php
+
+defined('POWER_CAPTCHA_PATH') || exit;
+
 function powercaptcha_get_token_from_post_request() {
     if(isset($_POST["pc-token"])) {
         return $_POST["pc-token"];

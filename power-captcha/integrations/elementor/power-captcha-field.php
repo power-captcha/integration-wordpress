@@ -1,4 +1,7 @@
 <?php
+
+defined('POWER_CAPTCHA_PATH') || exit;
+
 if ( ! class_exists( '\ElementorPro\Modules\Forms\Fields\Field_Base' ) ) {
 	die();
 }

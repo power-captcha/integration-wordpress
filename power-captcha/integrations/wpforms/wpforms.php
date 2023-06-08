@@ -1,5 +1,7 @@
 <?php
 
+defined('POWER_CAPTCHA_PATH') || exit;
+
 if (powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
     // integration js
     add_action( 'wpforms_wp_footer_end', 'powercaptcha_wpforms_integration_javascript', 10, 0 );

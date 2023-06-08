@@ -9,11 +9,12 @@
  * Text Domain: power-captcha
  */
  
-
+define('POWER_CAPTCHA_PATH', plugin_dir_path( __FILE__ ));
+define('POWER_CAPTCHA_URL', plugin_dir_url( __FILE__ ));
 
 // Init core
-require plugin_dir_path( __FILE__ ) . 'core/PowerCaptcha.php';
-require plugin_dir_path( __FILE__ ) . 'core/functions.php';
+require POWER_CAPTCHA_PATH . 'core/PowerCaptcha.php';
+require POWER_CAPTCHA_PATH . 'core/functions.php';
 
 // Init integrations
 if(powercaptcha()->is_configured()) {
@@ -22,7 +23,7 @@ if(powercaptcha()->is_configured()) {
         /** @var PowerCaptcha_WP\PowerCaptchaIntegration $integration */
         if($integration->is_enabled()) {
             foreach($integration->get_file_paths() as $file_path) {
-                $full_path = plugin_dir_path( __FILE__ ) . $file_path;
+                $full_path = POWER_CAPTCHA_PATH . $file_path;
                 require_once $full_path;
             }
         }
@@ -30,5 +31,5 @@ if(powercaptcha()->is_configured()) {
 }
 
 // Init admin settings
-require plugin_dir_path( __FILE__ ) . 'admin/settings.php';
-require plugin_dir_path( __FILE__ ) . 'admin/plugin.php';
+require POWER_CAPTCHA_PATH . 'admin/settings.php';
+require POWER_CAPTCHA_PATH . 'admin/plugin.php';

@@ -1,5 +1,7 @@
 <?php
 
+defined('POWER_CAPTCHA_PATH') || exit;
+
 if(powercaptcha()->is_enabled(powercaptcha()::WOOCOMMERCE_REGISTER_INTEGRATION)) {
     // integration js
     add_action('woocommerce_register_form_end', 'powercaptcha_woocommerce_register_integration_javascript');

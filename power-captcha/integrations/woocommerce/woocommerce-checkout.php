@@ -1,5 +1,7 @@
 <?php
 
+defined('POWER_CAPTCHA_PATH') || exit;
+
 if(powercaptcha()->is_enabled(powercaptcha()::WOOCOMMERCE_CHECKOUT_INTEGRATION)) {
     // integration js
     add_action('woocommerce_after_checkout_billing_form', 'powercaptcha_woocommerce_checkout_integration_javascript');

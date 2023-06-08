@@ -1,4 +1,7 @@
 <?php
+
+defined('POWER_CAPTCHA_PATH') || exit;
+
     if(is_admin()) {
 
         add_action( 'admin_menu', 'powercaptcha_admin_menu' );
@@ -86,7 +89,7 @@
                 __('API Key', 'power-captcha'),
                 sprintf(
                     /** translators %s: url to power captcha API Key management page */
-                    __('Enter your POWER CAPTCHA API Key. You can find your API Key in the <a href="%s" target="_blank">API Key management</a> page.', 'power-captcha'),
+                    __('Enter your POWER CAPTCHA API Key. You can find your API Key in the <a href="%s" target="_blank">API Key Management</a> page.', 'power-captcha'),
                     powercaptcha()::API_KEY_MANAGEMENT_URL
                 )
             );

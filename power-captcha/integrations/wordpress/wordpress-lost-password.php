@@ -1,5 +1,7 @@
 <?php
 
+defined('POWER_CAPTCHA_PATH') || exit;
+
 if(powercaptcha()->is_enabled(powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION)) {
     // integration js
     // note: Despite the name, 'login_enqueue_scripts' is used for enqueuing both scripts and styles, on all login and registration related screens.

@@ -1,4 +1,7 @@
 <?php
+
+defined('POWER_CAPTCHA_PATH') || exit;
+
 // note: there is only one integration setting for WordPress AND WooCommerce Lost Password.
 if(powercaptcha()->is_enabled(powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION)) {
     // integration js

@@ -1,4 +1,7 @@
 <?php
+
+defined('POWER_CAPTCHA_PATH') || exit;
+
 // adding link to settings page on the plugin list overview
 add_filter( 'plugin_action_links_power-captcha/power-captcha.php', 'powercaptcha_settings_link' );
 function powercaptcha_settings_link( $links ) {
