@@ -36,10 +36,10 @@
     }
 
     function init(elementorFormWidget) {
-        // Ensure our init call fires after Elementor by setting timeout
-        setTimeout( () => {
+        const elementorForm = elementorFormWidget.find('form.elementor-form');
 
-            const elementorForm = elementorFormWidget.find('form.elementor-form');
+        // Wait for JQuery bound events
+        awaitJQueryBoundEvents(elementorForm, 500, 20).then((events) => {
 
             // generate id
             const elementorFormId = 'elementor-' + Math.random().toString(16).slice(2);
@@ -51,12 +51,6 @@
             // create instance for the elementor form
             const captchaInstance = window.uiiCaptcha.captcha({idSuffix: elementorFormId});
 
-            // Get JQuery bound events
-            var events = $._data( elementorForm[0], 'events' );
-            if( !events || !events.submit ) {
-                console.error('init POWER CAPTCHA for Elementor form failed. maybe elementor js was not loaded completely? form: ', elementorForm[0]);
-                return;
-            }
             // Save Submit Events to be called later then Disable Them
             var submitEvents = $.map( events.submit, event => event.handler );
             $( submitEvents ).each( event => elementorForm.off( 'submit', null, event ) );  
@@ -83,8 +77,32 @@
                 console.debug('token field cleared.');
                 tokenField.val('');
             });
+        }).catch(() => {
+            console.error('init POWER CAPTCHA for Elementor form failed. form: ', elementorForm);
+        });
+    }
 
-        }, 500); // little delay to ensure that elementor form.js is loaded
+    function awaitJQueryBoundEvents($element, waitTimeMs, retries) {
+        return new Promise((resolve, reject) => {
+            let leftRetries = retries;
+
+            // wait till we found bound submit events
+            const intervalId = setInterval(() => {
+                var events = $._data( $element[0], 'events' );
+                if( events && events.submit ) {
+                    // found bound submit events -> finish
+                    clearInterval(intervalId);
+                    resolve(events);
+                } else {
+                    // not found submit events -> not finished
+                    if(--leftRetries < 1) {
+                        // no retries left -> abbort
+                        clearInterval(intervalId);
+                        reject();
+                    }
+                }
+            }, waitTimeMs);
+        });
     }
 
     $(window).on('elementor/frontend/init', function() {
@@ -99,4 +117,5 @@
             } 
         );
     });
+    
 }(jQuery));
