@@ -72,7 +72,7 @@ jQuery(function($){
                 }
 
                 captchaInstance.check({
-                    apiKey: '<?php echo powercaptcha()->get_api_key(); ?>',
+                    apiKey: '<?php echo powercaptcha()->get_api_key(powercaptcha()::WPFORMS_INTEGRATION); ?>',
                     backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>', 
                     user: userName,
                     callback: ''
@@ -160,7 +160,7 @@ function powercaptcha_wpforms_verification( $fields, $entry, $form_data ) {
             ]
         );
     } else {
-        $verification = powercaptcha_verify_token($pcToken, $pcUsername);
+        $verification = powercaptcha_verify_token($pcToken, $pcUsername, null, powercaptcha()::WPFORMS_INTEGRATION);
         if($verification['success'] !== TRUE) {
             wpforms()->process->errors[ $form_id ] [ 'header' ] = powercaptcha_user_error_message($verification['error_code']); 
             $entry['pc_token'] = "";

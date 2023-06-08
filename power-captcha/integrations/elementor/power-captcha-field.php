@@ -105,7 +105,7 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 			}
 		}
         
-        $verification = powercaptcha_verify_token($pcToken, $username);
+        $verification = powercaptcha_verify_token($pcToken, $username, null, powercaptcha()::ELEMENTOR_FORM_INTEGRATION);
         if($verification['success'] !== TRUE) {
             $ajax_handler->add_error(
                 $field['id'],

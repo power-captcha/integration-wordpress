@@ -55,7 +55,7 @@ function powercaptcha_woocommerce_register_integration_javascript() {
 
                     // requesting token
                     captchaInstance.check({
-                        apiKey: '<?php echo powercaptcha()->get_api_key(); ?>',
+                        apiKey: '<?php echo powercaptcha()->get_api_key(powercaptcha()::WOOCOMMERCE_REGISTER_INTEGRATION); ?>',
                         backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>', 
                         user: userName,
                         callback: ''
@@ -90,7 +90,7 @@ function powercaptcha_woocommerce_register_verification(string $username, string
     if($pcToken === FALSE) {
         $errors->add(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD, powercaptcha_user_error_message(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD, false));
     } else {
-        $verification = powercaptcha_verify_token($pcToken, $_POST['email']);
+        $verification = powercaptcha_verify_token($pcToken, $_POST['email'], null, powercaptcha()::WOOCOMMERCE_REGISTER_INTEGRATION);
         if($verification['success'] !== TRUE) {
             $errors->add($verification['error_code'], powercaptcha_user_error_message($verification['error_code'], false));
         }

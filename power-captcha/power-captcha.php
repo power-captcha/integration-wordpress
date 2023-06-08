@@ -14,6 +14,11 @@ define('POWER_CAPTCHA_URL', plugin_dir_url( __FILE__ ));
 
 // Init core
 require POWER_CAPTCHA_PATH . 'core/PowerCaptcha.php';
+
+if(file_exists(POWER_CAPTCHA_PATH . 'config.php')) {
+    require_once POWER_CAPTCHA_PATH . 'config.php';
+}
+
 require POWER_CAPTCHA_PATH . 'core/functions.php';
 
 // Init integrations

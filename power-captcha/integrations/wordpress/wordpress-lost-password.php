@@ -53,7 +53,7 @@ jQuery(function($){
 
                 // requesting token
                 captchaInstance.check({
-                    apiKey: '<?php echo powercaptcha()->get_api_key(); ?>',
+                    apiKey: '<?php echo powercaptcha()->get_api_key(powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION); ?>',
                     backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>', 
                     user: userName,
                     callback: ''
@@ -89,7 +89,7 @@ function powercaptcha_wordpress_lost_password_verification(WP_Error $errors, WP_
         $errors->add(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD, powercaptcha_user_error_message(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD));
     } else {
         $pcUserName = $_POST['user_login'];
-        $verification = powercaptcha_verify_token($pcToken, $pcUserName);
+        $verification = powercaptcha_verify_token($pcToken, $pcUserName, null, powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION);
         if($verification['success'] !== TRUE) {
             $errors->add($verification['error_code'], powercaptcha_user_error_message($verification['error_code']));
         }

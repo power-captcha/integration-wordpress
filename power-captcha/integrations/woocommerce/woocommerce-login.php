@@ -54,7 +54,7 @@ function powercaptcha_woocommerce_login_integration_javascript() {
 
                     // requesting token
                     captchaInstance.check({
-                        apiKey: '<?php echo powercaptcha()->get_api_key(); ?>',
+                        apiKey: '<?php echo powercaptcha()->get_api_key(powercaptcha()::WOOCOMMERCE_LOGIN_INTEGRATION); ?>',
                         backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>', 
                         user: userName,
                         callback: ''
@@ -96,7 +96,7 @@ function powercaptcha_woocommerce_login_verification(WP_Error $validation_error,
     if($pcToken === FALSE) {
         $validation_error->add(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD, powercaptcha_user_error_message(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD, false));
     } else {
-        $verification = powercaptcha_verify_token($pcToken, $_POST['username']);
+        $verification = powercaptcha_verify_token($pcToken, $_POST['username'], null, powercaptcha()::WOOCOMMERCE_LOGIN_INTEGRATION);
         if($verification['success'] !== TRUE) {
             $validation_error->add($verification['error_code'], powercaptcha_user_error_message($verification['error_code'], false));
         }

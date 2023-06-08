@@ -57,6 +57,8 @@ namespace PowerCaptcha_WP {
         const SETTING_NAME_ENDPOINT_BASE_URL = 'powercaptcha_endpoint_base_url';
         const SETTING_NAME_JAVASCRIPT_BASE_URL = 'powercaptcha_javascript_base_url';
 
+        private array $key_overwrite = [];
+
         /**
          * @var PowerCaptchaIntegration[] $integrations
          */
@@ -148,6 +150,13 @@ namespace PowerCaptcha_WP {
             );
         }
 
+        public function overwrite_keys($integration, $api_key, $secret_key) {
+            $this->key_overwrite[$integration] = [
+                'api_key' => $api_key,
+                'secret_key' => $secret_key
+            ];
+        }
+
         /**
          * @return PowerCaptchaIntegration[] $integrations
          */
@@ -160,12 +169,20 @@ namespace PowerCaptcha_WP {
             return !empty($this->get_api_key()) && !empty($this->get_secret_key());
         }
     
-        public function get_api_key() {
-            return self::get_setting_text(self::SETTING_NAME_API_KEY);
+        public function get_api_key($integration = null) {
+            $api_key = self::get_setting_text(self::SETTING_NAME_API_KEY);
+            if($integration !== null && isset($this->key_overwrite[$integration]['api_key'])) {
+                $api_key = $this->key_overwrite[$integration]['api_key'];
+            }
+            return $api_key;
         }
     
-        public function get_secret_key() {
-            return self::get_setting_text(self::SETTING_NAME_SECRET_KEY);
+        public function get_secret_key($integration = null) {
+            $secret_key = self::get_setting_text(self::SETTING_NAME_SECRET_KEY);
+            if($integration !== null && isset($this->key_overwrite[$integration]['secret_key'])) {
+               $secret_key = $this->key_overwrite[$integration]['secret_key'];
+            }
+            return $secret_key;
         }
     
         private function get_endpoint_base_url() {

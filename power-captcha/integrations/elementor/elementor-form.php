@@ -14,8 +14,8 @@ if(powercaptcha()->is_enabled(powercaptcha()::ELEMENTOR_FORM_INTEGRATION)) {
 
     wp_add_inline_script(
         'power-captcha-elementor-field-js', 
-        'const POWER_CAPTCHA_API_KEY = "'.powercaptcha()->get_api_key().'";' .
-        'const POWER_CAPTCHA_ENDPOINT_URL = "'.powercaptcha()->get_token_request_url().'";', 
+        'const ELEMENTOR_POWER_CAPTCHA_API_KEY = "'.powercaptcha()->get_api_key(powercaptcha()::ELEMENTOR_FORM_INTEGRATION).'";' .
+        'const ELEMENTOR_POWER_CAPTCHA_ENDPOINT_URL = "'.powercaptcha()->get_token_request_url().'";', 
         'before' );
     
     // add field to elementor

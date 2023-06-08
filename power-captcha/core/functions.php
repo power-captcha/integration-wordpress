@@ -18,7 +18,7 @@ function powercaptcha_get_username_from_post_request() {
     }
 }
 
-function powercaptcha_verify_token($token, $username = null, $ip = null) {
+function powercaptcha_verify_token($token, $username = null, $ip = null, $integration = null) {
     if( empty ( $token ) ) {
         $log_message = "POWER CAPTCHA token is empty.";
         $error_code = powercaptcha()::ERROR_CODE_MISSING_TOKEN;
@@ -33,7 +33,7 @@ function powercaptcha_verify_token($token, $username = null, $ip = null) {
 
     $request_url = powercaptcha()->get_token_verification_url();
     $request_body = array(
-        'secret' => powercaptcha()->get_secret_key(),
+        'secret' => powercaptcha()->get_secret_key($integration),
         'token' => $token,
         'name' => $username ?? '',
         'ip' => $ip ?? $_SERVER['REMOTE_ADDR']
@@ -51,7 +51,7 @@ function powercaptcha_verify_token($token, $username = null, $ip = null) {
             'method' => 'POST', 
             'headers' => [
                 'Content-Type' => 'application/json',
-                'X-API-Key' => powercaptcha()->get_api_key()
+                'X-API-Key' => powercaptcha()->get_api_key($integration)
             ],
             'body' => $request_body
         ]
@@ -128,7 +128,7 @@ function powercaptcha_user_error_message($error_code = NULL, $prefix = true) {
         } else if($error_code === powercaptcha()::ERROR_CODE_INVALID_SECRET) {
             $error_message = __('The secret key is missing or invalid.', 'power-captcha');
         } else if($error_code === powercaptcha()::ERROR_CODE_API_ERROR) {
-            $error_message = __('Error connecting to the API.', 'power-captcha');
+            $error_message = __('Error connecting to the API. API Key maybe invalid.', 'power-captcha');
         } else {
             $error_message = $error_code; // fallback
         }
