@@ -211,7 +211,7 @@ defined('POWER_CAPTCHA_PATH') || exit;
 <?php
             elseif ($field_type == 'text'):
 ?>
-    <input type="text" id="<?php echo $field_id; ?>" name="<?php echo $field_name; ?>" value="<?php echo $field_value; ?>" autcomplete="none"> 
+    <input type="text" id="<?php echo $field_id; ?>" name="<?php echo $field_name; ?>" value="<?php echo $field_value; ?>" autocomplete="none"> 
     <label for="<?php echo $field_id; ?>" class="description"><?php echo $field_label ?></label>
 <?php
             endif;
