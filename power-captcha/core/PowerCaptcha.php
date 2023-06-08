@@ -46,6 +46,8 @@ namespace PowerCaptcha_WP {
         const WOOCOMMERCE_REGISTER_INTEGRATION = 'woocommerce_register';
         const WOOCOMMERCE_CHECKOUT_INTEGRATION = 'woocommerce_checkout';
 
+        const ELEMENTOR_FORM_INTEGRATION = 'elementor_form';
+
         // TODO Setting for exluding forms!
     
         // on premises settings
@@ -117,6 +119,15 @@ namespace PowerCaptcha_WP {
                 __('WooCommerce Checkout', 'power-captcha'),
                 __('Enable protection for the WooCommerce checkout form.', 'power-captcha'), 
                 ['integrations/woocommerce/woocommerce-checkout.php']
+            );
+
+            // Elementor integration
+            $this->register_integration(
+                self::ELEMENTOR_FORM_INTEGRATION,
+                __('Elmentor Pro Forms', 'power-captcha'),
+                __('Enable protection for <a href="https://elementor.com/pro/" target="_blank">Elementor Pro</a> Forms.', 'power-captcha')
+                    .'<br/>'.__('After enabling, you need to add a \'POWER CAPTCHA\'-field to your desired Elementor form.', 'power-captcha'), 
+                ['integrations/elementor/elementor-form.php']
             );
 
 

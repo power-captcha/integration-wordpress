@@ -152,15 +152,19 @@ function powercaptcha_javascript_tags($display = true) {
     }
 }
 
+
+function powercaptcha_register_javascript() {
+    wp_register_script(powercaptcha()::JAVASCRIPT_HANDLE, powercaptcha()->get_javascript_url());
+}
+add_action( 'wp_enqueue_scripts', 'powercaptcha_register_javascript' );
+
 function powercaptcha_enqueue_javascript() {
     if(!powercaptcha()->is_configured()) {
         return;
     }
-
-    wp_enqueue_script(powercaptcha()::JAVASCRIPT_HANDLE, powercaptcha()->get_javascript_url());
+    wp_enqueue_script(powercaptcha()::JAVASCRIPT_HANDLE);
 }
 
-
 function powercaptcha_enqueue_jquery() {
-    wp_enqueue_script('jquery');    
+    wp_enqueue_script('jquery');
 }
