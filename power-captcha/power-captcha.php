@@ -3,7 +3,7 @@
  * Plugin Name: POWER CAPTCHA WordPress Integration
  * Plugin URI:  https://power-captcha.com/
  * Description: POWER CAPTCHA protects your WordPress website and WordPress forms against bots and unauthorized people. GDPR compliant!
- * Version:     0.0.1-alpha
+ * Version:     0.1.0
  * Author:      POWER CAPTCHA
  * Author URI:  https://power-captcha.com/
  * Text Domain: power-captcha
