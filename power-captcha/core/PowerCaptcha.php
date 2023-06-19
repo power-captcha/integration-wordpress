@@ -8,7 +8,7 @@ namespace PowerCaptcha_WP {
     final class PowerCaptcha {
     
         const API_VERSION = 'v1';
-        const JS_VERSION = 'v1';
+        const JS_VERSION = '1.0.0';
 
         // Singelton instance
         private static $instance;
@@ -212,7 +212,7 @@ namespace PowerCaptcha_WP {
         }
 
         public function get_javascript_url() {
-            return $this->get_javascript_base_url() . '/' . self::JS_VERSION . '/uii-catpcha-lib.iife.js';
+            return $this->get_javascript_base_url() . '/' . self::API_VERSION . '/power-captcha-' . self::JS_VERSION . '.min.js';
         }
 
         public function is_enabled(string $key) {
