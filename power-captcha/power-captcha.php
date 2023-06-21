@@ -11,7 +11,7 @@
  * Text Domain: power-captcha
  */
  
-define('POWER_CAPTCHA_PLUGIN_VERSION', '0.1.0'); 
+define('POWER_CAPTCHA_PLUGIN_VERSION', '0.1.1'); 
 define('POWER_CAPTCHA_PLUGIN_FILE', __FILE__ );
 define('POWER_CAPTCHA_PLUGIN_DIR', __DIR__ );
 define('POWER_CAPTCHA_PATH', plugin_dir_path( POWER_CAPTCHA_PLUGIN_FILE ));

@@ -27,7 +27,7 @@ namespace PowerCaptcha_WP {
             $this->plugin_slug = plugin_basename( POWER_CAPTCHA_PLUGIN_DIR ); // power-captcha
             $this->cache_key = 'powercaptcha_update_info_cache';
             $this->cache_allowed = true;
-            $this->cache_seconds = DAY_IN_SECONDS; // cache duration: one day
+            $this->cache_seconds = HOUR_IN_SECONDS * 6; // cache duration: 6 hours
 
             add_filter( 'plugins_api', array( $this, 'info' ), 20, 3 );
             add_filter( 'site_transient_update_plugins', array( $this, 'update' ) );
