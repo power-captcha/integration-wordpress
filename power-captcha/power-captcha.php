@@ -2,15 +2,20 @@
 /**
  * Plugin Name: POWER CAPTCHA WordPress Integration
  * Plugin URI:  https://power-captcha.com/
- * Description: POWER CAPTCHA protects your WordPress website and WordPress forms against bots and unauthorized people. GDPR compliant!
- * Version:     0.1.0
+ * Description: POWER CAPTCHA protects your WordPress website and WordPress forms against bots and unauthorized persons. GDPR compliant!
+ * Version:     0.1.1
+ * Requires at least: 6.0
+ * Requires PHP: 8.0
  * Author:      POWER CAPTCHA
  * Author URI:  https://power-captcha.com/
  * Text Domain: power-captcha
  */
  
-define('POWER_CAPTCHA_PATH', plugin_dir_path( __FILE__ ));
-define('POWER_CAPTCHA_URL', plugin_dir_url( __FILE__ ));
+define('POWER_CAPTCHA_PLUGIN_VERSION', '0.1.0'); 
+define('POWER_CAPTCHA_PLUGIN_FILE', __FILE__ );
+define('POWER_CAPTCHA_PLUGIN_DIR', __DIR__ );
+define('POWER_CAPTCHA_PATH', plugin_dir_path( POWER_CAPTCHA_PLUGIN_FILE ));
+define('POWER_CAPTCHA_URL', plugin_dir_url( POWER_CAPTCHA_PLUGIN_FILE ));
 
 // Init core
 require POWER_CAPTCHA_PATH . 'core/PowerCaptcha.php';
