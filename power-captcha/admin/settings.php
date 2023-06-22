@@ -89,7 +89,7 @@ defined('POWER_CAPTCHA_PATH') || exit;
                 __('API Key', 'power-captcha'),
                 sprintf(
                     /** translators %s: url to power captcha API Key management page */
-                    __('Enter your POWER CAPTCHA API Key. You can find your API Key in the <a href="%s" target="_blank">API Key Management</a> page.', 'power-captcha'),
+                    __('Enter your POWER CAPTCHA API Key. You can find your API Key in the <a href="%s" target="_blank">API Key Management</a>.', 'power-captcha'),
                     powercaptcha()::API_KEY_MANAGEMENT_URL
                 )
             );
@@ -101,7 +101,7 @@ defined('POWER_CAPTCHA_PATH') || exit;
                 __('Secret Key', 'power-captcha'),
                 sprintf(
                     /** translators %s: url to power captcha API Key management page */
-                    __('Enter your POWER CAPTCHA Secret Key. You can find your Secret Key on the <a href="%s" target="_blank">API Key Management</a> page.', 'power-captcha'),
+                    __('Enter your POWER CAPTCHA Secret Key. You can find your Secret Key in the <a href="%s" target="_blank">API Key Management</a>.', 'power-captcha'),
                     powercaptcha()::API_KEY_MANAGEMENT_URL
                 )
             );
@@ -150,7 +150,7 @@ defined('POWER_CAPTCHA_PATH') || exit;
             echo '<p>'.
                 sprintf(
                     /** translators %s: url to power captcha API Key management page */
-                    __('The API Key and the Secret Key must be provided for the POWER CAPTCHA to activate. Both keys can be found on the <a href="%s" target="_blank">API Key Management</a> page.', 'power-captcha'),
+                    __('The API Key and the Secret Key must be provided for the POWER CAPTCHA to activate. Both keys can be found in the <a href="%s" target="_blank">API Key Management</a>.', 'power-captcha'),
                     powercaptcha()::API_KEY_MANAGEMENT_URL
                 ).'</p>';
             echo '<p>'.sprintf(
