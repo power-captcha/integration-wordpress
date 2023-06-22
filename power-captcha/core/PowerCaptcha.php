@@ -128,7 +128,7 @@ namespace PowerCaptcha_WP {
             // Elementor integration
             $this->register_integration(
                 self::ELEMENTOR_FORM_INTEGRATION,
-                __('Elmentor Pro Forms', 'power-captcha'),
+                __('Elementor Pro Forms', 'power-captcha'),
                 __('Enable protection for <a href="https://elementor.com/pro/" target="_blank">Elementor Pro</a> Forms.', 'power-captcha')
                     .'<br/>'.__('After enabling, you need to add a \'POWER CAPTCHA\'-field to your desired Elementor form.', 'power-captcha'), 
                 ['integrations/elementor/elementor-form.php']
