@@ -6,9 +6,11 @@
 
             let userName = "";
             const userNameFieldId = elementorForm.find('input[type=power-captcha]').data('pc-username-id');
-            if(userNameFieldId != "") {
+            
+            if(typeof userNameFieldId !== 'undefined' && userNameFieldId != "") {
                 const userNameField = elementorForm.find('#form-field-'+userNameFieldId);
-                if(userNameField) {
+                console.log('username val', userNameField.val());
+                if(userNameField.length > 0 && typeof userNameField.val() !== undefined) {
                     userName = userNameField.val();
                     console.debug('userName', userName);
                 }
@@ -37,6 +39,10 @@
 
     function init(elementorFormWidget) {
         const elementorForm = elementorFormWidget.find('form.elementor-form');
+        
+        if(elementorForm.length < 0) {
+            return; // abbort if widget does not contain elementor form
+        }
 
         // Wait for JQuery bound events
         awaitJQueryBoundEvents(elementorForm, 500, 20).then((events) => {
@@ -108,11 +114,9 @@
     $(window).on('elementor/frontend/init', function() {
         window.elementorFrontend.hooks.addAction( 'frontend/element_ready/widget', 
             function( $scope ) {
-                if($scope.is('.elementor-widget-form')) {
-                    if($scope.has('input[type=power-captcha]')) {
-                        // elementor form containing our field selector is ready
-                        init($scope);
-                    }
+                if($scope.is('.elementor-widget-form:has(input[type=power-captcha])')) {
+                    // elementor form containing our field selector is ready
+                    init($scope);
                 }
             } 
         );
