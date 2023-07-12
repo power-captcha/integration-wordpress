@@ -20,8 +20,8 @@ define('POWER_CAPTCHA_URL', plugin_dir_url( POWER_CAPTCHA_PLUGIN_FILE ));
 // Init core
 require POWER_CAPTCHA_PATH . 'core/PowerCaptcha.php';
 
-if(file_exists(POWER_CAPTCHA_PATH . 'config.php')) {
-    require_once POWER_CAPTCHA_PATH . 'config.php';
+if(file_exists(WP_CONTENT_DIR . '/power-captcha-config.php')) {
+    require_once WP_CONTENT_DIR . '/power-captcha-config.php';
 }
 
 require POWER_CAPTCHA_PATH . 'core/functions.php';
