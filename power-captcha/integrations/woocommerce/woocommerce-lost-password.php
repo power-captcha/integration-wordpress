@@ -50,7 +50,8 @@ function powercaptcha_woocommerce_lost_password_integration_javascript() {
                     // requesting token
                     captchaInstance.check({
                         apiKey: '<?php echo powercaptcha()->get_api_key(powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION); ?>',
-                        backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>', 
+                        backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>',
+                        clientUid: '<?php echo powercaptcha()->get_client_uid(); ?>',
                         user: userName,
                         callback: ''
                     }, 

@@ -19,7 +19,8 @@
             // requesting token
             captchaInstance.check({
                 apiKey: ELEMENTOR_POWER_CAPTCHA_API_KEY,
-                backendUrl: ELEMENTOR_POWER_CAPTCHA_ENDPOINT_URL, 
+                backendUrl: ELEMENTOR_POWER_CAPTCHA_ENDPOINT_URL,
+                clientUid: ELEMENTOR_POWER_CAPTCHA_CLIENT_UID,
                 user: userName,
                 callback: ''
             }, 

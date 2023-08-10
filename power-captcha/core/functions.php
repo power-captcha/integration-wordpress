@@ -35,8 +35,8 @@ function powercaptcha_verify_token($token, $username = null, $ip = null, $integr
     $request_body = array(
         'secret' => powercaptcha()->get_secret_key($integration),
         'token' => $token,
-        'name' => $username ?? '',
-        'ip' => $ip ?? $_SERVER['REMOTE_ADDR']
+        'clientUid' => powercaptcha()->get_client_uid(),
+        'name' => $username ?? ''
     );
     $request_body = json_encode($request_body);
         

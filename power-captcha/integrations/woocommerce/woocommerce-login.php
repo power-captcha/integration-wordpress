@@ -55,7 +55,8 @@ function powercaptcha_woocommerce_login_integration_javascript() {
                     // requesting token
                     captchaInstance.check({
                         apiKey: '<?php echo powercaptcha()->get_api_key(powercaptcha()::WOOCOMMERCE_LOGIN_INTEGRATION); ?>',
-                        backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>', 
+                        backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>',
+                        clientUid: '<?php echo powercaptcha()->get_client_uid(); ?>',
                         user: userName,
                         callback: ''
                     }, 

@@ -74,6 +74,7 @@ jQuery(function($){
                 captchaInstance.check({
                     apiKey: '<?php echo powercaptcha()->get_api_key(powercaptcha()::WPFORMS_INTEGRATION); ?>',
                     backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>', 
+                    clientUid: '<?php echo powercaptcha()->get_client_uid(); ?>',
                     user: userName,
                     callback: ''
                 }, 

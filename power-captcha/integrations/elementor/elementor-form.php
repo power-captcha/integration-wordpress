@@ -6,7 +6,7 @@ if(powercaptcha()->is_enabled(powercaptcha()::ELEMENTOR_FORM_INTEGRATION)) {
     // register field javascript
     wp_register_script(
         'power-captcha-elementor-field-js', 
-        plugin_dir_url( __FILE__ )  . '/public/power-captcha-field.js',  
+        plugin_dir_url( __FILE__ )  . 'public/power-captcha-field.js',  
         [ 'elementor-frontend', 'jquery' ], 
         '1.0', 
         true 
@@ -15,7 +15,8 @@ if(powercaptcha()->is_enabled(powercaptcha()::ELEMENTOR_FORM_INTEGRATION)) {
     wp_add_inline_script(
         'power-captcha-elementor-field-js', 
         'const ELEMENTOR_POWER_CAPTCHA_API_KEY = "'.powercaptcha()->get_api_key(powercaptcha()::ELEMENTOR_FORM_INTEGRATION).'";' .
-        'const ELEMENTOR_POWER_CAPTCHA_ENDPOINT_URL = "'.powercaptcha()->get_token_request_url().'";', 
+        'const ELEMENTOR_POWER_CAPTCHA_ENDPOINT_URL = "'.powercaptcha()->get_token_request_url().'";' .
+        'const ELEMENTOR_POWER_CAPTCHA_CLIENT_UID = "'.powercaptcha()->get_client_uid().'";',
         'before' );
     
     // add field to elementor
