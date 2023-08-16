@@ -22,6 +22,9 @@ function powercaptcha_woocommerce_register_integration_javascript() {
 ?>
 <script type="text/javascript">
     (function (window, document) {
+
+        powerCaptchaWp.prefetchFrontendDetails('woocommerce_register');
+
         document.querySelectorAll('form.woocommerce-form-register').forEach((wcRegisterForm) => {
             // generate id for each form since woocommerce does not provide an element id
             const wcRegisterFormId = 'wc-' + Math.random().toString(16).slice(2);
@@ -54,20 +57,22 @@ function powercaptcha_woocommerce_register_integration_javascript() {
                     console.debug('userNameField val', userNameField.value);
                     const userName = userNameField.value;
 
-                    // requesting token
-                    captchaInstance.check({
-                        apiKey: '<?php echo powercaptcha()->get_api_key(powercaptcha()::WOOCOMMERCE_REGISTER_INTEGRATION); ?>',
-                        backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>',
-                        clientUid: '<?php echo powercaptcha()->get_client_uid(); ?>',
-                        user: userName,
-                        callback: ''
-                    }, 
-                    function(token) {
-                        console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
-                        tokenField.value = token;
-                        console.debug('resubmitting wcRegisterForm form.');
+                    powerCaptchaWp.withFrontendDetails('woocommerce_register', function(details) {
+                        // requesting token
+                        captchaInstance.check({
+                            apiKey: details.apiKey,
+                            backendUrl: details.backendUrl,
+                            clientUid: details.clientUid,
+                            user: userName,
+                            callback: ''
+                        }, 
+                        function(token) {
+                            console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
+                            tokenField.value = token;
+                            console.debug('resubmitting wcRegisterForm form.');
 
-                        wcRegisterForm.submit();
+                            wcRegisterForm.submit();
+                        });
                     });
                 } else {
                     console.debug('pc-token already set. no token has to be requested. wcRegisterForm can be submitted.');

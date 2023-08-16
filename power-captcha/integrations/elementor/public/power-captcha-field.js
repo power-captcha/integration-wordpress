@@ -1,5 +1,9 @@
 (function($) {
 
+    // prefetch details
+    powerCaptchaWp.prefetchFrontendDetails('elementor');
+
+
     function isSubmitAllowed(elementorForm, tokenField, captchaInstance) {
         if(tokenField.val() === "") {
             console.debug('pc-token field empty. preventing form submit and requesting token.');
@@ -16,21 +20,23 @@
                 }
             }
 
-            // requesting token
-            captchaInstance.check({
-                apiKey: ELEMENTOR_POWER_CAPTCHA_API_KEY,
-                backendUrl: ELEMENTOR_POWER_CAPTCHA_ENDPOINT_URL,
-                clientUid: ELEMENTOR_POWER_CAPTCHA_CLIENT_UID,
-                user: userName,
-                callback: ''
-            }, 
-            function(token) {
-                console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
-                tokenField.val(token);
-                console.debug('resubmitting elementorForm form.');
-
-                elementorForm.trigger('submit');
-            });
+            powerCaptchaWp.withFrontendDetails('elementor', function(details) {
+                // requesting token
+                captchaInstance.check({
+                    apiKey: details.apiKey,
+                    backendUrl: details.backendUrl,
+                    clientUid: details.clientUid,
+                    user: userName,
+                    callback: ''
+                }, 
+                function(token) {
+                    console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
+                    tokenField.val(token);
+                    console.debug('resubmitting elementorForm form.');
+    
+                    elementorForm.trigger('submit');
+                });
+            }); 
             return false; // stop form submit
         } else {
             console.debug('pc-token already set. no token has to be requested. elementorForm can be submitted.');

@@ -19,6 +19,7 @@ namespace PowerCaptcha_WP {
         const DEFAULT_ENDPOINT_BASE_URL = 'https://api.power-captcha.com';
         const DEFAULT_JAVASCRIPT_URL = 'https://cdn.power-captcha.com';
         const JAVASCRIPT_HANDLE = 'powercaptcha-js';
+        const JAVASCRIPT_WP_HANDLE = 'powercaptcha-wp-js';
 
         const ERROR_CODE_NO_TOKEN_FIELD = 'powercaptcha_error_no_token_field';
         const ERROR_CODE_MISSING_TOKEN = 'powercaptcha_error_missing_token';
@@ -217,6 +218,14 @@ namespace PowerCaptcha_WP {
 
         public function get_client_uid() {
             return hash('sha256', $_SERVER['REMOTE_ADDR']);
+        }
+
+        public function get_frontend_details($integration) {
+            return [
+                'apiKey' => $this->get_api_key($integration),
+                'backendUrl' => $this->get_token_request_url(),
+                'clientUid' => $this->get_client_uid()
+            ];
         }
 
         public function is_enabled(string $key) {

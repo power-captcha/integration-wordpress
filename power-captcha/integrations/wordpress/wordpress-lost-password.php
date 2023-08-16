@@ -4,8 +4,6 @@ defined('POWER_CAPTCHA_PATH') || exit;
 
 if(powercaptcha()->is_enabled(powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION)) {
     // integration js
-    // note: Despite the name, 'login_enqueue_scripts' is used for enqueuing both scripts and styles, on all login and registration related screens.
-    add_action('login_enqueue_scripts', 'powercaptcha_enqueue_jquery' ); // we need jquery for the integration.
     add_action('lostpassword_form', 'powercaptcha_wordpress_lost_password_integration_javascript');
 
     // token verification
@@ -23,6 +21,9 @@ function powercaptcha_wordpress_lost_password_integration_javascript() {
 <script type="text/javascript">
 // TODO move this script to javascript file. note parameters like apiKey and secretKey must be injected
 jQuery(function($){
+
+    powerCaptchaWp.prefetchFrontendDetails('wordpress_lost_password');
+
     (function ($) {
         const wpLostPasswordForm = $('#lostpasswordform');
         const wpLostPasswordFormId = wpLostPasswordForm.attr('id');
@@ -51,19 +52,21 @@ jQuery(function($){
                 console.debug('userNameField val', userNameField.val());
                 const userName = userNameField.val();
 
-                // requesting token
-                captchaInstance.check({
-                    apiKey: '<?php echo powercaptcha()->get_api_key(powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION); ?>',
-                    backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>',
-                    clientUid: '<?php echo powercaptcha()->get_client_uid(); ?>',
-                    user: userName,
-                    callback: ''
-                }, 
-                function(token) {
-                    console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
-                    tokenField.val(token);
-                    console.debug('resubmitting wpLostPasswordForm.');
-                    wpLostPasswordForm.trigger("submit");
+                powerCaptchaWp.withFrontendDetails('wordpress_lost_password', function(details) {
+                    // requesting token
+                    captchaInstance.check({
+                        apiKey: details.apiKey,
+                        backendUrl: details.backendUrl,
+                        clientUid: details.clientUid,
+                        user: userName,
+                        callback: ''
+                    }, 
+                    function(token) {
+                        console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
+                        tokenField.val(token);
+                        console.debug('resubmitting wpLostPasswordForm.');
+                        wpLostPasswordForm.trigger("submit");
+                    });
                 });
             } else {
                 console.debug('pc-token already set. no token has to be requested. wpLostPasswordForm can be submitted.');

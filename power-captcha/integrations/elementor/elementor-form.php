@@ -3,22 +3,19 @@
 defined('POWER_CAPTCHA_PATH') || exit;
 
 if(powercaptcha()->is_enabled(powercaptcha()::ELEMENTOR_FORM_INTEGRATION)) {
-    // register field javascript
-    wp_register_script(
-        'power-captcha-elementor-field-js', 
-        plugin_dir_url( __FILE__ )  . 'public/power-captcha-field.js',  
-        [ 'elementor-frontend', 'jquery' ], 
-        '1.0', 
-        true 
-    );
 
-    wp_add_inline_script(
-        'power-captcha-elementor-field-js', 
-        'const ELEMENTOR_POWER_CAPTCHA_API_KEY = "'.powercaptcha()->get_api_key(powercaptcha()::ELEMENTOR_FORM_INTEGRATION).'";' .
-        'const ELEMENTOR_POWER_CAPTCHA_ENDPOINT_URL = "'.powercaptcha()->get_token_request_url().'";' .
-        'const ELEMENTOR_POWER_CAPTCHA_CLIENT_UID = "'.powercaptcha()->get_client_uid().'";',
-        'before' );
-    
+    add_action('wp_enqueue_scripts', function() {
+        // register field javascript (field javascript is loaded in power-captcha-field.php)
+        wp_register_script(
+            'power-captcha-elementor-field-js', 
+            plugin_dir_url( __FILE__ )  . 'public/power-captcha-field.js',  
+            [ 'elementor-frontend', 'jquery' ], 
+            '1.0', 
+            true 
+        );
+    });
+
+
     // add field to elementor
     add_action( 'elementor_pro/forms/fields/register', 'powercaptcha_elementor_form_integration_register_field' );
 }

@@ -23,6 +23,9 @@ function powercaptcha_woocommerce_checkout_integration_javascript() {
 ?>
 <script type="text/javascript">
     (function($){
+
+        powerCaptchaWp.prefetchFrontendDetails('woocommerce_checkout');
+
         // based on https://stackoverflow.com/a/68699215
         let wcCheckoutForm, tokenField, captchaInstance;
 
@@ -44,22 +47,23 @@ function powercaptcha_woocommerce_checkout_integration_javascript() {
                     userName = userNameField.val();
                 }
                 
-                // requesting token
-                captchaInstance.check({
-                    apiKey: '<?php echo powercaptcha()->get_api_key(powercaptcha()::WOOCOMMERCE_CHECKOUT_INTEGRATION); ?>',
-                    backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>',
-                    clientUid: '<?php echo powercaptcha()->get_client_uid(); ?>',
-                    user: userName,
-                    callback: ''
-                }, 
-                function(token) {
-                    console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
-                    tokenField.val(token);
+                powerCaptchaWp.withFrontendDetails('woocomerce_checkout', function(details) {
+                    // requesting token
+                    captchaInstance.check({
+                        apiKey: details.apiKey,
+                        backendUrl: details.backendUrl,
+                        clientUid: details.clientUid,
+                        user: userName,
+                        callback: ''
+                    }, 
+                    function(token) {
+                        console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
+                        tokenField.val(token);
 
-                    console.debug('resubmitting wcCheckoutForm form.');
-                    wcCheckoutForm.trigger('submit');
+                        console.debug('resubmitting wcCheckoutForm form.');
+                        wcCheckoutForm.trigger('submit');
+                    });
                 });
-
                 return false; // stop woocommerce form submit
             } else {
                 console.debug('pc-token already set. no token has to be requested. wcCheckoutForm can be submitted.');

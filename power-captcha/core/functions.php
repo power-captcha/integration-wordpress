@@ -155,19 +155,34 @@ function powercaptcha_javascript_tags($display = true) {
     }
 }
 
+function powercaptcha_register_scripts() {
+    wp_register_script(powercaptcha()::JAVASCRIPT_WP_HANDLE, POWER_CAPTCHA_URL . 'public/power-captcha-wp.js', array('jquery'));
+    wp_localize_script(powercaptcha()::JAVASCRIPT_WP_HANDLE, 'powercaptcha_settings', array(
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'actionFrontendDetails' => 'power_captcha_frontend_details'
+    ));
 
-function powercaptcha_register_javascript() {
-    wp_register_script(powercaptcha()::JAVASCRIPT_HANDLE, powercaptcha()->get_javascript_url());
+    wp_register_script(powercaptcha()::JAVASCRIPT_HANDLE, powercaptcha()->get_javascript_url(), array(powercaptcha()::JAVASCRIPT_WP_HANDLE));
 }
-add_action( 'wp_enqueue_scripts', 'powercaptcha_register_javascript' );
+add_action( 'wp_enqueue_scripts', 'powercaptcha_register_scripts' );
+// note: The 'wp_enqueue_scripts' hook is not executed on wordpress login, registration and lost-password pages.
+//       Instead, we use the 'login_enqueue_scripts' hook, which is executed on all login and registration related screens.
+add_action( 'login_enqueue_scripts', 'powercaptcha_register_scripts' );
 
-function powercaptcha_enqueue_javascript() {
-    if(!powercaptcha()->is_configured()) {
-        return;
-    }
-    wp_enqueue_script(powercaptcha()::JAVASCRIPT_HANDLE);
-}
 
-function powercaptcha_enqueue_jquery() {
-    wp_enqueue_script('jquery');
+function powercaptcha_enqueue_scripts() {
+    wp_enqueue_script(powercaptcha()::JAVASCRIPT_WP_HANDLE);
 }
+add_action( 'wp_enqueue_scripts', 'powercaptcha_enqueue_scripts' );
+// note: The 'wp_enqueue_scripts' hook is not executed on wordpress login, registration and lost-password pages.
+//       Instead, we use the 'login_enqueue_scripts' hook, which is executed on all login and registration related screens.
+add_action( 'login_enqueue_scripts', 'powercaptcha_enqueue_scripts' );
+
+function power_captcha_ajax_frontend_details_callback() {
+    $integration = isset($_GET['integration']) ? sanitize_text_field($_GET['integration']) : null;
+    wp_send_json(
+        powercaptcha()->get_frontend_details($integration)
+    );
+}
+add_action('wp_ajax_power_captcha_frontend_details', 'power_captcha_ajax_frontend_details_callback');
+add_action('wp_ajax_nopriv_power_captcha_frontend_details', 'power_captcha_ajax_frontend_details_callback');

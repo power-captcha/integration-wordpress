@@ -23,6 +23,9 @@ function powercaptcha_woocommerce_lost_password_integration_javascript() {
 ?>
 <script type="text/javascript">
     (function (window, document) {
+
+        powerCaptchaWp.prefetchFrontendDetails('wordpress_lost_password');
+
         document.querySelectorAll('form.woocommerce-ResetPassword').forEach((wcLostPasswordForm) => {
             // generate id for each form since woocommerce does not provide an element id
             const wcLostPassowrdFormId = 'wc-' + Math.random().toString(16).slice(2);
@@ -47,20 +50,22 @@ function powercaptcha_woocommerce_lost_password_integration_javascript() {
                     console.debug('userNameField val', userNameField.value);
                     const userName = userNameField.value;
 
-                    // requesting token
-                    captchaInstance.check({
-                        apiKey: '<?php echo powercaptcha()->get_api_key(powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION); ?>',
-                        backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>',
-                        clientUid: '<?php echo powercaptcha()->get_client_uid(); ?>',
-                        user: userName,
-                        callback: ''
-                    }, 
-                    function(token) {
-                        console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
-                        tokenField.value = token;
-                        console.debug('resubmitting wcLostPasswordForm form.');
+                    powerCaptchaWp.withFrontendDetails('wordpress_lost_password', function(details) {
+                        // requesting token
+                        captchaInstance.check({
+                            apiKey: details.apiKey,
+                            backendUrl: details.backendUrl,
+                            clientUid: details.clientUid,
+                            user: userName,
+                            callback: ''
+                        }, 
+                        function(token) {
+                            console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
+                            tokenField.value = token;
+                            console.debug('resubmitting wcLostPasswordForm form.');
 
-                        wcLostPasswordForm.submit();
+                            wcLostPasswordForm.submit();
+                        });
                     });
                 } else {
                     console.debug('pc-token already set. no token has to be requested. wcLostPasswordForm can be submitted.');

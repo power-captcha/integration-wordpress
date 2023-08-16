@@ -24,6 +24,9 @@ function powercaptcha_wpforms_integration_javascript( ) {
 jQuery(function($){
     // based on https://causier.co.uk/2021/02/04/hooking-into-wpforms-ajax-submission-workflow-for-custom-event-handling/
 
+    // prefetch details
+    powerCaptchaWp.prefetchFrontendDetails('wpforms');
+
     // for each form
     $('form.wpforms-form').each(function () {
         const wpform = $(this);
@@ -71,20 +74,24 @@ jQuery(function($){
                     }
                 }
 
-                captchaInstance.check({
-                    apiKey: '<?php echo powercaptcha()->get_api_key(powercaptcha()::WPFORMS_INTEGRATION); ?>',
-                    backendUrl: '<?php echo powercaptcha()->get_token_request_url() ; ?>', 
-                    clientUid: '<?php echo powercaptcha()->get_client_uid(); ?>',
-                    user: userName,
-                    callback: ''
-                }, 
-                function(token) {
-                    console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
-                    tokenField.val(token);
-                    console.debug('resubmitting form.');
-                    wpform.submit(); // TODO jquery
-                    //$('#wpforms-form-9').submit();
+                powerCaptchaWp.withFrontendDetails('wpforms', function(details) {
+                    // requesting token
+                    captchaInstance.check({
+                        apiKey: details.apiKey,
+                        backendUrl: details.backendUrl, 
+                        clientUid: details.clientUid,
+                        user: userName,
+                        callback: ''
+                    }, 
+                    function(token) {
+                        console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
+                        tokenField.val(token);
+                        console.debug('resubmitting form.');
+                        wpform.submit(); // TODO jquery
+                        //$('#wpforms-form-9').submit();
+                    });
                 });
+                
             } else {
                 console.debug('token already exists. no captcha has to be shown. form can be submitted.');
             }
