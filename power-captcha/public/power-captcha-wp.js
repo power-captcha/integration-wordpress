@@ -3,16 +3,16 @@ const powerCaptchaWp = (function($, settings) {
     const frontendDetailPromises = {};
 
     function fetchFrontendDetails(integration) {
-        if(frontendDetailPromises[integration] !== undefined) {
-            return frontendDetailPromises[integration];
+        if(frontendDetailPromises[integration] === undefined) {
+            frontendDetailPromises[integration] = $.ajax({
+                url: settings.ajaxurl,
+                method: 'GET',
+                data: { action: settings.actionFrontendDetails, integration: integration },
+                dataType: 'json'
+            });
         }
-
-        frontendDetailPromises[integration] = $.ajax({
-            url: settings.ajaxurl,
-            method: 'GET',
-            data: { action: settings.actionFrontendDetails, integration: integration },
-            dataType: 'json'
-        });
+        
+        return frontendDetailPromises[integration];
     }
     
     return {
