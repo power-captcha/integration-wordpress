@@ -37,7 +37,7 @@ function powercaptcha_woocommerce_lost_password_integration_javascript() {
             wcLostPasswordForm.appendChild(tokenField);
 
             // create instance for the register form
-            const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wcLostPassowrdFormId});
+            const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wcLostPassowrdFormId, lang: powerCaptchaWp.getLang()});
 
             wcLostPasswordForm.addEventListener('submit', event => {
                 console.debug('submitEvent for wcLostPasswordForm', '#'+wcLostPassowrdFormId);

@@ -44,7 +44,7 @@ function powercaptcha_woocommerce_register_integration_javascript() {
             wcRegisterForm.appendChild(loginField);
 
             // create instance for the register form
-            const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wcRegisterFormId});
+            const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wcRegisterFormId, lang: powerCaptchaWp.getLang()});
 
             wcRegisterForm.addEventListener('submit', event => {
                 console.debug('submitEvent for wcRegisterForm', '#'+wcRegisterFormId);

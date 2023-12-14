@@ -159,7 +159,8 @@ function powercaptcha_register_scripts() {
     wp_register_script(powercaptcha()::JAVASCRIPT_WP_HANDLE, POWER_CAPTCHA_URL . 'public/power-captcha-wp.js', array('jquery'));
     wp_localize_script(powercaptcha()::JAVASCRIPT_WP_HANDLE, 'powercaptcha_settings', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
-        'actionFrontendDetails' => 'power_captcha_frontend_details'
+        'actionFrontendDetails' => 'power_captcha_frontend_details',
+        'wp_locale' => get_locale()
     ));
 
     wp_register_script(powercaptcha()::JAVASCRIPT_HANDLE, powercaptcha()->get_javascript_url(), array(powercaptcha()::JAVASCRIPT_WP_HANDLE));

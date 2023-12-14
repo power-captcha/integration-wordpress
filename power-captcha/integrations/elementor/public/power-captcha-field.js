@@ -62,7 +62,7 @@
             elementorForm.append(tokenField);
 
             // create instance for the elementor form
-            const captchaInstance = window.uiiCaptcha.captcha({idSuffix: elementorFormId});
+            const captchaInstance = window.uiiCaptcha.captcha({idSuffix: elementorFormId, lang: powerCaptchaWp.getLang()});
 
             // Save Submit Events to be called later then Disable Them
             var submitEvents = $.map( events.submit, event => event.handler );

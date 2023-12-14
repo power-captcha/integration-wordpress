@@ -42,7 +42,7 @@ function powercaptcha_woocommerce_login_integration_javascript() {
             wcLoginForm.appendChild(loginField);
 
             // create instance for the login form
-            const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wcLoginFormId});
+            const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wcLoginFormId, lang: powerCaptchaWp.getLang()});
 
             wcLoginForm.addEventListener('submit', event => {
                 console.debug('submitEvent for wcLoginForm', '#'+wcLoginFormId);

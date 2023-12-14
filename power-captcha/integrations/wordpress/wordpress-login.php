@@ -32,7 +32,7 @@ jQuery(function($){
         wpLoginForm.append('<input type="hidden" name="pc-token" value =""/>');
         
         // create instance for the login form
-        const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wpLoginFormId});
+        const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wpLoginFormId, lang: powerCaptchaWp.getLang()});
 
         // register submit listener
         wpLoginForm.on('submit', function (event) {

@@ -1,5 +1,6 @@
 const powerCaptchaWp = (function($, settings) {
     // private access
+    const lang = settings.wp_locale || undefined;
     const frontendDetailPromises = {};
 
     function fetchFrontendDetails(integration) {
@@ -25,6 +26,10 @@ const powerCaptchaWp = (function($, settings) {
             fetchFrontendDetails(integration).done(function(details) {
                 callbackFn(details);
             });
+        },
+
+        getLang: function() {
+            return lang;
         }
     };
 

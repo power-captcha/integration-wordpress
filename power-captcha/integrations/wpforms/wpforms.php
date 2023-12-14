@@ -36,7 +36,7 @@ jQuery(function($){
         wpform.append('<input type="hidden" name="pc-token" value =""/>');
 
         // create instance for the wpfrom
-        const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wpformId});
+        const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wpformId, lang: powerCaptchaWp.getLang()});
 
         // register before submit listener
         wpform.on('wpformsBeforeFormSubmit', function(event) {

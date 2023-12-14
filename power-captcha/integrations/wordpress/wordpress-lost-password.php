@@ -32,7 +32,7 @@ jQuery(function($){
         wpLostPasswordForm.append('<input type="hidden" name="pc-token" value =""/>');
         
         // create instance for the lost password form
-        const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wpLostPasswordFormId});
+        const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wpLostPasswordFormId, lang: powerCaptchaWp.getLang()});
 
         // register submit listener
         wpLostPasswordForm.on('submit', function (event) {

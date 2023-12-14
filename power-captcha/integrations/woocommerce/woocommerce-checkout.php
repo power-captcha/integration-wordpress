@@ -82,7 +82,7 @@ function powercaptcha_woocommerce_checkout_integration_javascript() {
             tokenField = wcCheckoutForm.find('input[name="pc-token"]').eq(0);
 
             // create instance for the form
-            captchaInstance = window.uiiCaptcha.captcha({idSuffix: wcCheckoutFormId});
+            captchaInstance = window.uiiCaptcha.captcha({idSuffix: wcCheckoutFormId, lang: powerCaptchaWp.getLang()});
 
             $( document.body ).on( 'checkout_error' , function () {
                 // reset token field after error
