@@ -59,6 +59,11 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 			]
 		);
 		echo '<input ' . $form->get_render_attribute_string( 'input' . $item_index ) . '>';
+		echo '<div class="pc-widget"></div>'; 
+		// echo '<div data-pc-sitekey="' . powercaptcha()->get_api_key(powercaptcha()::ELEMENTOR_FORM_INTEGRATION) . '"'
+		// 	 .' data-pc-user-selector="#form-field-'.$item[self::FIELD_CONTROL_PC_USERNAME_ID].'"'
+		// 	 .' data-pc-endpoint="'.powercaptcha()->get_token_request_url().'"'
+		// 	 .'></div>'; // TODO -> Möglich, aber Submit-Problem
 	}
 
 	/**
