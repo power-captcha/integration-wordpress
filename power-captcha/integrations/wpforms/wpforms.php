@@ -3,6 +3,9 @@
 defined('POWER_CAPTCHA_PATH') || exit;
 
 if (powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
+    // add widget div
+    add_action( 'wpforms_display_submit_before', 'powercaptcha_wpforms_verification_add_widget', 10, 1 );
+
     // integration js
     add_action( 'wpforms_wp_footer_end', 'powercaptcha_wpforms_integration_javascript', 10, 0 );
 
@@ -32,83 +35,64 @@ jQuery(function($){
         const wpform = $(this);
         const wpformId = wpform.attr('id');
 
-        // append hidden input for token
-        wpform.append('<input type="hidden" name="pc-token" value =""/>');
-
-        // create instance for the wpfrom
-        const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wpformId, lang: powerCaptchaWp.getLang()});
-
-        // register before submit listener
-        wpform.on('wpformsBeforeFormSubmit', function(event) {
-            console.debug('beforeSubmitEvent for wpform #'+wpformId);
-
-            const tokenField = wpform.find('input[name="pc-token"]').eq(0);
-            if(tokenField.length === 0) {
-                console.warn('No pc-token field found in wpform #'+wpformId+' before submit.');
-                return; // exit
-            }
-
-            if(tokenField.val() === "") {
-                console.debug('pc-token field empty. preventing form submit and requesting token.');
-                event.preventDefault();
-
-                let userName = '';
-                const fieldContainer = wpform.find('[class*="pc-user-"]').eq(0);
-                if(fieldContainer.length === 0) {
-                    console.debug('no container found with pc-user-* class in wpform #'+wpformId);
-                } else {
-                    var fieldPosition = fieldContainer.attr('class').match(/pc-user-([0-9]+)/)[1];
-                    const userNameField = fieldContainer.find('input').eq(fieldPosition);
-                    if(userNameField.length === 0) {
-                        console.debug('no pc-user field found with index '+fieldPosition+' in container #'+fieldContainer.attr('id')+' of wpform #'+wpformId);
-                    } else {
-                        userName = userNameField.val();
-                        console.debug('userName val: '+userNameField.val());
-
-                        const pcUserName = wpform.find('input[name="pc-username"]').eq(0);
-                        if(pcUserName === 0) {
-                            console.warn('no pc-username field found in wpform #'+wpformId);
-                        } else {
-                            pcUserName.val(userName);
-                        }
-                    }
-                }
-
-                powerCaptchaWp.withFrontendDetails('wpforms', function(details) {
-                    // requesting token
-                    captchaInstance.check({
-                        apiKey: details.apiKey,
-                        backendUrl: details.backendUrl, 
-                        clientUid: details.clientUid,
-                        user: userName,
-                        callback: ''
-                    }, 
-                    function(token) {
-                        console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
-                        tokenField.val(token);
-                        console.debug('resubmitting form.');
-                        wpform.submit(); // TODO jquery
-                        //$('#wpforms-form-9').submit();
-                    });
-                });
-                
+        let usernameField = undefined;
+        // find check if there is a username field and find it
+        const fieldContainer = wpform.find('[class*="pc-user-"]').eq(0);
+        if(fieldContainer.length === 0) {
+            console.debug('no container found with pc-user-* class in wpform #'+wpformId);
+            usernameField = undefined;
+        } else {
+            const fieldPosition = fieldContainer.attr('class').match(/pc-user-([0-9]+)/)[1];
+            usernameField = fieldContainer.find('input').eq(fieldPosition);
+            if(usernameField.length === 0) {
+                console.warn(`username field not found with index ${fieldPosition} in container #${fieldContainer.attr('id')} of wpform #${wpformId}`);
+                usernameField = undefined;
             } else {
-                console.debug('token already exists. no captcha has to be shown. form can be submitted.');
+                usernameField = usernameField[0];
             }
-        });
+        }
 
+
+        powerCaptchaWp.withFrontendDetails('wpforms', function(details) {
+            console.log('details: ', details);
+            // create instance for the wpfrom
+            const pc = PowerCaptcha.init({
+                idSuffix: wpformId, 
+                apiKey: details.apiKey,
+                backendUrl: details.backendUrl, 
+                widgetTarget: wpform.find('.pc-widget-target')[0],//document.querySelector('.my-widget'), // widgetElement (div)
+                
+                userInputField: usernameField[0], //document.querySelector('#fname'),
+                
+                // unique client id (e.g. hashed client ip address)
+                clientUid: details.clientUid,
+                lang: powerCaptchaWp.getLang(),
+
+                invisibleMode: false, // TODO make invisibleMode configurable 
+                debug: true // TODO turn off debug or make debug configurable 
+            });
+
+            // TODO prevent sumbit if captcha is not valid: seems that wpForms ignores browser invalid marking.
+
+            // clear captcha after ajax submit failed
+            wpform.on('wpformsAjaxSubmitFailed wpformsAjaxSubmitActionRequired wpformsAjaxSubmitError', function (event) {
+                pc.reset();
+            });
+        });
 
         // add after submit failed listners
         wpform.on('wpformsAjaxSubmitFailed wpformsAjaxSubmitActionRequired wpformsAjaxSubmitError', function (event) {
+            console.log('wpforms submit failed', event);
+
             // clear token field after submit failed
-            const wpform = $(this);
+            /* const wpform = $(this);
             console.debug('clearing token field after submit failed');
             const tokenField = wpform.find('input[name="pc-token"]').eq(0);
             if(tokenField.length === 0) {
                 console.warn('no token field found in wpform #'+wpform.attr('id')+' after submit failed.');
                 return; // exit
             }
-            tokenField.val("");
+            tokenField.val("");*/
         });
     });
 
@@ -116,6 +100,23 @@ jQuery(function($){
  </script>
 <?php
 }
+
+/**
+ * Action that fires immediately before the submit button element is displayed.
+ * 
+ * @link  https://wpforms.com/developers/wpforms_display_submit_before/
+ * 
+ * @param array  $form_data Form data and settings
+ */
+ 
+function powercaptcha_wpforms_verification_add_widget( $form_data ) {
+    if (!powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
+        return;
+    }
+    // TODO control margin via css variables
+    echo '<div class="pc-widget-target wpforms-field" style="margin-top: -10px; margin-bottom: 10px"></div>';
+}
+
 
 /**
  * Action that fires during form entry processing after initial field validation.
