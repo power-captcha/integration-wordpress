@@ -3,102 +3,25 @@
 defined('POWER_CAPTCHA_PATH') || exit;
 
 if (powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
+
+
+    add_action('wpforms_frontend_js', 'powercaptcha_wpforms_enqueue_js', 10, 1);
+
     // add widget div
     add_action( 'wpforms_display_submit_before', 'powercaptcha_wpforms_verification_add_widget', 10, 1 );
-
-    // integration js
-    add_action( 'wpforms_wp_footer_end', 'powercaptcha_wpforms_integration_javascript', 10, 0 );
 
     // token verification
     add_action( 'wpforms_process', 'powercaptcha_wpforms_verification', 10, 3 );
 }
 
-function powercaptcha_wpforms_integration_javascript( ) {
-    if (!powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
-        return;
-    }
-
-    powercaptcha_javascript_tags();
-?>
-
-
-<script type="text/javascript">
-// TODO move this script to javascript file. note parameters like apiKey and secretKey must be injected
-jQuery(function($){
-    // based on https://causier.co.uk/2021/02/04/hooking-into-wpforms-ajax-submission-workflow-for-custom-event-handling/
-
-    // prefetch details
-    powerCaptchaWp.prefetchFrontendDetails('wpforms');
-
-    // for each form
-    $('form.wpforms-form').each(function () {
-        const wpform = $(this);
-        const wpformId = wpform.attr('id');
-
-        let usernameField = undefined;
-        // find check if there is a username field and find it
-        const fieldContainer = wpform.find('[class*="pc-user-"]').eq(0);
-        if(fieldContainer.length === 0) {
-            console.debug('no container found with pc-user-* class in wpform #'+wpformId);
-            usernameField = undefined;
-        } else {
-            const fieldPosition = fieldContainer.attr('class').match(/pc-user-([0-9]+)/)[1];
-            usernameField = fieldContainer.find('input').eq(fieldPosition);
-            if(usernameField.length === 0) {
-                console.warn(`username field not found with index ${fieldPosition} in container #${fieldContainer.attr('id')} of wpform #${wpformId}`);
-                usernameField = undefined;
-            } else {
-                usernameField = usernameField[0];
-            }
-        }
-
-
-        powerCaptchaWp.withFrontendDetails('wpforms', function(details) {
-            console.log('details: ', details);
-            // create instance for the wpfrom
-            const pc = PowerCaptcha.init({
-                idSuffix: wpformId, 
-                apiKey: details.apiKey,
-                backendUrl: details.backendUrl, 
-                widgetTarget: wpform.find('.pc-widget-target')[0],//document.querySelector('.my-widget'), // widgetElement (div)
-                
-                userInputField: usernameField[0], //document.querySelector('#fname'),
-                
-                // unique client id (e.g. hashed client ip address)
-                clientUid: details.clientUid,
-                lang: powerCaptchaWp.getLang(),
-
-                invisibleMode: false, // TODO make invisibleMode configurable 
-                debug: true // TODO turn off debug or make debug configurable 
-            });
-
-            // TODO prevent sumbit if captcha is not valid: seems that wpForms ignores browser invalid marking.
-
-            // clear captcha after ajax submit failed
-            wpform.on('wpformsAjaxSubmitFailed wpformsAjaxSubmitActionRequired wpformsAjaxSubmitError', function (event) {
-                pc.reset();
-            });
-        });
-
-        // add after submit failed listners
-        wpform.on('wpformsAjaxSubmitFailed wpformsAjaxSubmitActionRequired wpformsAjaxSubmitError', function (event) {
-            console.log('wpforms submit failed', event);
-
-            // clear token field after submit failed
-            /* const wpform = $(this);
-            console.debug('clearing token field after submit failed');
-            const tokenField = wpform.find('input[name="pc-token"]').eq(0);
-            if(tokenField.length === 0) {
-                console.warn('no token field found in wpform #'+wpform.attr('id')+' after submit failed.');
-                return; // exit
-            }
-            tokenField.val("");*/
-        });
-    });
-
-});
- </script>
-<?php
+function powercaptcha_wpforms_enqueue_js($forms) {
+    wp_enqueue_script(
+        'powercaptcha_wpforms_js', 
+        plugin_dir_url( __FILE__ )  . 'public/power-captcha-wpforms.js',  
+        [ 'jquery', powercaptcha()::JAVASCRIPT_HANDLE], 
+        POWER_CAPTCHA_PLUGIN_VERSION, 
+        false 
+    );
 }
 
 /**
