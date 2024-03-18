@@ -8,7 +8,7 @@ namespace PowerCaptcha_WP {
     final class PowerCaptcha {
     
         const API_VERSION = 'v1';
-        const JS_VERSION = '1.2.0';
+        const JS_VERSION = '1.2.0-beta';
 
         // Singelton instance
         private static $instance;
