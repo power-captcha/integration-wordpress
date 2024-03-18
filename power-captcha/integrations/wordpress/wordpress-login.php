@@ -40,12 +40,12 @@ function powercaptcha_wordpress_login_integration_javascript() {
             apiKey: details.apiKey,
             backendUrl: details.backendUrl,
             clientUid: details.clientUid,
-            widgetTarget: wpLoginForm.find('.power-captcha-widget')[0],
+            widgetTarget: wpLoginForm.find('.pc-widget-target')[0],
 
             userInputField: wpLoginForm.find('#user_login')[0],
 
             idSuffix: wpLoginFormId,
-            lang: details.lang,
+            lang: powerCaptchaWp.getLang(),
 
             invisibleMode: false, // TODO make invisibleMode configurable 
             debug: true // TODO turn off debug or make debug configurable 
@@ -60,7 +60,7 @@ function powercaptcha_wordpress_login_integration_javascript() {
 function powercaptcha_wordpress_login_add_widget_div() { 
     // TODO control margin via css variables
 ?>
-    <div class="power-captcha-widget" style="margin-bottom: 16px"></div>
+    <div class="pc-widget-target" style="margin-bottom: 16px"></div>
 <?php
 }
 
