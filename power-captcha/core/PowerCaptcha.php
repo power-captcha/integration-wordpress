@@ -8,7 +8,7 @@ namespace PowerCaptcha_WP {
     final class PowerCaptcha {
     
         const API_VERSION = 'v1';
-        const JS_VERSION = '1.2.0-beta';
+        const JS_VERSION = '1.2.1';
 
         // Singelton instance
         private static $instance;
@@ -220,7 +220,7 @@ namespace PowerCaptcha_WP {
             return hash('sha256', $_SERVER['REMOTE_ADDR']);
         }
 
-        public function get_frontend_details($integration) {
+        public function get_integration_settings($integration) {
             return [
                 'apiKey' => $this->get_api_key($integration),
                 'backendUrl' => $this->get_token_request_url(),

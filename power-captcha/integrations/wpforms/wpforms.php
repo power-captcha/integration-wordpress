@@ -4,21 +4,18 @@ defined('POWER_CAPTCHA_PATH') || exit;
 
 if (powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
 
+    add_action('wpforms_frontend_js', 'powercaptcha_wpforms_enqueue_script', 10, 1);
 
-    add_action('wpforms_frontend_js', 'powercaptcha_wpforms_enqueue_js', 10, 1);
+    add_action( 'wpforms_display_submit_before', 'powercaptcha_wpforms_widget', 10, 1 );
 
-    // add widget div
-    add_action( 'wpforms_display_submit_before', 'powercaptcha_wpforms_verification_add_widget', 10, 1 );
-
-    // token verification
     add_action( 'wpforms_process', 'powercaptcha_wpforms_verification', 10, 3 );
 }
 
-function powercaptcha_wpforms_enqueue_js($forms) {
+function powercaptcha_wpforms_enqueue_script($forms) {
     wp_enqueue_script(
-        'powercaptcha_wpforms_js', 
+        'powercaptcha-wpforms', 
         plugin_dir_url( __FILE__ )  . 'public/power-captcha-wpforms.js',  
-        [ 'jquery', powercaptcha()::JAVASCRIPT_HANDLE], 
+        ['powercaptcha-wp'], 
         POWER_CAPTCHA_PLUGIN_VERSION, 
         false 
     );
@@ -32,12 +29,12 @@ function powercaptcha_wpforms_enqueue_js($forms) {
  * @param array  $form_data Form data and settings
  */
  
-function powercaptcha_wpforms_verification_add_widget( $form_data ) {
+function powercaptcha_wpforms_widget( $form_data ) {
     if (!powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
         return;
     }
-    // TODO control margin via css variables
-    echo '<div class="pc-widget-target wpforms-field" style="margin-top: -10px; margin-bottom: 10px"></div>';
+
+    echo powercaptcha_widget_html(powercaptcha()::WPFORMS_INTEGRATION, '', '', 'wpforms-field', 'margin-top: -10px; margin-bottom: 10px');
 }
 
 

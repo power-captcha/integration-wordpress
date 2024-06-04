@@ -3,65 +3,21 @@
 defined('POWER_CAPTCHA_PATH') || exit;
 
 if(powercaptcha()->is_enabled(powercaptcha()::WORDPRESS_LOGIN_INTEGRATION)) {
-
     
-    // add div for the widget after password field
-    add_action('login_form', 'powercaptcha_wordpress_login_add_widget_div', 10, 2);
+    add_action('login_form', 'powercaptcha_wordpress_login_widget', 10, 0);
 
-
-    // integration js
-    add_action('login_form', 'powercaptcha_wordpress_login_integration_javascript');
-
-    // token verification
     add_filter('authenticate', 'powercaptcha_wordpress_login_verification', 20, 3);
 }
 
 
-function powercaptcha_wordpress_login_integration_javascript() {
+function powercaptcha_wordpress_login_widget() {
     if (!powercaptcha()->is_enabled(powercaptcha()::WORDPRESS_LOGIN_INTEGRATION)) {
         return;
     }
 
-    powercaptcha_javascript_tags();
-?>
-<script type="text/javascript">
-// TODO move this script to javascript file. note parameters like apiKey and secretKey must be injected
-(function($){
-    
-    powerCaptchaWp.prefetchFrontendDetails('wordpress_login');
+    echo powercaptcha_widget_html(powercaptcha()::WOOCOMMERCE_LOGIN_INTEGRATION, '#username', false, '', 'margin-bottom: 16px');
 
-    const wpLoginForm = $('#loginform');
-    const wpLoginFormId = wpLoginForm.attr('id');
-        
-    const usernameField = wpLoginForm.find('#user_login');
-
-    powerCaptchaWp.withFrontendDetails('wordpress_login', function(details) {
-        const captchaInstance = PowerCaptcha.init({
-            apiKey: details.apiKey,
-            backendUrl: details.backendUrl,
-            clientUid: details.clientUid,
-            widgetTarget: wpLoginForm.find('.pc-widget-target')[0],
-
-            userInputField: wpLoginForm.find('#user_login')[0],
-
-            idSuffix: wpLoginFormId,
-            lang: powerCaptchaWp.getLang(),
-
-            invisibleMode: false, // TODO make invisibleMode configurable 
-            debug: true // TODO turn off debug or make debug configurable 
-        });
-    });
-    
-})(jQuery);
-</script>
-<?php
-}
-
-function powercaptcha_wordpress_login_add_widget_div() { 
-    // TODO control margin via css variables
-?>
-    <div class="pc-widget-target" style="margin-bottom: 16px"></div>
-<?php
+    powercaptcha_enqueue_widget_script();
 }
 
 function powercaptcha_wordpress_login_verification(null|WP_User|WP_Error $user, string $username, string $password) {

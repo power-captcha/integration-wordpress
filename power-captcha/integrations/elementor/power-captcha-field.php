@@ -17,7 +17,7 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 
 	const FIELD_CONTROL_PC_USERNAME_ID = 'field_pc_username_id';
 
-    public $depended_scripts = [ \PowerCaptcha_WP\PowerCaptcha::JAVASCRIPT_HANDLE, 'power-captcha-elementor-field-js' ];
+    public $depended_scripts = [ 'powercaptcha-wp' ];
 
 	/**
 	 * Get field type.
@@ -50,20 +50,15 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
             return;
         }
 
-		$form->add_render_attribute(
-			'input' . $item_index,
-			[
-                'class' => 'elementor-form-power-captcha',
-                'style' => 'display: none;', // visually hidden
-				'data-pc-username-id' => $item[self::FIELD_CONTROL_PC_USERNAME_ID]
-			]
+		$userInputFieldSelector = '';
+		if(!empty($item[self::FIELD_CONTROL_PC_USERNAME_ID])) {
+			$userInputFieldSelector = '#form-field-'.$item[self::FIELD_CONTROL_PC_USERNAME_ID];
+		}
+
+		echo powercaptcha_widget_html(
+			powercaptcha()::ELEMENTOR_FORM_INTEGRATION, 
+			$userInputFieldSelector
 		);
-		echo '<input ' . $form->get_render_attribute_string( 'input' . $item_index ) . '>';
-		echo '<div class="pc-widget-target"></div>'; 
-		// echo '<div data-pc-sitekey="' . powercaptcha()->get_api_key(powercaptcha()::ELEMENTOR_FORM_INTEGRATION) . '"'
-		// 	 .' data-pc-user-selector="#form-field-'.$item[self::FIELD_CONTROL_PC_USERNAME_ID].'"'
-		// 	 .' data-pc-endpoint="'.powercaptcha()->get_token_request_url().'"'
-		// 	 .'></div>'; // TODO -> Möglich, aber Submit-Problem
 	}
 
 	/**
@@ -217,22 +212,26 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 	 * @return void
 	 */
 	public function content_template_script() {
-		// TODO display widget in elementor editor!
 		?>
 		<script>
 		jQuery( document ).ready( () => {
-
 			elementor.hooks.addFilter(
 				'elementor_pro/forms/content_template/field/<?php echo $this->get_type(); ?>',
 				function ( inputField, item, i ) {
-					const fieldId    = `form_field_${i}`;
-					// just display that the form is protected by power captcha
-					return `<div id="${fieldId}" style="position: relative; padding: 10px; width: 100%; color: #000; background-color: #fff; text-align: center;">
-						<?php _e('This form is protected by POWER CAPTCHA. This message is visible only in Elementor editor.', 'power-captcha') ?>
-					</div>`;
+					
+					// delay PowerCaptchaWp.setup() method, so the div is already rendered
+					setTimeout(function () {
+						if(window.PowerCaptchaWp) {
+							window.PowerCaptchaWp.destroyAll();
+							window.PowerCaptchaWp.setup();
+						} else {
+							console.warn('PowerCaptchaWp not found');
+						}
+					}, 1000);
+
+					return `<?php echo powercaptcha_widget_html(powercaptcha()::ELEMENTOR_FORM_INTEGRATION) ?>`;
 				}, 10, 3
 			);
-
 		});
 		</script>
 		<?php
