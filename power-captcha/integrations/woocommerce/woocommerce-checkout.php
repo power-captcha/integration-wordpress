@@ -3,138 +3,24 @@
 defined('POWER_CAPTCHA_PATH') || exit;
 
 if(powercaptcha()->is_enabled(powercaptcha()::WOOCOMMERCE_CHECKOUT_INTEGRATION)) {
-    // integration js
-    add_action('woocommerce_after_checkout_billing_form', 'powercaptcha_woocommerce_checkout_integration_javascript');
+    
+    add_action('woocommerce_after_checkout_billing_form', 'powercaptcha_woocommerce_checkout_widget', 10, 0);
 
-    // token verification
     add_action('woocommerce_after_checkout_validation', 'powercaptcha_woocommerce_checkout_verification', 10, 2);
     // Note: We can't use the woocommerce_before_checkout_validation hook because it is executed multiple times during the checkout.
     // Another hook alternative could be woocommerce_checkout_process, but woocommerce_after_checkout_validation seems to be the most suitable, 
     // as it is executed after the address and payment method have been validated.
 }
 
-
-function powercaptcha_woocommerce_checkout_integration_javascript() {
+function powercaptcha_woocommerce_checkout_widget() {
     if (!powercaptcha()->is_enabled(powercaptcha()::WOOCOMMERCE_CHECKOUT_INTEGRATION)) {
         return;
     }
 
-    powercaptcha_javascript_tags();
-?>
-<script type="text/javascript">
-    (function($){
+    echo powercaptcha_widget_html(powercaptcha()::WOOCOMMERCE_CHECKOUT_INTEGRATION, '#billing_email', true, 'form-row');
 
-        powerCaptchaWp.prefetchFrontendDetails('woocommerce_checkout');
-
-        // based on https://stackoverflow.com/a/68699215
-        let wcCheckoutForm, tokenField, captchaInstance;
-
-        function canSubmit( e ) {
-            if(tokenField.length === 0) {
-                console.warn('no pc-token field found in wcCheckoutForm.');
-                return true; // exit
-            }
-
-            if(tokenField.val() === "") {
-                console.debug('pc-token field empty. preventing form submit and requesting token.');
-
-                const userNameField = wcCheckoutForm.find('#billing_email').eq(0);
-                let userName = '';
-                if(userNameField.length === 0) {
-                    console.warn('no billing_email field found in wcCheckoutForm.');
-                } else {
-                    console.debug('userNameField val', userNameField.val());
-                    userName = userNameField.val();
-                }
-                
-                powerCaptchaWp.withFrontendDetails('woocomerce_checkout', function(details) {
-                    // requesting token
-                    captchaInstance.check({
-                        apiKey: details.apiKey,
-                        backendUrl: details.backendUrl,
-                        clientUid: details.clientUid,
-                        user: userName,
-                        callback: ''
-                    }, 
-                    function(token) {
-                        console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
-                        tokenField.val(token);
-
-                        console.debug('resubmitting wcCheckoutForm form.');
-                        wcCheckoutForm.trigger('submit');
-                    });
-                });
-                return false; // stop woocommerce form submit
-            } else {
-                console.debug('pc-token already set. no token has to be requested. wcCheckoutForm can be submitted.');
-                return true; // proceed woocommerce from submit
-            }
-        }
-
-        function initPowerCaptcha() {
-            wcCheckoutForm = $( 'form.checkout' );
-            // generate id for each form since woocommerce does not provide an element id
-            const wcCheckoutFormId = 'wc-' + Math.random().toString(16).slice(2);
-
-            // append hidden input for token
-            wcCheckoutForm.append('<input type="hidden" name="pc-token" value =""/>');
-
-            tokenField = wcCheckoutForm.find('input[name="pc-token"]').eq(0);
-
-            // create instance for the form
-            captchaInstance = window.uiiCaptcha.captcha({idSuffix: wcCheckoutFormId, lang: powerCaptchaWp.getLang()});
-
-            $( document.body ).on( 'checkout_error' , function () {
-                // reset token field after error
-                tokenField.val('');
-                console.debug('token field was resetted.');
-                return true;
-            } );
-        }
-
-        function init() {
-            // Use set timeout to ensure our $( document ).ready call fires after WC
-            setTimeout( () => {
-
-                initPowerCaptcha();
-
-                // Get JQuery bound events
-                var events = $._data( wcCheckoutForm[0], 'events' );
-                if( !events || !events.submit ) {
-                    return;
-                }
-
-                // Save Submit Events to be called later then Disable Them
-                var submitEvents = $.map( events.submit, event => event.handler );
-                $( submitEvents ).each( event => wcCheckoutForm.off( 'submit', null, event ) );  
-
-                // Now Setup our Event Relay
-                wcCheckoutForm.on( 'submit', function( e )  {
-                    e.preventDefault();
-                    var self = this;
-
-                    if( !canSubmit( ...arguments ) ) {
-                        return;
-                    }
-
-                    // Trigger Event
-                    $( submitEvents ).each( ( i, event ) => {
-                        var doEvent = event.bind( self );
-                        doEvent( ...arguments );
-                    } );
-
-                } );
-
-            }, 10);
-        }
-
-        $( document ).ready( () => init() );
-    })( jQuery );
-
-</script>
-<?php
+    powercaptcha_enqueue_widget_script();
 }
-
 
 function powercaptcha_woocommerce_checkout_verification(array $fields, WP_Error $errors) {
     if (!powercaptcha()->is_enabled(powercaptcha()::WOOCOMMERCE_CHECKOUT_INTEGRATION)) {

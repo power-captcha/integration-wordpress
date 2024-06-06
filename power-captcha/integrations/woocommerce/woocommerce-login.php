@@ -3,83 +3,20 @@
 defined('POWER_CAPTCHA_PATH') || exit;
 
 if(powercaptcha()->is_enabled(powercaptcha()::WOOCOMMERCE_LOGIN_INTEGRATION)) {
-    // integration js
-    add_action('woocommerce_login_form_end', 'powercaptcha_woocommerce_login_integration_javascript');
+    
+    add_action('woocommerce_login_form', 'powercaptcha_woocommerce_login_widget');
 
-    // token verification
     add_filter('woocommerce_process_login_errors', 'powercaptcha_woocommerce_login_verification', 20, 3);
 }
 
-
-function powercaptcha_woocommerce_login_integration_javascript() {
+function powercaptcha_woocommerce_login_widget() {
     if (!powercaptcha()->is_enabled(powercaptcha()::WOOCOMMERCE_LOGIN_INTEGRATION)) {
         return;
     }
 
-    powercaptcha_javascript_tags();
-?>
-<script type="text/javascript">
-    (function (window, document) {
+    echo powercaptcha_widget_html(powercaptcha()::WOOCOMMERCE_LOGIN_INTEGRATION, '#username', true, 'form-row');
 
-        powerCaptchaWp.prefetchFrontendDetails('woocommerce_login');
-
-        document.querySelectorAll('form.woocommerce-form-login').forEach((wcLoginForm) => {
-            // generate id for each form since woocommerce does not provide an element id
-            const wcLoginFormId = 'wc-' + Math.random().toString(16).slice(2);
-
-            // append hidden input for token
-            const tokenField = document.createElement("input");
-            tokenField.name = "pc-token";
-            tokenField.type = "hidden";
-            wcLoginForm.appendChild(tokenField);
-
-            // workaround for WooCommerce: adding login field 
-            //      (the login field is in the submit button of the WC login form and is somehow not submitted when submitting via form.submit()).
-            const loginField = document.createElement("input");
-            loginField.name = "login";
-            loginField.value = "Anmelden";
-            loginField.type = "hidden";
-            wcLoginForm.appendChild(loginField);
-
-            // create instance for the login form
-            const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wcLoginFormId, lang: powerCaptchaWp.getLang()});
-
-            wcLoginForm.addEventListener('submit', event => {
-                console.debug('submitEvent for wcLoginForm', '#'+wcLoginFormId);
-
-                if(tokenField.value === "") {
-                    console.debug('pc-token field empty. preventing form submit and requesting token.');
-                    event.preventDefault();
-
-                    const userNameField = wcLoginForm.querySelector('#username');
-                    console.debug('userNameField val', userNameField.value);
-                    const userName = userNameField.value;
-
-                    powerCaptchaWp.withFrontendDetails('woocommerce_login', function(details) {
-                        // requesting token
-                        captchaInstance.check({
-                            apiKey: details.apiKey,
-                            backendUrl: details.backendUrl,
-                            clientUid: details.clientUid,
-                            user: userName,
-                            callback: ''
-                        }, 
-                        function(token) {
-                            console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
-                            tokenField.value = token;
-                            console.debug('resubmitting wcLoginForm form.');
-
-                            wcLoginForm.submit();
-                        });
-                    });
-                } else {
-                    console.debug('pc-token already set. no token has to be requested. wcLoginForm can be submitted.');
-                }
-            });
-        });
-    }(window, document));
-</script>
-<?php
+    powercaptcha_enqueue_widget_script();
 }
 
 function powercaptcha_woocommerce_login_verification(WP_Error $validation_error, string $user_login, string $user_passsword) {

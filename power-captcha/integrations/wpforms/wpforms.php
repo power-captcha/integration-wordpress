@@ -3,119 +3,40 @@
 defined('POWER_CAPTCHA_PATH') || exit;
 
 if (powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
-    // integration js
-    add_action( 'wpforms_wp_footer_end', 'powercaptcha_wpforms_integration_javascript', 10, 0 );
 
-    // token verification
+    add_action('wpforms_frontend_js', 'powercaptcha_wpforms_enqueue_script', 10, 1);
+
+    add_action( 'wpforms_display_submit_before', 'powercaptcha_wpforms_widget', 10, 1 );
+
     add_action( 'wpforms_process', 'powercaptcha_wpforms_verification', 10, 3 );
 }
 
-function powercaptcha_wpforms_integration_javascript( ) {
+function powercaptcha_wpforms_enqueue_script($forms) {
+    wp_enqueue_script(
+        'powercaptcha-wpforms', 
+        plugin_dir_url( __FILE__ )  . 'public/power-captcha-wpforms.js',  
+        ['jquery', 'powercaptcha-wp'], 
+        POWER_CAPTCHA_PLUGIN_VERSION, 
+        false 
+    );
+}
+
+/**
+ * Action that fires immediately before the submit button element is displayed.
+ * 
+ * @link  https://wpforms.com/developers/wpforms_display_submit_before/
+ * 
+ * @param array  $form_data Form data and settings
+ */
+ 
+function powercaptcha_wpforms_widget( $form_data ) {
     if (!powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
         return;
     }
 
-    powercaptcha_javascript_tags();
-?>
-
-
-<script type="text/javascript">
-// TODO move this script to javascript file. note parameters like apiKey and secretKey must be injected
-jQuery(function($){
-    // based on https://causier.co.uk/2021/02/04/hooking-into-wpforms-ajax-submission-workflow-for-custom-event-handling/
-
-    // prefetch details
-    powerCaptchaWp.prefetchFrontendDetails('wpforms');
-
-    // for each form
-    $('form.wpforms-form').each(function () {
-        const wpform = $(this);
-        const wpformId = wpform.attr('id');
-
-        // append hidden input for token
-        wpform.append('<input type="hidden" name="pc-token" value =""/>');
-
-        // create instance for the wpfrom
-        const captchaInstance = window.uiiCaptcha.captcha({idSuffix: wpformId, lang: powerCaptchaWp.getLang()});
-
-        // register before submit listener
-        wpform.on('wpformsBeforeFormSubmit', function(event) {
-            console.debug('beforeSubmitEvent for wpform #'+wpformId);
-
-            const tokenField = wpform.find('input[name="pc-token"]').eq(0);
-            if(tokenField.length === 0) {
-                console.warn('No pc-token field found in wpform #'+wpformId+' before submit.');
-                return; // exit
-            }
-
-            if(tokenField.val() === "") {
-                console.debug('pc-token field empty. preventing form submit and requesting token.');
-                event.preventDefault();
-
-                let userName = '';
-                const fieldContainer = wpform.find('[class*="pc-user-"]').eq(0);
-                if(fieldContainer.length === 0) {
-                    console.debug('no container found with pc-user-* class in wpform #'+wpformId);
-                } else {
-                    var fieldPosition = fieldContainer.attr('class').match(/pc-user-([0-9]+)/)[1];
-                    const userNameField = fieldContainer.find('input').eq(fieldPosition);
-                    if(userNameField.length === 0) {
-                        console.debug('no pc-user field found with index '+fieldPosition+' in container #'+fieldContainer.attr('id')+' of wpform #'+wpformId);
-                    } else {
-                        userName = userNameField.val();
-                        console.debug('userName val: '+userNameField.val());
-
-                        const pcUserName = wpform.find('input[name="pc-username"]').eq(0);
-                        if(pcUserName === 0) {
-                            console.warn('no pc-username field found in wpform #'+wpformId);
-                        } else {
-                            pcUserName.val(userName);
-                        }
-                    }
-                }
-
-                powerCaptchaWp.withFrontendDetails('wpforms', function(details) {
-                    // requesting token
-                    captchaInstance.check({
-                        apiKey: details.apiKey,
-                        backendUrl: details.backendUrl, 
-                        clientUid: details.clientUid,
-                        user: userName,
-                        callback: ''
-                    }, 
-                    function(token) {
-                        console.debug('captcha solved with token: '+token+'. setting value to tokenField.');
-                        tokenField.val(token);
-                        console.debug('resubmitting form.');
-                        wpform.submit(); // TODO jquery
-                        //$('#wpforms-form-9').submit();
-                    });
-                });
-                
-            } else {
-                console.debug('token already exists. no captcha has to be shown. form can be submitted.');
-            }
-        });
-
-
-        // add after submit failed listners
-        wpform.on('wpformsAjaxSubmitFailed wpformsAjaxSubmitActionRequired wpformsAjaxSubmitError', function (event) {
-            // clear token field after submit failed
-            const wpform = $(this);
-            console.debug('clearing token field after submit failed');
-            const tokenField = wpform.find('input[name="pc-token"]').eq(0);
-            if(tokenField.length === 0) {
-                console.warn('no token field found in wpform #'+wpform.attr('id')+' after submit failed.');
-                return; // exit
-            }
-            tokenField.val("");
-        });
-    });
-
-});
- </script>
-<?php
+    echo powercaptcha_widget_html(powercaptcha()::WPFORMS_INTEGRATION, '', '', 'wpforms-field', 'margin-top: -10px; margin-bottom: 10px');
 }
+
 
 /**
  * Action that fires during form entry processing after initial field validation.

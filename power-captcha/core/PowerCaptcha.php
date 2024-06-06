@@ -8,7 +8,7 @@ namespace PowerCaptcha_WP {
     final class PowerCaptcha {
     
         const API_VERSION = 'v1';
-        const JS_VERSION = '1.1.0';
+        const JS_VERSION = '1.2.2';
 
         // Singelton instance
         private static $instance;
@@ -18,8 +18,6 @@ namespace PowerCaptcha_WP {
 
         const DEFAULT_ENDPOINT_BASE_URL = 'https://api.power-captcha.com';
         const DEFAULT_JAVASCRIPT_URL = 'https://cdn.power-captcha.com';
-        const JAVASCRIPT_HANDLE = 'powercaptcha-js';
-        const JAVASCRIPT_WP_HANDLE = 'powercaptcha-wp-js';
 
         const ERROR_CODE_NO_TOKEN_FIELD = 'powercaptcha_error_no_token_field';
         const ERROR_CODE_MISSING_TOKEN = 'powercaptcha_error_missing_token';
@@ -36,6 +34,10 @@ namespace PowerCaptcha_WP {
         const SETTING_SECTION_GENERAL = 'powercaptcha_setting_section_general';
         const SETTING_NAME_API_KEY = 'powercaptcha_api_key';
         const SETTING_NAME_SECRET_KEY = 'powercaptcha_secret_key';
+
+        // captcha settings
+        const SETTING_SECTION_CAPTCHA = 'powercaptcha_setting_section_captcha';
+        const SETTING_NAME_CHECK_MODE = 'powercaptcha_check_mode';
         
         // integration settings
         const SETTING_SECTION_INTEGRATION = 'powercaptcha_setting_section_integration';
@@ -185,6 +187,10 @@ namespace PowerCaptcha_WP {
             }
             return $secret_key;
         }
+
+        public function get_check_mode() : string {
+            return get_option(self::SETTING_NAME_CHECK_MODE, 'auto');
+        }
     
         private function get_endpoint_base_url() {
             $endpoint_base_url = self::get_setting_text(self::SETTING_NAME_ENDPOINT_BASE_URL);  
@@ -220,7 +226,7 @@ namespace PowerCaptcha_WP {
             return hash('sha256', $_SERVER['REMOTE_ADDR']);
         }
 
-        public function get_frontend_details($integration) {
+        public function get_integration_settings($integration) {
             return [
                 'apiKey' => $this->get_api_key($integration),
                 'backendUrl' => $this->get_token_request_url(),

@@ -57,6 +57,12 @@ defined('POWER_CAPTCHA_PATH') || exit;
                 powercaptcha()::SETTING_NAME_SECRET_KEY
             );
 
+            // captcha settings
+            register_setting(
+                powercaptcha()::SETTING_GROUP_NAME,
+                powercaptcha()::SETTING_NAME_CHECK_MODE,
+            );
+
             // enterprise settings
             register_setting(
                 powercaptcha()::SETTING_GROUP_NAME,
@@ -71,21 +77,67 @@ defined('POWER_CAPTCHA_PATH') || exit;
             // https://developer.wordpress.org/reference/functions/add_settings_section/
 
             // general settings section
-            add_settings_section( powercaptcha()::SETTING_SECTION_GENERAL, __('General settings', 'power-captcha'), 'powercaptcha_setting_section_general_description', powercaptcha()::SETTING_PAGE );
-        
+            add_settings_section( 
+                powercaptcha()::SETTING_SECTION_GENERAL, 
+                __('General settings', 'power-captcha'), 
+                function() { // description
+                    echo '<p>'.sprintf(
+                        /** translators %s: url to power captcha API Key management page */
+                        __('The API Key and the Secret Key must be provided for the POWER CAPTCHA to activate. Both keys can be found in the <a href="%s" target="_blank">API Key Management</a>.', 'power-captcha'),
+                        powercaptcha()::API_KEY_MANAGEMENT_URL
+                        ).'</p>';
+                    echo '<p>'.sprintf(
+                        /** translators %s: url to power captcha Shop page */
+                        __('If you don\'t have an API Key yet, you can create one for free on <a href="%s" target="_blank">POWER CAPTCHA</a>.', 'power-captcha'),
+                        powercaptcha()::SHOP_URL
+                    ).'</p>';
+                },
+                powercaptcha()::SETTING_PAGE 
+            );
+            
+            // captcha settings sections
+            add_settings_section(
+                powercaptcha()::SETTING_SECTION_CAPTCHA,
+                __('Captcha settings', 'power-captcha'), 
+                function () { // description
+                    echo '<p>'.
+                        __('You can configure the functionality and display of the captcha or widget here.', 'power-captcha')
+                    .'</p>';
+                },
+                powercaptcha()::SETTING_PAGE 
+            );
+            
             // integration setting section
-            add_settings_section( powercaptcha()::SETTING_SECTION_INTEGRATION, __('Integration settings', 'power-captcha'), 'powercaptcha_setting_section_integration_description', powercaptcha()::SETTING_PAGE );
+            add_settings_section(
+                powercaptcha()::SETTING_SECTION_INTEGRATION, 
+                __('Integration settings', 'power-captcha'), 
+                function () { // description
+                    echo '<p>'.
+                    __('Specify which sections or plugins should be protected with POWER CAPTCHA.', 'power-captcha')
+                    .'</p>';
+                },
+                powercaptcha()::SETTING_PAGE
+            );
     
             // enterprise settings section
-            add_settings_section( powercaptcha()::SETTING_SECTION_ON_PREMISES, __('On-premises settings', 'power-captcha'), 'powercaptcha_setting_section_on_premises_description', powercaptcha()::SETTING_PAGE );
+            add_settings_section(
+                powercaptcha()::SETTING_SECTION_ON_PREMISES,
+                __('On-premises settings', 'power-captcha'),
+                function () { // description
+                    echo '<p>'.
+                    __('These settings are only relevant if you are running a self-hosted POWER CAPTCHA instance. Otherwise you can leave these settings empty.', 'power-captcha')
+                    .'</p>';
+                },
+                powercaptcha()::SETTING_PAGE
+            );
 
             // https://developer.wordpress.org/reference/functions/add_settings_field/
 
             // general settings fields
-            powercaptcha_setting_add_default_field(
+            powercatpcha_setting_add_text_field(
                 powercaptcha()::SETTING_SECTION_GENERAL,
                 powercaptcha()::SETTING_NAME_API_KEY,
-                'text',
+                '',
                 __('API Key', 'power-captcha'),
                 sprintf(
                     /** translators %s: url to power captcha API Key management page */
@@ -94,16 +146,39 @@ defined('POWER_CAPTCHA_PATH') || exit;
                 )
             );
 
-            powercaptcha_setting_add_default_field(
+            powercatpcha_setting_add_text_field(
                 powercaptcha()::SETTING_SECTION_GENERAL,
                 powercaptcha()::SETTING_NAME_SECRET_KEY,
-                'text',
+                '',
                 __('Secret Key', 'power-captcha'),
                 sprintf(
                     /** translators %s: url to power captcha API Key management page */
                     __('Enter your POWER CAPTCHA Secret Key. You can find your Secret Key in the <a href="%s" target="_blank">API Key Management</a>.', 'power-captcha'),
                     powercaptcha()::API_KEY_MANAGEMENT_URL
                 )
+            );
+
+            // widget settings fields 
+            powercatpcha_setting_add_radio_field(
+                powercaptcha()::SETTING_SECTION_CAPTCHA,
+                powercaptcha()::SETTING_NAME_CHECK_MODE,
+                [
+                    'auto' => [
+                        'label' => __('Automatic', 'power-captcha'),
+                        'description' => __('The widget is always displayed and the security check is started automatically as soon as the form is filled in or after the corresponding field (e.g. user name or email address) has been filled in.  A click on the widget is only necessary if it is required to solve a captcha.', 'power-captcha'),
+                    ],
+                    'hidden' => [
+                        'label' => __('Hidden', 'power-captcha'),
+                        'description' => __('The widget is not displayed initially and the security check is started automatically as soon as the form is filled in or after the corresponding field (e.g. user name or e-mail address) has been filled in. The widget is only displayed if it is required to solve a captcha.', 'power-captcha'),
+                    ],
+                    'manu' => [
+                        'label' => __('Manual', 'power-captcha'),
+                        'description' => __('The widget is always displayed and the security check is only started when the widget is clicked. The click is always required.', 'power-captcha'),
+                    ]
+                ],
+                'auto',
+                __('Check mode', 'power-captcha'),
+                ''
             );
 
             // integration settings fields
@@ -119,104 +194,143 @@ defined('POWER_CAPTCHA_PATH') || exit;
                 );
 
                 // add setting field
-                powercaptcha_setting_add_default_field(
+                powercatpcha_setting_add_checkbox_field(
                     powercaptcha()::SETTING_SECTION_INTEGRATION,
                     $integration->get_setting_name(),
-                    'checkbox',
+                    0,
                     $integration->get_setting_title(),
                     $integration->get_setting_description() 
                 );
             }
 
             // on premise settings fields
-            powercaptcha_setting_add_default_field( //TODO we have to validate if the endpoint url is valid, before saving the setting!
+            powercatpcha_setting_add_text_field( //TODO we have to validate if the endpoint url is valid, before saving the setting!
                 powercaptcha()::SETTING_SECTION_ON_PREMISES,
                 powercaptcha()::SETTING_NAME_ENDPOINT_BASE_URL,
-                'text',
+                '',
                 __('Endpoint base URL (optional)', 'power-captcha'),
-                __('Only required if you have an on-premises version with self-hosted POWER CAPTCHA endpoint.')
+                __('Only required if you have an on-premises version with self-hosted POWER CAPTCHA endpoint.', 'power-captcha')
             );
 
-            powercaptcha_setting_add_default_field( //TODO we have to validate if the endpoint url is valid, before saving the setting!
+            powercatpcha_setting_add_text_field( //TODO we have to validate if the endpoint url is valid, before saving the setting!
                 powercaptcha()::SETTING_SECTION_ON_PREMISES,
                 powercaptcha()::SETTING_NAME_JAVASCRIPT_BASE_URL,
-                'text',
+                '',
                 __('JavaScript base URL (optional)', 'power-captcha'),
                 __('Only required if you have an on-premises version with self-hosted POWER CAPTCHA JavaScript.', 'power-captcha')
             );
         }
-        
-        function powercaptcha_setting_section_general_description() {
-            echo '<p>'.
-                sprintf(
-                    /** translators %s: url to power captcha API Key management page */
-                    __('The API Key and the Secret Key must be provided for the POWER CAPTCHA to activate. Both keys can be found in the <a href="%s" target="_blank">API Key Management</a>.', 'power-captcha'),
-                    powercaptcha()::API_KEY_MANAGEMENT_URL
-                ).'</p>';
-            echo '<p>'.sprintf(
-                /** translators %s: url to power captcha Shop page */
-                __('If you don\'t have an API Key yet, you can create one for free on <a href="%s" target="_blank">POWER CAPTCHA</a>.', 'power-captcha'),
-                powercaptcha()::SHOP_URL
-            ).'</p>';
-        }
 
-        function powercaptcha_setting_section_integration_description() {
-            echo '<p>'.
-                __('Specify which sections or plugins should be protected with POWER CAPTCHA.', 'power-captcha')
-                .'</p>';
-        }
-        
-        function powercaptcha_setting_section_on_premises_description() {
-            echo '<p>'.
-                __('These settings are only relevant if you are running a self-hosted POWER CAPTCHA instance. Otherwise you can leave these settings empty.', 'power-captcha')
-            .'</p>';
-        }
 
         // util
-        function powercaptcha_setting_add_default_field($section, $setting_name, $type, $title, $description) {
+        function powercatpcha_setting_add_text_field($section, $setting_name, $default_value, $title, $description) {
             $field_id = $setting_name."_field";
+            $setting_value = get_option($setting_name, $default_value);
+
             $render_args = [
-                'setting_name' => $setting_name,
-                'field_type' => $type,
-                'field_label' => $description,
+                'name' => $setting_name,
+                'value' => $setting_value,
+                'id' => $field_id,
+                'label' => $description,
             ];
 
             add_settings_field(
                 $field_id, 
                 $title, 
-                'powercatpcha_setting_render_default_field', // callback function to display the field
+                'powercatpcha_setting_render_text_field', // callback function to display the field
                 powercaptcha()::SETTING_PAGE, 
                 $section,
                 $render_args
             );
         }
 
-        function powercatpcha_setting_render_default_field(array $render_args) {
-            $setting_name = $render_args['setting_name'];
+        function powercatpcha_setting_add_checkbox_field($section, $setting_name, $default_value, $title, $description) {
+            $field_id = $setting_name."_field";
+            $setting_value = get_option($setting_name, $default_value);
             
-            $field_name = $setting_name;
-            $field_id = $setting_name.'_id'; 
-            $field_type = $render_args['field_type'];
-            $field_label = $render_args['field_label'];
+            $render_args = [
+                'name' => $setting_name,
+                'value' => $setting_value,
+                'id' => $field_id,
+                'label' => $description,
+            ];
 
-            // get the setting value
-            $setting_value = get_option($setting_name);
-            $field_value = isset($setting_value) ? esc_attr($setting_value) : '';
-
-            if ($field_type == 'checkbox'):
-                $checked = checked(1, $setting_value, false);
-?>
-    <input type="checkbox" id="<?php echo $field_id; ?>" name="<?php echo $field_name; ?>" value="1" <?php echo $checked ?>>
-    <label for="<?php echo $field_id; ?>" class="description"><?php echo $field_label ?></label>
-<?php
-            elseif ($field_type == 'text'):
-?>
-    <input type="text" id="<?php echo $field_id; ?>" name="<?php echo $field_name; ?>" value="<?php echo $field_value; ?>" autocomplete="none"> 
-    <label for="<?php echo $field_id; ?>" class="description"><?php echo $field_label ?></label>
-<?php
-            endif;
-            // TODO more field types!
+            add_settings_field(
+                $field_id, 
+                $title, 
+                'powercatpcha_setting_render_checkbox_field', // callback function to display the field
+                powercaptcha()::SETTING_PAGE, 
+                $section,
+                $render_args
+            );
         }
 
+        function powercatpcha_setting_add_radio_field($section, $setting_name, $options, $default_value, $title, $description) {
+            $field_id = $setting_name."_field";
+            $setting_value = get_option($setting_name, $default_value);
+            
+            $render_args = [
+                'name' => $setting_name,
+                'value' => $setting_value,
+                'id' => $field_id,
+                'label' => $description,
+                'options' => $options
+            ];
+
+            add_settings_field(
+                $field_id, 
+                $title, 
+                'powercaptcha_setting_render_radio_field', // callback function to display the field
+                powercaptcha()::SETTING_PAGE, 
+                $section,
+                $render_args
+            );
+        }
+
+        function powercatpcha_setting_render_text_field(array $render_args) {
+?>
+    <input type="text" id="<?php echo esc_attr($render_args['id']); ?>" name="<?php echo esc_attr($render_args['name']); ?>" value="<?php echo esc_attr($render_args['value']); ?>" autocomplete="none"> 
+    <label for="<?php echo esc_attr($render_args['id']); ?>" class="description"><?php echo $render_args['label']; ?></label>
+<?php
     }
+
+    function powercatpcha_setting_render_checkbox_field(array $render_args) {
+        $checked = checked(1, $render_args['value'], false);
+        ?>
+            <input type="checkbox" 
+                id="<?php echo esc_attr($render_args['id']); ?>" 
+                name="<?php echo esc_attr($render_args['name']); ?>" value="1" <?php echo $checked ?>>
+            <label for="<?php echo esc_attr($render_args['id']); ?>" class="description">
+                <?php echo $render_args['label']; ?>
+            </label>
+<?php
+    }
+
+    function powercaptcha_setting_render_radio_field(array $render_args) {
+?>
+        <fieldset>
+        <legend><?php echo esc_html($render_args['label']) ?></legend>
+<?php
+                foreach($render_args['options'] as $option_value => $option_details):
+                    $option_checked = checked($option_value, $render_args['value'], false);
+?>
+            <div>
+                <label for="<?php echo esc_attr($option_value); ?>">
+                    <input type="radio" 
+                        id="<?php echo esc_attr($option_value); ?>" 
+                        name="<?php echo esc_attr($render_args['name']) ?>" 
+                        value="<?php echo esc_attr($option_value) ?>" 
+                        <?php echo $option_checked ?>
+                    >
+                    <strong><?php echo $option_details['label']; ?></strong>
+                    <p class="description">
+                        <?php echo $option_details['description']; ?>
+                    </p>
+                </label>
+            </div>
+                <?php endforeach; ?>
+    </fieldset>
+<?php
+    }
+}
 ?>
