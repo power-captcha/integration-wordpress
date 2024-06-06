@@ -136,6 +136,7 @@ function powercaptcha_user_error_message($error_code = NULL, $prefix = true) {
 
 function powercaptcha_widget_html($integration, $userInputField = '', $userInputFieldRequried = false, $cssClass = '', $style = '') {
     $widgetHtml =   '<div';
+    $widgetHtml .=      ' data-pc-wp-check-mode="'.powercaptcha()->get_check_mode().'"';
     $widgetHtml .=      ' data-pc-wp-integration="'.esc_attr($integration).'"';
     if(!empty($userInputField)) {
         $widgetHtml .=  ' data-pc-wp-user-field="'.esc_attr($userInputField).'"';

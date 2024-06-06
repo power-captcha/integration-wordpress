@@ -41,7 +41,8 @@ window.PowerCaptchaWp = (function($, conf) {
             idSuffix: captchaSettings.idSuffix || undefined, 
             formElement: captchaSettings.formElement || undefined,
             widgetContainer: captchaSettings.widgetContainer,
-            userInputField: captchaSettings.userInputField || undefined
+            userInputField: captchaSettings.userInputField || undefined,
+            checkMode: captchaSettings.checkMode || undefined,
         });
     }
 
@@ -57,6 +58,7 @@ window.PowerCaptchaWp = (function($, conf) {
         document.querySelectorAll("form div[data-pc-wp-integration]").forEach((widgetContainer) => {
             
             const integration = widgetContainer.dataset['pcWpIntegration'];
+            const checkMode = widgetContainer.dataset['pcWpCheckMode'];
             const formElement = widgetContainer.closest('form');
             if(!formElement) {
                 console.error('[POWER CAPTCHA WordPress] Widget container is not within a form element.', '/ Integration: ', integration, ' / Container: ', widgetContainer); // TODO better exception
@@ -83,7 +85,8 @@ window.PowerCaptchaWp = (function($, conf) {
                 integration: integration,
                 // idSuffix: captchaSettings.idSuffix || undefined, 
                 widgetContainer: widgetContainer,
-                userInputField: userInputField
+                userInputField: userInputField,
+                checkMode: checkMode
             });
             autoCaptchas.push(captcha);
             console.log('collected captcha: ', captcha);
