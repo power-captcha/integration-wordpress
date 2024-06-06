@@ -134,7 +134,7 @@ defined('POWER_CAPTCHA_PATH') || exit;
             // https://developer.wordpress.org/reference/functions/add_settings_field/
 
             // general settings fields
-            powercatpcha_setting_add_text_field(
+            powercaptcha_setting_add_text_field(
                 powercaptcha()::SETTING_SECTION_GENERAL,
                 powercaptcha()::SETTING_NAME_API_KEY,
                 '',
@@ -146,7 +146,7 @@ defined('POWER_CAPTCHA_PATH') || exit;
                 )
             );
 
-            powercatpcha_setting_add_text_field(
+            powercaptcha_setting_add_text_field(
                 powercaptcha()::SETTING_SECTION_GENERAL,
                 powercaptcha()::SETTING_NAME_SECRET_KEY,
                 '',
@@ -159,7 +159,7 @@ defined('POWER_CAPTCHA_PATH') || exit;
             );
 
             // widget settings fields 
-            powercatpcha_setting_add_radio_field(
+            powercaptcha_setting_add_radio_field(
                 powercaptcha()::SETTING_SECTION_CAPTCHA,
                 powercaptcha()::SETTING_NAME_CHECK_MODE,
                 [
@@ -194,7 +194,7 @@ defined('POWER_CAPTCHA_PATH') || exit;
                 );
 
                 // add setting field
-                powercatpcha_setting_add_checkbox_field(
+                powercaptcha_setting_add_checkbox_field(
                     powercaptcha()::SETTING_SECTION_INTEGRATION,
                     $integration->get_setting_name(),
                     0,
@@ -204,7 +204,7 @@ defined('POWER_CAPTCHA_PATH') || exit;
             }
 
             // on premise settings fields
-            powercatpcha_setting_add_text_field( //TODO we have to validate if the endpoint url is valid, before saving the setting!
+            powercaptcha_setting_add_text_field( //TODO we have to validate if the endpoint url is valid, before saving the setting!
                 powercaptcha()::SETTING_SECTION_ON_PREMISES,
                 powercaptcha()::SETTING_NAME_ENDPOINT_BASE_URL,
                 '',
@@ -212,7 +212,7 @@ defined('POWER_CAPTCHA_PATH') || exit;
                 __('Only required if you have an on-premises version with self-hosted POWER CAPTCHA endpoint.', 'power-captcha')
             );
 
-            powercatpcha_setting_add_text_field( //TODO we have to validate if the endpoint url is valid, before saving the setting!
+            powercaptcha_setting_add_text_field( //TODO we have to validate if the endpoint url is valid, before saving the setting!
                 powercaptcha()::SETTING_SECTION_ON_PREMISES,
                 powercaptcha()::SETTING_NAME_JAVASCRIPT_BASE_URL,
                 '',
@@ -223,7 +223,7 @@ defined('POWER_CAPTCHA_PATH') || exit;
 
 
         // util
-        function powercatpcha_setting_add_text_field($section, $setting_name, $default_value, $title, $description) {
+        function powercaptcha_setting_add_text_field($section, $setting_name, $default_value, $title, $description) {
             $field_id = $setting_name."_field";
             $setting_value = get_option($setting_name, $default_value);
 
@@ -237,14 +237,14 @@ defined('POWER_CAPTCHA_PATH') || exit;
             add_settings_field(
                 $field_id, 
                 $title, 
-                'powercatpcha_setting_render_text_field', // callback function to display the field
+                'powercaptcha_setting_render_text_field', // callback function to display the field
                 powercaptcha()::SETTING_PAGE, 
                 $section,
                 $render_args
             );
         }
 
-        function powercatpcha_setting_add_checkbox_field($section, $setting_name, $default_value, $title, $description) {
+        function powercaptcha_setting_add_checkbox_field($section, $setting_name, $default_value, $title, $description) {
             $field_id = $setting_name."_field";
             $setting_value = get_option($setting_name, $default_value);
             
@@ -258,14 +258,14 @@ defined('POWER_CAPTCHA_PATH') || exit;
             add_settings_field(
                 $field_id, 
                 $title, 
-                'powercatpcha_setting_render_checkbox_field', // callback function to display the field
+                'powercaptcha_setting_render_checkbox_field', // callback function to display the field
                 powercaptcha()::SETTING_PAGE, 
                 $section,
                 $render_args
             );
         }
 
-        function powercatpcha_setting_add_radio_field($section, $setting_name, $options, $default_value, $title, $description) {
+        function powercaptcha_setting_add_radio_field($section, $setting_name, $options, $default_value, $title, $description) {
             $field_id = $setting_name."_field";
             $setting_value = get_option($setting_name, $default_value);
             
@@ -287,14 +287,14 @@ defined('POWER_CAPTCHA_PATH') || exit;
             );
         }
 
-        function powercatpcha_setting_render_text_field(array $render_args) {
+        function powercaptcha_setting_render_text_field(array $render_args) {
 ?>
     <input type="text" id="<?php echo esc_attr($render_args['id']); ?>" name="<?php echo esc_attr($render_args['name']); ?>" value="<?php echo esc_attr($render_args['value']); ?>" autocomplete="none"> 
     <label for="<?php echo esc_attr($render_args['id']); ?>" class="description"><?php echo $render_args['label']; ?></label>
 <?php
     }
 
-    function powercatpcha_setting_render_checkbox_field(array $render_args) {
+    function powercaptcha_setting_render_checkbox_field(array $render_args) {
         $checked = checked(1, $render_args['value'], false);
         ?>
             <input type="checkbox" 
