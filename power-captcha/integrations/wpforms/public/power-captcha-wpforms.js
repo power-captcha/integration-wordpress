@@ -24,12 +24,13 @@ document.addEventListener('PowerCaptchaReady', (e) => {
         }
     }
 
-    wpform.addEventListener('wpformsBeforeFormSubmit', (event) => {
+
+    jQuery(wpform).on('wpformsBeforeFormSubmit', (event) => {
         // check captcha validity before submit
         return pc.checkValidity();
     });
 
-    wpform.addEventListener('wpformsAjaxSubmitFailed wpformsAjaxSubmitActionRequired wpformsAjaxSubmitError', (event) => {
+    jQuery(wpform).on('wpformsAjaxSubmitFailed wpformsAjaxSubmitActionRequired wpformsAjaxSubmitError', (event) => {
         // clear captcha after ajax submit failed
         pc.reset();
     });

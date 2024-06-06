@@ -15,7 +15,7 @@ function powercaptcha_wpforms_enqueue_script($forms) {
     wp_enqueue_script(
         'powercaptcha-wpforms', 
         plugin_dir_url( __FILE__ )  . 'public/power-captcha-wpforms.js',  
-        ['powercaptcha-wp'], 
+        ['jquery', 'powercaptcha-wp'], 
         POWER_CAPTCHA_PLUGIN_VERSION, 
         false 
     );
