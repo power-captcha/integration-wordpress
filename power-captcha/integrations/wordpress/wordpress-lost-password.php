@@ -17,7 +17,7 @@ function powercaptcha_wordpress_lost_password_widget() {
 
     echo powercaptcha_widget_html(powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION, '#user_login', true, '', 'margin-bottom: 16px');
 
-    powercaptcha_enqueue_widget_script();
+    powercaptcha_javascript();
 }
 
 

@@ -1,4 +1,4 @@
-window.PowerCaptchaWp = (function($, conf) {
+window.PowerCaptchaWp = (function(conf) {
     // private access
     let autoCaptchas = [];
     const wp_locale = conf.wp_locale || undefined;
@@ -7,21 +7,29 @@ window.PowerCaptchaWp = (function($, conf) {
 
     function fetchSettings(integration) {
         if(integrationSettingPromises[integration] === undefined) {
-            integrationSettingPromises[integration] = $.ajax({
-                url: conf.ajaxurl,
-                method: 'GET',
-                data: { action: conf.action_integration_setting, integration: integration },
-                dataType: 'json'
-            });
+            integrationSettingPromises[integration] = 
+                fetch(conf.ajaxurl + '?action=' + conf.action_integration_setting + '&integration=' + integration, 
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('[POWER CAPTCHA WordPress] Could not fetch the integration settings.');
+                    }
+                    return response.json();
+                });
         }
         return integrationSettingPromises[integration];
     }
 
     function internalInit(captchaSettings) {
         if(!window.PowerCaptcha) {
-            throw new Error('POWER CAPTCHA library was not loaded.');
+            throw new Error('[POWER CAPTCHA WordPress] POWER CAPTCHA library was not loaded.');
         }
-        if(true) {
+        if(wp_script_debug) {
             console.debug('[POWER CAPTCHA WordPress] Init ', captchaSettings);
         }
         const integrationSettings = fetchSettings(captchaSettings.integration);
@@ -89,7 +97,9 @@ window.PowerCaptchaWp = (function($, conf) {
                 checkMode: checkMode
             });
             autoCaptchas.push(captcha);
-            console.log('collected captcha: ', captcha);
+            if(wp_script_debug) {
+                console.debug('collected captcha: ', captcha);
+            }
         });
       }
     
@@ -119,7 +129,7 @@ window.PowerCaptchaWp = (function($, conf) {
             internalSetup();
         }
     };
-})(jQuery, powercaptcha_ajax_conf);
+})(powercaptcha_ajax_conf);
 
 
 
