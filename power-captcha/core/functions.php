@@ -149,75 +149,43 @@ function powercaptcha_widget_html($integration, $userInputField = '', $userInput
     $widgetHtml .=  '></div>';
     return $widgetHtml;
 }
-
-$powercaptcha_javascript_injected = false;
-
-function powercaptcha_javascript() {
-    global $powercaptcha_javascript_injected;
-    if(!powercaptcha()->is_configured()) {
-        return;
-    }
-
-    if($powercaptcha_javascript_injected) {
-        return; // already injected
-    }
-
-    // add main js
-    $javascript = '<script src="'. powercaptcha()->get_javascript_url() .'" type="text/javascript"></script>';
-    
-    // custom wp_localize_script javascript for power-captcha-wp.js:
-    $javascript .= '<script type="text/javascript">';
-    $javascript .= 'var powercaptcha_ajax_conf = {';
-    $javascript .= 'ajaxurl: "'.admin_url('admin-ajax.php').'",';
-    $javascript .= 'action_integration_setting: "powercaptcha_ajax_integration_setting",';
-    $javascript .= 'wp_locale: "'.get_locale().'",';
-    $javascript .= 'is_debug: "'.(defined('SCRIPT_DEBUG') && SCRIPT_DEBUG).'"';
-    $javascript .= '};';
-    $javascript .= '</script>';
-    
-    // add power-captcha-wp.js:
-    $javascript .= '<script src="'. POWER_CAPTCHA_URL . 'public/power-captcha-wp.js?' . POWER_CAPTCHA_PLUGIN_VERSION .'" type="text/javascript"></script>';
-   
-    echo $javascript;
-    $powercaptcha_javascript_injected = true;
-}
  
-// function powercaptcha_register_scripts() {
+function powercaptcha_register_scripts() {
 
-//     wp_register_script(
-//         'powercaptcha-library', 
-//         powercaptcha()->get_javascript_url(),
-//         // TODO verison
-//     ); 
+    wp_register_script(
+        'powercaptcha-library', 
+        powercaptcha()->get_javascript_url(),
+        // TODO verison
+    ); 
 
-//     wp_register_script(
-//         'powercaptcha-wp', 
-//         POWER_CAPTCHA_URL . 'public/power-captcha-wp.js', 
-//         array('powercaptcha-library', 'jquery'), 
-//         POWER_CAPTCHA_PLUGIN_VERSION
-//     );
+    wp_register_script(
+        'powercaptcha-wp', 
+        POWER_CAPTCHA_URL . 'public/power-captcha-wp.js', 
+        array('powercaptcha-library', 'jquery'), 
+        POWER_CAPTCHA_PLUGIN_VERSION
+    );
 
-//     wp_localize_script(
-//         'powercaptcha-wp',
-//         'powercaptcha_ajax_conf', 
-//         [
-//             'ajaxurl' => admin_url('admin-ajax.php'),
-//             'action_integration_setting' => 'powercaptcha_ajax_integration_setting',
-//             'wp_locale' => get_locale(),
-//             'is_debug' => (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG)
-//         ]
-//     );
+    wp_localize_script(
+        'powercaptcha-wp',
+        'powercaptcha_ajax_conf', 
+        [
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'action_integration_setting' => 'powercaptcha_ajax_integration_setting',
+            'wp_locale' => get_locale(),
+            'is_debug' => (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG)
+        ]
+    );
 
-// }
-// add_action( 'wp_enqueue_scripts', 'powercaptcha_register_scripts' );
+}
+add_action( 'wp_enqueue_scripts', 'powercaptcha_register_scripts' );
 // note: The 'wp_enqueue_scripts' hook is not executed on wordpress login, registration and lost-password pages.
 //       Instead, we use the 'login_enqueue_scripts' hook, which is executed on all login and registration related screens.
-// add_action( 'login_enqueue_scripts', 'powercaptcha_register_scripts' );
+add_action( 'login_enqueue_scripts', 'powercaptcha_register_scripts' );
 
 
-// function powercaptcha_enqueue_widget_script() {
-//      wp_enqueue_script('powercaptcha-wp');
-// }
+function powercaptcha_enqueue_widget_script() {
+     wp_enqueue_script('powercaptcha-wp');
+}
 // add_action( 'wp_enqueue_scripts', 'powercaptcha_enqueue_widget_script' );
 // // note: The 'wp_enqueue_scripts' hook is not executed on wordpress login, registration and lost-password pages.
 // //       Instead, we use the 'login_enqueue_scripts' hook, which is executed on all login and registration related screens.

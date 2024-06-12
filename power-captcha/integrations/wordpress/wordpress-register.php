@@ -17,7 +17,7 @@ function powercaptcha_wordpress_register_widget() {
 
     echo powercaptcha_widget_html(powercaptcha()::WORDPRESS_REGISTER_INTEGRATION, '#user_email', true, '', 'margin-bottom: 16px');
 
-    powercaptcha_javascript();
+    powercaptcha_enqueue_widget_script();
 }
 
 

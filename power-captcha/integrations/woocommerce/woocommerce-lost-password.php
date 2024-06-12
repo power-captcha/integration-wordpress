@@ -21,5 +21,5 @@ function powercaptcha_woocommerce_lost_password_widget() {
 
     echo powercaptcha_widget_html(powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION, '#user_login', true, 'form-row');
 
-    powercaptcha_javascript();
+    powercaptcha_enqueue_widget_script();
 }

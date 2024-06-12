@@ -17,7 +17,7 @@ function powercaptcha_wordpress_login_widget() {
 
     echo powercaptcha_widget_html(powercaptcha()::WOOCOMMERCE_LOGIN_INTEGRATION, '#username', false, '', 'margin-bottom: 16px');
 
-    powercaptcha_javascript();
+    powercaptcha_enqueue_widget_script();
 }
 
 function powercaptcha_wordpress_login_verification(null|WP_User|WP_Error $user, string $username, string $password) {

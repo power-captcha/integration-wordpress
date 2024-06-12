@@ -19,7 +19,7 @@ function powercaptcha_woocommerce_checkout_widget() {
 
     echo powercaptcha_widget_html(powercaptcha()::WOOCOMMERCE_CHECKOUT_INTEGRATION, '#billing_email', true, 'form-row');
 
-    powercaptcha_javascript();
+    powercaptcha_enqueue_widget_script();
 }
 
 function powercaptcha_woocommerce_checkout_verification(array $fields, WP_Error $errors) {

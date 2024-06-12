@@ -19,7 +19,7 @@ function powercaptcha_woocommerce_register_widget() {
 
     echo powercaptcha_widget_html(powercaptcha()::WOOCOMMERCE_REGISTER_INTEGRATION, '#reg_email', true, 'form-row');
 
-    powercaptcha_javascript();
+    powercaptcha_enqueue_widget_script();
 }
 
 function powercaptcha_woocommerce_register_verification(WP_Error $validation_error, $username, $password, $email) {

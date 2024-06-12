@@ -4,24 +4,21 @@ defined('POWER_CAPTCHA_PATH') || exit;
 
 if (powercaptcha()->is_enabled(powercaptcha()::WPFORMS_INTEGRATION)) {
 
-    add_action('wpforms_wp_footer_end', 'powercaptcha_wpforms_enqueue_script', 10, 0);
+    add_action('wpforms_frontend_js', 'powercaptcha_wpforms_enqueue_script', 10, 1);
 
     add_action( 'wpforms_display_submit_before', 'powercaptcha_wpforms_widget', 10, 1 );
 
     add_action( 'wpforms_process', 'powercaptcha_wpforms_verification', 10, 3 );
 }
 
-function powercaptcha_wpforms_enqueue_script() {
-    powercaptcha_javascript();
-    // addiditonal javascript for wpforms:
-    echo '<script src="'. plugin_dir_url( __FILE__ )  . 'public/power-captcha-wpforms.js' .'" type="text/javascript"></script>';
-    // wp_enqueue_script(
-    //     'powercaptcha-wpforms', 
-    //     plugin_dir_url( __FILE__ )  . 'public/power-captcha-wpforms.js',  
-    //     ['jquery', 'powercaptcha-wp'], 
-    //     POWER_CAPTCHA_PLUGIN_VERSION, 
-    //     false 
-    // );
+function powercaptcha_wpforms_enqueue_script($forms) {
+    wp_enqueue_script(
+        'powercaptcha-wpforms', 
+        plugin_dir_url( __FILE__ )  . 'public/power-captcha-wpforms.js',  
+        ['jquery', 'powercaptcha-wp'], 
+        POWER_CAPTCHA_PLUGIN_VERSION, 
+        false 
+    );
 }
 
 /**
