@@ -25,14 +25,15 @@ document.addEventListener('PowerCaptchaReady', (e) => {
     }
 
 
-    jQuery(wpform).on('wpformsBeforeFormSubmit', (event) => {
-        // check captcha validity before submit
-        return pc.checkValidity();
-    });
+    jQuery(document).ready(function(){
+		jQuery(wpform).on('wpformsBeforeFormSubmit', (event) => {
+			// check captcha validity before submit
+			return pc.checkValidity();
+		});
 
-    jQuery(wpform).on('wpformsAjaxSubmitFailed wpformsAjaxSubmitActionRequired wpformsAjaxSubmitError', (event) => {
-        // clear captcha after ajax submit failed
-        pc.reset();
+		jQuery(wpform).on('wpformsAjaxSubmitFailed wpformsAjaxSubmitActionRequired wpformsAjaxSubmitError', (event) => {
+			// clear captcha after ajax submit failed
+			pc.reset();
+		});
     });
-    
 });

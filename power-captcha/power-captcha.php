@@ -26,6 +26,8 @@ if(file_exists(WP_CONTENT_DIR . '/power-captcha-config.php')) {
 
 require POWER_CAPTCHA_PATH . 'core/functions.php';
 
+require POWER_CAPTCHA_PATH . 'core/third-party-compatibility.php';
+
 // Init integrations
 if(powercaptcha()->is_configured()) {
     foreach(powercaptcha()->get_integrations() as $key => $integration) {
