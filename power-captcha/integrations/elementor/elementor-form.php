@@ -5,6 +5,16 @@ defined('POWER_CAPTCHA_PATH') || exit;
 if(powercaptcha()->is_enabled(powercaptcha()::ELEMENTOR_FORM_INTEGRATION)) {
     
     add_action( 'elementor_pro/forms/fields/register', 'powercaptcha_elementor_form_register_field' );
+
+	// register addditional javascript for elementor forms
+	// note: the javascript is enqueued via the elementor field ($depended_scripts in power-captcha-field.php)
+	wp_register_script(
+        'powercaptcha-elementor', 
+        plugin_dir_url( __FILE__ )  . 'public/power-captcha-elementor.js',  
+        ['jquery', 'powercaptcha-wp'], 
+        POWER_CAPTCHA_PLUGIN_VERSION, 
+        false 
+    );
 }
 
 // source: https://developers.elementor.com/docs/form-fields/simple-example/

@@ -17,7 +17,7 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 
 	const FIELD_CONTROL_PC_USERNAME_ID = 'field_pc_username_id';
 
-    public $depended_scripts = [ 'powercaptcha-wp' ];
+    public $depended_scripts = [ 'powercaptcha-wp', 'powercaptcha-elementor' ];
 
 	/**
 	 * Get field type.
