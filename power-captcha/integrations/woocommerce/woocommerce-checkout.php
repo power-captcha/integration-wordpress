@@ -20,6 +20,15 @@ function powercaptcha_woocommerce_checkout_widget() {
     echo powercaptcha_widget_html(powercaptcha()::WOOCOMMERCE_CHECKOUT_INTEGRATION, '#billing_email', true, 'form-row');
 
     powercaptcha_enqueue_widget_script();
+
+    // enqueue additional javascript for woocommerce checkout
+    wp_enqueue_script(
+        'powercaptcha-woocommerce-checkout', 
+        plugin_dir_url( __FILE__ )  . 'public/power-captcha-woocommerce-checkout.js',  
+        ['jquery', 'powercaptcha-wp'], 
+        POWER_CAPTCHA_PLUGIN_VERSION, 
+        false 
+    );
 }
 
 function powercaptcha_woocommerce_checkout_verification(array $fields, WP_Error $errors) {
