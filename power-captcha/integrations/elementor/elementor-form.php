@@ -4,8 +4,13 @@ defined('POWER_CAPTCHA_PATH') || exit;
 
 if(powercaptcha()->is_enabled(powercaptcha()::ELEMENTOR_FORM_INTEGRATION)) {
     
+
+    add_action( 'wp_enqueue_scripts', 'powercaptcha_elementor_from_register_scripts' );
     add_action( 'elementor_pro/forms/fields/register', 'powercaptcha_elementor_form_register_field' );
 
+}
+
+function powercaptcha_elementor_from_register_scripts() {
 	// register addditional javascript for elementor forms
 	// note: the javascript is enqueued via the elementor field ($depended_scripts in power-captcha-field.php)
 	wp_register_script(
