@@ -1,48 +1,54 @@
 <?php
 
+namespace PowerCaptcha_WP;
+
 defined('POWER_CAPTCHA_PATH') || exit;
 
-if(powercaptcha()->is_enabled(powercaptcha()::WOOCOMMERCE_CHECKOUT_INTEGRATION)) {
-    
-    add_action('woocommerce_after_checkout_billing_form', 'powercaptcha_woocommerce_checkout_widget', 10, 0);
+add_action('powercaptcha_register_integration', function ($powerCaptcha) {
+    $powerCaptcha->register_integration(new Integration_WooCommerce_Checkout());
+});
 
-    add_action('woocommerce_after_checkout_validation', 'powercaptcha_woocommerce_checkout_verification', 10, 2);
-    // Note: We can't use the woocommerce_before_checkout_validation hook because it is executed multiple times during the checkout.
-    // Another hook alternative could be woocommerce_checkout_process, but woocommerce_after_checkout_validation seems to be the most suitable, 
-    // as it is executed after the address and payment method have been validated.
-}
+class Integration_WooCommerce_Checkout extends Integration {
 
-function powercaptcha_woocommerce_checkout_widget() {
-    if (!powercaptcha()->is_enabled(powercaptcha()::WOOCOMMERCE_CHECKOUT_INTEGRATION)) {
-        return;
+    public function __construct() {
+        $this->id = 'woocommerce_checkout';
+        $this->setting_title = __('WooCommerce Checkout', 'power-captcha');
+        $this->setting_description = __('Enable protection for the WooCommerce checkout form.', 'power-captcha');
     }
 
-    echo powercaptcha_widget_html(powercaptcha()::WOOCOMMERCE_CHECKOUT_INTEGRATION, '#billing_email', true, 'form-row');
+    public function init() {
+        add_action('woocommerce_after_checkout_billing_form', [$this, 'display_widget'], 10, 0);
+        add_action('woocommerce_after_checkout_billing_form', [$this, 'enqueue_script'], 11, 0);
 
-    powercaptcha_enqueue_widget_script();
-
-    // enqueue additional javascript for woocommerce checkout
-    wp_enqueue_script(
-        'powercaptcha-woocommerce-checkout', 
-        plugin_dir_url( __FILE__ )  . 'public/power-captcha-woocommerce-checkout.js',  
-        ['jquery', 'powercaptcha-wp'], 
-        POWER_CAPTCHA_PLUGIN_VERSION, 
-        false 
-    );
-}
-
-function powercaptcha_woocommerce_checkout_verification(array $fields, WP_Error $errors) {
-    if (!powercaptcha()->is_enabled(powercaptcha()::WOOCOMMERCE_CHECKOUT_INTEGRATION)) {
-        return;
+        add_action('woocommerce_after_checkout_validation', [$this, 'verification'], 10, 2);
+        // Note: We can't use the woocommerce_before_checkout_validation hook because it is executed multiple times during the checkout.
+        // Another hook alternative could be woocommerce_checkout_process, but woocommerce_after_checkout_validation seems to be the most suitable, 
+        // as it is executed after the address and payment method have been validated.
     }
 
-    $pcToken = powercaptcha_get_token_from_post_request();
-    if($pcToken === FALSE) {
-        $errors->add(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD, powercaptcha_user_error_message(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD));
-    } else {
-        $verification = powercaptcha_verify_token($pcToken, $_POST['billing_email'], null, powercaptcha()::WOOCOMMERCE_CHECKOUT_INTEGRATION);
-        if($verification['success'] !== TRUE) {
-            $errors->add($verification['error_code'], powercaptcha_user_error_message($verification['error_code']));
+    public function display_widget() {
+        echo $this->widget_html('#billing_email', true, 'form-row');
+    }
+
+    public function enqueue_script() {
+        parent::enqueue_scripts(); // TODO is this needed?? 
+        // because is 'powercaptcha-woocommerce-checkout' depends on powercaptcha-wp 
+
+        // enqueue additional javascript for woocommerce checkout
+        wp_enqueue_script(
+            'powercaptcha-woocommerce-checkout', 
+            plugin_dir_url( __FILE__ )  . 'public/power-captcha-woocommerce-checkout.js',  
+            ['jquery', 'powercaptcha-wp'], 
+            POWER_CAPTCHA_PLUGIN_VERSION, 
+            false 
+        );
+    }
+
+    public function verification(array $fields, \WP_Error $errors) {
+        $verification = $this->verify_token($_POST['billing_email']);
+        if(FALSE === $verification->is_success()) {
+            $errors->add($verification->get_error_code(), $verification->get_user_message());
         }
     }
+
 }

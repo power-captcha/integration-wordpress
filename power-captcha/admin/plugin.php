@@ -1,5 +1,5 @@
 <?php
-
+// TODO integrate to admin/settings.php
 defined('POWER_CAPTCHA_PATH') || exit;
 
 add_action('init', 'powercaptcha_update_check');

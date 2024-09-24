@@ -1,49 +1,55 @@
 <?php
 
+namespace PowerCaptcha_WP;
+
 defined('POWER_CAPTCHA_PATH') || exit;
 
-if(powercaptcha()->is_enabled(powercaptcha()::WOOCOMMERCE_LOGIN_INTEGRATION)) {
-    
-    add_action('woocommerce_login_form', 'powercaptcha_woocommerce_login_widget');
 
-    add_filter('woocommerce_process_login_errors', 'powercaptcha_woocommerce_login_verification', 20, 3);
-}
+add_action('powercaptcha_register_integration', function ($powerCaptcha) {
+    $powerCaptcha->register_integration(new Integration_WooCommerce_Login());
+});
 
-function powercaptcha_woocommerce_login_widget() {
-    if (!powercaptcha()->is_enabled(powercaptcha()::WOOCOMMERCE_LOGIN_INTEGRATION)) {
-        return;
+class Integration_WooCommerce_Login extends Integration {
+
+    public function __construct() {
+        $this->id = 'woocommerce_login';
+        $this->setting_title = __('WooCommerce Login', 'power-captcha');
+        $this->setting_description = __('Enable protection for the WooCommerce My Account login form.', 'power-captcha');
     }
 
-    echo powercaptcha_widget_html(powercaptcha()::WOOCOMMERCE_LOGIN_INTEGRATION, '#username', true, 'form-row');
+    public function init() {
+        add_action('woocommerce_login_form', [$this, 'display_widget'], 10, 0);
+        add_action('woocommerce_login_form', [$this, 'enqueue_script'], 10, 0);
 
-    powercaptcha_enqueue_widget_script();
-}
-
-function powercaptcha_woocommerce_login_verification(WP_Error $validation_error, string $user_login, string $user_passsword) {
-    if (!powercaptcha()->is_enabled(powercaptcha()::WOOCOMMERCE_LOGIN_INTEGRATION)) {
-        return $validation_error;
+        add_filter('woocommerce_process_login_errors', [$this, 'verification'], 20, 3);
     }
 
-    if(powercaptcha()->is_enabled(powercaptcha()::WORDPRESS_LOGIN_INTEGRATION)) {
-        // If the WordPress login integration is enabled, the token will be verified later in the 'authenticate' filter, 
-        // because WoCommerce uses the wp_signon method that calls the 'authenticate' filter.
-        // Therefore, we can stop at this point.
-        return $validation_error;
+    public function display_widget() {
+        echo $this->widget_html('#username', true, 'form-row');
     }
 
-    if(empty($_POST)) {
-        return $validation_error;
+    public function enqueue_script() {
+        parent::enqueue_scripts();
     }
 
-    $pcToken = powercaptcha_get_token_from_post_request();
-    if($pcToken === FALSE) {
-        $validation_error->add(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD, powercaptcha_user_error_message(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD, false));
-    } else {
-        $verification = powercaptcha_verify_token($pcToken, $_POST['username'], null, powercaptcha()::WOOCOMMERCE_LOGIN_INTEGRATION);
-        if($verification['success'] !== TRUE) {
-            $validation_error->add($verification['error_code'], powercaptcha_user_error_message($verification['error_code'], false));
+    public function verification(\WP_Error $validation_error, string $user_login, string $user_passsword) {
+        if(powercaptcha()->is_integration_enabled(powercaptcha()::WORDPRESS_LOGIN_INTEGRATION)) { //TODO powercaptcha()->get_integration('wordpress_login')->is_enabled()
+            // If the WordPress login integration is also enabled, the token will be verified later in the 'authenticate' filter, 
+            // because WoCommerce uses the wp_signon method that calls the 'authenticate' filter.
+            // Therefore, we can stop at this point.
+            return $validation_error;
         }
+    
+        if(empty($_POST)) {
+            return $validation_error;
+        }
+    
+        $verification = $this->verify_token($_POST['username']);
+        if(FALSE === $verification->is_success()) {
+            $validation_error->add($verification->get_error_code(), $verification->get_user_message(false));
+        }
+    
+        return $validation_error; 
     }
 
-    return $validation_error;
 }
