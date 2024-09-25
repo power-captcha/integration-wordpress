@@ -132,7 +132,7 @@ abstract class Integration {
             // PC_OFFLINE = POWER CAPTCHA API is offline
             if(isset($response_body['errors']) 
                 && (in_array('MISSING_SECRET', $response_body['errors']) || in_array('INVALID_SECRET', $response_body['errors'])) ) {
-                $log_message = "POWER CAPTCHA secret id is invalid or missing.";
+                $log_message = "POWER CAPTCHA secret key is invalid or missing.";
                 $error_code = powercaptcha()::ERROR_CODE_INVALID_SECRET;
                 trigger_error($log_message, E_USER_WARNING);
             } else {
