@@ -1,0 +1,198 @@
+# Copyright (C) 2024 POWER CAPTCHA
+# This file is distributed under the same license as the POWER CAPTCHA WordPress Integration plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: POWER CAPTCHA WordPress Integration 0.3.0-dev\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/power-captcha\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-09-25T16:15:01+02:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Domain: power-captcha\n"
+
+#. Plugin Name of the plugin
+msgid "POWER CAPTCHA WordPress Integration"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://power-captcha.com/"
+msgstr ""
+
+#. Description of the plugin
+msgid "POWER CAPTCHA protects your WordPress website and WordPress forms against bots and unauthorized persons. GDPR compliant!"
+msgstr ""
+
+#. Author of the plugin
+msgid "POWER CAPTCHA"
+msgstr ""
+
+#: admin/settings.php:25
+#: admin/settings.php:26
+msgid "POWER CAPTCHA Settings"
+msgstr ""
+
+#: admin/settings.php:101
+msgid "General settings"
+msgstr ""
+
+#: admin/settings.php:109
+msgid "Captcha settings"
+msgstr ""
+
+#: admin/settings.php:117
+msgid "Integration settings"
+msgstr ""
+
+#: admin/settings.php:125
+msgid "On-premises settings"
+msgstr ""
+
+#: admin/settings.php:138
+msgid "API Key"
+msgstr ""
+
+#: admin/settings.php:141
+msgid "Enter your POWER CAPTCHA API Key. You can find your API Key in the <a href=\"%s\" target=\"_blank\">API Key Management</a>."
+msgstr ""
+
+#: admin/settings.php:149
+msgid "Secret Key"
+msgstr ""
+
+#: admin/settings.php:152
+msgid "Enter your POWER CAPTCHA Secret Key. You can find your Secret Key in the <a href=\"%s\" target=\"_blank\">API Key Management</a>."
+msgstr ""
+
+#: admin/settings.php:163
+msgid "Automatic"
+msgstr ""
+
+#: admin/settings.php:164
+msgid "The widget is always displayed and the security check is started automatically as soon as the form is filled in or after the corresponding field (e.g. user name or email address) has been filled in.  A click on the widget is only necessary if it is required to solve a captcha."
+msgstr ""
+
+#: admin/settings.php:167
+msgid "Hidden"
+msgstr ""
+
+#: admin/settings.php:168
+msgid "The widget is not displayed initially and the security check is started automatically as soon as the form is filled in or after the corresponding field (e.g. user name or e-mail address) has been filled in. The widget is only displayed if it is required to solve a captcha."
+msgstr ""
+
+#: admin/settings.php:171
+msgid "Manual"
+msgstr ""
+
+#: admin/settings.php:172
+msgid "The widget is always displayed and the security check is only started when the widget is clicked. The click is always required."
+msgstr ""
+
+#: admin/settings.php:176
+msgid "Check mode"
+msgstr ""
+
+#: admin/settings.php:198
+msgid "Endpoint base URL (optional)"
+msgstr ""
+
+#: admin/settings.php:199
+msgid "Only required if you have an on-premises version with self-hosted POWER CAPTCHA endpoint."
+msgstr ""
+
+#: admin/settings.php:205
+msgid "JavaScript base URL (optional)"
+msgstr ""
+
+#: admin/settings.php:206
+msgid "Only required if you have an on-premises version with self-hosted POWER CAPTCHA JavaScript."
+msgstr ""
+
+#: admin/settings.php:323
+msgid "The API Key and the Secret Key must be provided for the POWER CAPTCHA to activate. Both keys can be found in the <a href=\"%s\" target=\"_blank\">API Key Management</a>."
+msgstr ""
+
+#: admin/settings.php:328
+msgid "If you don't have an API Key yet, you can create one for free on <a href=\"%s\" target=\"_blank\">POWER CAPTCHA</a>."
+msgstr ""
+
+#: admin/settings.php:335
+msgid "You can configure the functionality and display of the captcha or widget here."
+msgstr ""
+
+#: admin/settings.php:341
+msgid "Specify which sections or plugins should be protected with POWER CAPTCHA."
+msgstr ""
+
+#: admin/settings.php:347
+msgid "These settings are only relevant if you are running a self-hosted POWER CAPTCHA instance. Otherwise you can leave these settings empty."
+msgstr ""
+
+#: includes/class-verification-result.php:26
+msgid "<strong>Error:</strong>"
+msgstr ""
+
+#: includes/class-verification-result.php:29
+msgid "Submission of the form was blocked by POWER CAPTCHA. Please try again later."
+msgstr ""
+
+#: includes/class-verification-result.php:36
+msgid "The form does not contain a token field."
+msgstr ""
+
+#: includes/class-verification-result.php:38
+msgid "The token is empty."
+msgstr ""
+
+#: includes/class-verification-result.php:40
+msgid "The token is invalid."
+msgstr ""
+
+#: includes/class-verification-result.php:42
+msgid "The token has not been verified."
+msgstr ""
+
+#: includes/class-verification-result.php:44
+msgid "The secret key is missing or invalid."
+msgstr ""
+
+#: includes/class-verification-result.php:46
+msgid "Error connecting to the API. API Key maybe invalid."
+msgstr ""
+
+#: includes/class-verification-result.php:53
+msgid "Error message: %s"
+msgstr ""
+
+#: integrations/elementor/power-captcha-field.php:157
+msgid "PC Username Field ID"
+msgstr ""
+
+#: integrations/elementor/power-captcha-field.php:160
+msgid "(optional) Specify the ID of the field that should be additionally protected with POWER CAPTCHA (e.g. user name or e-mail address). You can find the field ID in the \"Advanced\" tab of the corresponding field."
+msgstr ""
+
+#: integrations/woocommerce/woocommerce-checkout.php:15
+msgid "WooCommerce Checkout"
+msgstr ""
+
+#: integrations/woocommerce/woocommerce-checkout.php:16
+msgid "Enable protection for the WooCommerce checkout form."
+msgstr ""
+
+#: integrations/woocommerce/woocommerce-login.php:16
+msgid "WooCommerce Login"
+msgstr ""
+
+#: integrations/woocommerce/woocommerce-login.php:17
+msgid "Enable protection for the WooCommerce My Account login form."
+msgstr ""
+
+#: integrations/wpforms/wpforms.php:82
+#: integrations/wpforms/wpforms.php:97
+msgid "POWER CAPTCHA: Spam detected"
+msgstr ""

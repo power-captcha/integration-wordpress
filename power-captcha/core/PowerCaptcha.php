@@ -101,14 +101,41 @@ final class PowerCaptcha {
         if( defined('POWER_CAPTCHA_PLUGIN_VERSION') ) {
             $this->version = POWER_CAPTCHA_PLUGIN_VERSION;
         }
-        
-        $this->load_dependencies();
 
-        do_action('powercaptcha_register_integration', $this);
+        // Load dependencies
+        $this->load_dependencies();
+        $this->load_integrations();
+        
+        // Load textdomain
+        add_action('plugins_loaded', [$this, 'load_plugin_textdomain']);
+
+        // Register and init integrations
+        add_action('plugins_loaded', [$this, 'do_register_integrations']);
+        add_action('plugins_loaded', [$this, 'init_integrations']);
+
+        // Init admin
+        $admin_settings = new PowerCaptcha_Admin_Settings();
+        add_action('init', [$admin_settings, 'init']);
+
+        // Register scripts
+        add_action( 'wp_enqueue_scripts', [$this, 'register_scripts'] );
+        // note: The 'wp_enqueue_scripts' hook is not executed on wordpress login, registration and lost-password pages.
+        //       Instead, we use the 'login_enqueue_scripts' hook, which is executed on all login and registration related screens.
+        add_action( 'login_enqueue_scripts', [$this, 'register_scripts'] );
+
+        // Ajax callback
+        add_action('wp_ajax_' . self::AJAX_ACTION_NAME_INTEGRATION_SETTING, [$this, 'integration_settings_ajax_callback']);
+        add_action('wp_ajax_nopriv_' . self::AJAX_ACTION_NAME_INTEGRATION_SETTING, [$this, 'integration_settings_ajax_callback']);
+
     }
 
-    public function register_integration(Integration $integration) {
-        $this->integrations[$integration->get_id()] = $integration;
+    public function init_integrations() : void {
+        foreach( $this->integrations as $integration ) {
+            /** @var Integration $integration */
+            if( $integration->is_enabled() ) {
+                $integration->init();
+            }
+        }
     }
 
     public function register_scripts() {
@@ -138,37 +165,31 @@ final class PowerCaptcha {
     }
 
     private function load_dependencies() {
-
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-integration.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-verification-result.php';
+    }
 
+    private function load_integrations() {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'integrations/woocommerce/woocommerce-checkout.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'integrations/woocommerce/woocommerce-login.php';
     }
 
-    public function init() {
+    
+    public function register_integration(Integration $integration) {
+        $this->integrations[$integration->get_id()] = $integration;
+    }
 
-        // init admin
-        new PowerCaptcha_Admin_Settings();
+    public function do_register_integrations() {
+        do_action('powercaptcha_register_integration', $this);
+    }
 
-        // Register scripts
-        add_action( 'wp_enqueue_scripts', [$this, 'register_scripts'] );
-        // note: The 'wp_enqueue_scripts' hook is not executed on wordpress login, registration and lost-password pages.
-        //       Instead, we use the 'login_enqueue_scripts' hook, which is executed on all login and registration related screens.
-        add_action( 'login_enqueue_scripts', [$this, 'register_scripts'] );
-
-        // Ajax callback
-        add_action('wp_ajax_' . self::AJAX_ACTION_NAME_INTEGRATION_SETTING, [$this, 'integration_settings_ajax_callback']);
-        add_action('wp_ajax_nopriv_' . self::AJAX_ACTION_NAME_INTEGRATION_SETTING, [$this, 'integration_settings_ajax_callback']);
-
-        // init integrations
-        foreach( $this->integrations as $integration ) {
-            /** @var Integration $integration */
-            if( $integration->is_enabled() ) {
-                $integration->init();
-            }
-        }
+    public function load_plugin_textdomain() {
+        load_plugin_textdomain(
+			'power-captcha',
+            false,
+            plugin_basename( POWER_CAPTCHA_PLUGIN_DIR ) . '/languages/'
+        );
     }
 
     public function integration_settings_ajax_callback() {

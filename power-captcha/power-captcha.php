@@ -26,7 +26,6 @@ require POWER_CAPTCHA_PATH . 'core/third-party-compatibility.php'; // TODO integ
 function powercaptcha() : PowerCaptcha_WP\PowerCaptcha {
     return PowerCaptcha_WP\PowerCaptcha::instance();
 }
-powercaptcha()->init();
 
 if(file_exists(WP_CONTENT_DIR . '/power-captcha-config.php')) {
     require_once WP_CONTENT_DIR . '/power-captcha-config.php';

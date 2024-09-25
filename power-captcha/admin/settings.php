@@ -6,14 +6,17 @@ defined('POWER_CAPTCHA_PATH') || exit;
 
 class PowerCaptcha_Admin_Settings {
 
-    public function __construct() {
-        if( is_admin() ) {
-            add_action('admin_menu', [$this, 'init_admin_menu']);
+    public function __construct() {}
 
-            add_action( 'admin_init', [$this, 'register_settings'] );
-            add_action( 'admin_init', [$this, 'init_settings_sections'] );
-            add_action( 'admin_init', [$this, 'init_settings_fields'] );
-        }
+    public function init() {
+        if ( ! is_admin() ) {
+			return;
+		}
+
+        add_action('admin_menu', [$this, 'init_admin_menu']);
+        add_action( 'admin_init', [$this, 'register_settings'] );
+        add_action( 'admin_init', [$this, 'init_settings_sections'] );
+        add_action( 'admin_init', [$this, 'init_settings_fields'] );
     }
 
     public function init_admin_menu() {
