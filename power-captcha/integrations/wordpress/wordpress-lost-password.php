@@ -1,43 +1,60 @@
 <?php
 
+namespace PowerCaptcha_WP;
+
 defined('POWER_CAPTCHA_PATH') || exit;
 
-if(powercaptcha()->is_enabled(powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION)) {
-
-    add_action('lostpassword_form', 'powercaptcha_wordpress_lost_password_widget');
-
-    add_action('lostpassword_post', 'powercaptcha_wordpress_lost_password_verification', 10, 2);
-}
+add_action('powercaptcha_register_integration', function ($powerCaptcha) {
+    $powerCaptcha->register_integration(new Integration_WordPress_WooCommerce_Lost_Password());
+});
 
 
-function powercaptcha_wordpress_lost_password_widget() {
-    if (!powercaptcha()->is_enabled(powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION)) {
-        return;
+class Integration_WordPress_WooCommerce_Lost_Password extends Integration {
+
+    // Note: We use a single integration for both the WordPress Lost Password and WooCommerce Lost Password functionality.
+    // This is necessary because the WooCommerce process_lost_password function also triggers the WordPress lostpassword_post action.
+    // As a result, we cannot distinguish during token verification whether the request originates from the WooCommerce form or the WordPress form.
+
+    public function __construct() {
+        $this->id = 'wordpress_lost_password';
+        $this->setting_title = __('WordPress / WooCommerce Lost Password', 'power-captcha');
+        $this->setting_description = __('Enable protection for the WordPress and WooCommerce lost/reset password form.', 'power-captcha');
     }
 
-    echo powercaptcha_widget_html(powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION, '#user_login', true, '', 'margin-bottom: 16px');
+    public function init() {
+        // WordPress lost password form
+        add_action('lostpassword_form', [$this, 'display_widget_wordpress']);
+        add_action('lostpassword_form', [$this, 'enqueue_script']);
 
-    powercaptcha_enqueue_widget_script();
-}
+        // WooCommerce lost password form
+        add_action('woocommerce_lostpassword_form', [$this, 'display_widget_woocomerce']);
+        add_action('woocommerce_lostpassword_form', [$this, 'enqueue_script']);
 
-
-function powercaptcha_wordpress_lost_password_verification(WP_Error $errors, WP_User|false $user_data) {
-    if (!powercaptcha()->is_enabled(powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION)) {
-        return;
+        // Verification for both WordPress and WooCommerce lost password
+        add_action('lostpassword_post', [$this, 'verification'], 10, 2);
     }
 
-    if(empty($_POST)) {
-        return;
+    public function display_widget_wordpress() {
+        echo $this->widget_html('#user_login', true, '', 'margin-bottom: 16px');
     }
 
-    $pcToken = powercaptcha_get_token_from_post_request();
-    if($pcToken === FALSE) {
-        $errors->add(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD, powercaptcha_user_error_message(powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD));
-    } else {
-        $pcUserName = $_POST['user_login'];
-        $verification = powercaptcha_verify_token($pcToken, $pcUserName, null, powercaptcha()::WORDPRESS_LOST_PASSWORD_INTEGRATION);
-        if($verification['success'] !== TRUE) {
-            $errors->add($verification['error_code'], powercaptcha_user_error_message($verification['error_code']));
+    public function display_widget_woocomerce() {
+        echo $this->widget_html('#user_login', true, 'form-row');
+    }
+
+    public function enqueue_script() {
+        parent::enqueue_scripts();
+    }
+
+    public function verification(\WP_Error $errors, \WP_User|false $user_data) {
+        if(empty($_POST)) {
+            return;
+        }
+
+        $verification = $this->verify_token($_POST['user_login']); 
+        if(FALSE === $verification->is_success()) {
+            $errors->add($verification->get_error_code(), $verification->get_user_message());
         }
     }
+
 }
