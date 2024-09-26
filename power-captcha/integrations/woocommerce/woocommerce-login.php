@@ -44,6 +44,7 @@ class Integration_WooCommerce_Login extends Integration {
             return $validation_error;
         }
     
+        // TODO merge this verification with WordPress Login integration. note: wordpress login uses the field $_POST['log'] for username.
         $verification = $this->verify_token($_POST['username']);
         if(FALSE === $verification->is_success()) {
             $validation_error->add($verification->get_error_code(), $verification->get_user_message(false));
