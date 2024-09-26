@@ -177,6 +177,7 @@ final class PowerCaptcha {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'integrations/woocommerce/woocommerce-checkout.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'integrations/woocommerce/woocommerce-login.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'integrations/woocommerce/woocommerce-register.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'integrations/wpforms/wpforms.php';
     }
 
     
