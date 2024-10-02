@@ -67,19 +67,13 @@ abstract class Integration {
         if( is_null($token) ) {
             $token = $this->fetch_token_from_post_request();
             if($token === FALSE) {
-                $log_message = "The form does not contain a token field.";
-                if(WP_DEBUG) {
-                    trigger_error($log_message, E_USER_NOTICE);
-                }
+                $this->log('Token verification: The request does not contain a token field.');
                 return new VerificationResult(false, powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD);
             }
         }
 
         if( empty ( $token ) ) {
-            $log_message = "POWER CAPTCHA token is empty.";
-            if(WP_DEBUG) {
-                trigger_error($log_message, E_USER_NOTICE);
-            }
+            $this->log('Token verification: The request contains an empty token.');
             return new VerificationResult(false, powercaptcha()::ERROR_CODE_MISSING_TOKEN);
         } 
     
@@ -92,9 +86,7 @@ abstract class Integration {
         );
         $request_body = json_encode($request_body);
             
-        if(WP_DEBUG) {
-            trigger_error("POWER CAPTCHA token verification request. Request URL: $request_url / Request body: $request_body", E_USER_NOTICE);
-        }
+        $this->log('Token verification: Starting verification API request.', ['API URL' => $request_url, 'Request Body' => $request_body ]);
     
         // https://developer.wordpress.org/reference/functions/wp_remote_request/
         $response = wp_remote_request(
@@ -114,12 +106,13 @@ abstract class Integration {
     
         if($response_code == 200 && isset($response_body['success'])) {
             $verified = boolval($response_body['success']);
-            $error_code = ($verified ? NULL : powercaptcha()::ERROR_CODE_TOKEN_NOT_VERIFIED);
-            if(WP_DEBUG) {
-                $verified_text = $verified ? 'Token is valid' : 'Token is invalid';
-                trigger_error("POWER CAPTCHA token was verified sucessfully. Result: $verified_text / Token: $token", E_USER_NOTICE);
+            if($verified) {
+                $this->log('Token verification: Token successfully verified.', ['Token' => $token ]);
+                return new VerificationResult(TRUE, NULL);
+            } else {
+                $this->log('Token verification: Token not verified. Token was not solved by user or mismatch of clientUid or username.', ['Token' => $token ]);
+                return new VerificationResult(FALSE, powercaptcha()::ERROR_CODE_TOKEN_NOT_VERIFIED);
             }
-            return new VerificationResult($verified,  $error_code);
         } 
       
         // error handling 
@@ -132,27 +125,34 @@ abstract class Integration {
             // PC_OFFLINE = POWER CAPTCHA API is offline
             if(isset($response_body['errors']) 
                 && (in_array('MISSING_SECRET', $response_body['errors']) || in_array('INVALID_SECRET', $response_body['errors'])) ) {
-                $log_message = "POWER CAPTCHA secret key is invalid or missing.";
                 $error_code = powercaptcha()::ERROR_CODE_INVALID_SECRET;
-                trigger_error($log_message, E_USER_WARNING);
+                $this->log('Token verification: Error verifiying the token.', ['Reason' => 'Secret Key is invalid or missing. Please check your Secret Key!']);
             } else {
-                $log_message = "POWER CAPTCHA token is invalid or empty.";
                 $error_code = powercaptcha()::ERROR_CODE_INVALID_TOKEN;
-                if(WP_DEBUG) {
-                    trigger_error($log_message, E_USER_NOTICE);
-                }
+                $this->log('Token verification: Token not valid.', ['Reason' => 'User sent invalid or expired token.']);
             } 
         } else if( is_wp_error ( $response )) {
-            $log_message = "Could not connnect to POWER CAPTCHA API. WordPress error errormessage: {$response->get_error_message()}";
             $error_code = powercaptcha()::ERROR_CODE_API_ERROR;
-            trigger_error($log_message, E_USER_WARNING);
+            $this->log('Token verification: Error verifiying the token.', ['Reason' => 'Could not connnect to POWER CAPTCHA API.', 'WordPress error message' => $response->get_error_message()]);
         } else {
-            $log_message = "Unknown response from POWER CAPTCHA API. Response code: $response_code / Response body: $response_body";
             $error_code = powercaptcha()::ERROR_CODE_API_ERROR;
-            trigger_error($log_message, E_USER_WARNING);
+            $this->log('Token verification: Error verifiying the token.', ['Reason' => 'Unknown response from POWER CAPTCHA API.', 'Response code' => $response_code, 'Response body' => $response_body]);
         }
     
         return new VerificationResult(false,  $error_code);
+    }
+
+    protected function log(string $message, array|object $data = null) {
+        if(FALSE === WP_DEBUG) {
+            return;
+        }
+
+        if( isset($data) ) {
+            error_log('POWER CAPTCHA (Integration '.$this->get_id().') ' . $message . PHP_EOL . 'Details: '. print_r($data, true));
+        } else {
+            error_log('POWER CAPTCHA (Integration '.$this->get_id().') ' . $message);
+        }
+
     }
 
     public abstract function init();
