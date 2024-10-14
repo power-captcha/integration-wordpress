@@ -23,7 +23,7 @@ class VerificationResult {
     public function get_user_message($error_prefix = true) : string {
         $output = '';
         if($error_prefix) {
-            $output .= __('<strong>Error:</strong>', 'power-captcha').' ';
+            $output .= '<strong>'.__('Error:', 'power-captcha').'</strong>'.' ';
         }
         
         $output .= __('Submission of the form was blocked by POWER CAPTCHA. Please try again later.' , 'power-captcha');
