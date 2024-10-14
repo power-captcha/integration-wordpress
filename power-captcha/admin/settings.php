@@ -274,7 +274,7 @@ class PowerCaptcha_Admin_Settings {
     public function render_text_field(array $render_args){
         ?>
         <input type="text" id="<?php echo esc_attr($render_args['id']); ?>" name="<?php echo esc_attr($render_args['name']); ?>" value="<?php echo esc_attr($render_args['value']); ?>" autocomplete="none"> 
-        <label for="<?php echo esc_attr($render_args['id']); ?>" class="description"><?php echo $render_args['label']; ?></label>
+        <label for="<?php echo esc_attr($render_args['id']); ?>" class="description"><?php echo esc_html($render_args['label']); ?></label>
         <?php
     }
 
@@ -283,9 +283,9 @@ class PowerCaptcha_Admin_Settings {
         ?>
         <input type="checkbox" 
             id="<?php echo esc_attr($render_args['id']); ?>" 
-            name="<?php echo esc_attr($render_args['name']); ?>" value="1" <?php echo $checked ?>>
+            name="<?php echo esc_attr($render_args['name']); ?>" value="1" <?php echo esc_attr($checked) ?>>
         <label for="<?php echo esc_attr($render_args['id']); ?>" class="description">
-            <?php echo $render_args['label']; ?>
+            <?php echo esc_html($render_args['label']); ?>
         </label>
         <?php
     }
@@ -304,11 +304,11 @@ class PowerCaptcha_Admin_Settings {
                         id="<?php echo esc_attr($option_value); ?>" 
                         name="<?php echo esc_attr($render_args['name']) ?>" 
                         value="<?php echo esc_attr($option_value) ?>" 
-                        <?php echo $option_checked ?>
+                        <?php echo esc_attr($option_checked) ?>
                     >
-                    <strong><?php echo $option_details['label']; ?></strong>
+                    <strong><?php echo esc_html($option_details['label']); ?></strong>
                     <p class="description">
-                        <?php echo $option_details['description']; ?>
+                        <?php echo esc_html($option_details['description']); ?>
                     </p>
                 </label>
             </div>
@@ -320,31 +320,31 @@ class PowerCaptcha_Admin_Settings {
     public function general_setting_section_description_content() {
         echo '<p>'.sprintf(
             /** translators %s: url to power captcha API Key management page */
-            __('The API Key and the Secret Key must be provided for the POWER CAPTCHA to activate. Both keys can be found in the <a href="%s" target="_blank">API Key Management</a>.', 'power-captcha'),
-            powercaptcha()::API_KEY_MANAGEMENT_URL
+            esc_html__('The API Key and the Secret Key must be provided for the POWER CAPTCHA to activate. Both keys can be found in the %s.', 'power-captcha'),
+            '<a href="'.esc_attr(powercaptcha()::API_KEY_MANAGEMENT_URL).'" target="_blank">'.esc_html__('API Key Management', 'power-captcha').'</a>'
             ).'</p>';
         echo '<p>'.sprintf(
             /** translators %s: url to power captcha Shop page */
-            __('If you don\'t have an API Key yet, you can create one for free on <a href="%s" target="_blank">POWER CAPTCHA</a>.', 'power-captcha'),
-            powercaptcha()::SHOP_URL
+            esc_html__('If you don\'t have an API Key yet, you can create one for free on %s.', 'power-captcha'),
+            '<a href="'.esc_attr(powercaptcha()::SHOP_URL).'" target="_blank">'.esc_html__('POWER CAPTCHA', 'power-captcha').'</a>'
         ).'</p>';
     }
 
     public function captcha_setting_section_description_content() {
         echo '<p>'.
-            __('You can configure the functionality and display of the captcha or widget here.', 'power-captcha')
+            esc_html__('You can configure the functionality and display of the captcha or widget here.', 'power-captcha')
             .'</p>';
     }
     
     public function integration_setting_section_description_content() {
         echo '<p>'.
-            __('Specify which sections or plugins should be protected with POWER CAPTCHA.', 'power-captcha')
+            esc_html__('Specify which sections or plugins should be protected with POWER CAPTCHA.', 'power-captcha')
             .'</p>';
     }
 
     public function on_premises_setting_section_description_content() {
         echo '<p>'.
-            __('These settings are only relevant if you are running a self-hosted POWER CAPTCHA instance. Otherwise you can leave these settings empty.', 'power-captcha')
+            esc_html__('These settings are only relevant if you are running a self-hosted POWER CAPTCHA instance. Otherwise you can leave these settings empty.', 'power-captcha')
             .'</p>';
     }
 

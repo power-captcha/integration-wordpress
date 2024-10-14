@@ -26,7 +26,7 @@ class Integration_WooCommerce_Register extends Integration {
     }
 
     public function display_widget() {
-        echo $this->widget_html('#reg_email', true, 'form-row');
+        parent::echo_widget_html('#reg_email', true, 'form-row');
     }
 
     public function enqueue_script() {

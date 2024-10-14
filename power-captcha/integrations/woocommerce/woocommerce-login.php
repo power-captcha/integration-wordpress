@@ -25,7 +25,7 @@ class Integration_WooCommerce_Login extends Integration {
     }
 
     public function display_widget() {
-        echo $this->widget_html('#username', true, 'form-row');
+        parent::echo_widget_html('#username', true, 'form-row');
     }
 
     public function enqueue_script() {

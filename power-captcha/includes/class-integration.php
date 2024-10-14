@@ -39,20 +39,19 @@ abstract class Integration {
         wp_enqueue_script('powercaptcha-wp');
     }
 
-    public function widget_html($userInputField = '', $userInputFieldRequried = false, $cssClass = '', $style = '') {
-        $widgetHtml =   '<div';
-        $widgetHtml .=      ' data-pc-wp-check-mode="'.powercaptcha()->get_check_mode().'"';
-        $widgetHtml .=      ' data-pc-wp-integration="'.esc_attr($this->id).'"';
+    public function echo_widget_html($userInputField = '', $userInputFieldRequried = false, $cssClass = '', $style = '') {
+        echo '<div ';
+        echo ' data-pc-wp-check-mode="'.esc_attr(powercaptcha()->get_check_mode()).'"';
+        echo ' data-pc-wp-integration="'.esc_attr($this->id).'"';
         if(!empty($userInputField)) {
-            $widgetHtml .=  ' data-pc-wp-user-field="'.esc_attr($userInputField).'"';
+            echo ' data-pc-wp-user-field="'.esc_attr($userInputField).'"';
             if($userInputFieldRequried) {
-                $widgetHtml .= ' data-pc-wp-user-field-required ="1"';
+                echo ' data-pc-wp-user-field-required ="1"';
             }
         }
-        $widgetHtml .=      ' class="'.esc_attr($cssClass).'"';
-        $widgetHtml .=      ' style="'.esc_attr($style).'"';
-        $widgetHtml .=  '></div>';
-        return $widgetHtml;
+        echo ' class="'.esc_attr($cssClass).'"';
+        echo ' style="'.esc_attr($style).'"';
+        echo '></div>';
     }
 
     public function fetch_token_from_post_request() {

@@ -63,7 +63,7 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 			$userInputFieldSelector = '#form-field-'.$item[self::FIELD_CONTROL_PC_USERNAME_ID];
 		}
 
-		echo $this->power_captcha_integration->widget_html($userInputFieldSelector);
+		$this->power_captcha_integration->echo_widget_html($userInputFieldSelector);
 	}
 
 	/**
@@ -195,7 +195,7 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 		<script>
 		jQuery( document ).ready( () => {
 			elementor.hooks.addFilter(
-				'elementor_pro/forms/content_template/field/<?php echo $this->get_type(); ?>',
+				'elementor_pro/forms/content_template/field/<?php echo esc_js($this->get_type()); ?>',
 				function ( inputField, item, i ) {
 					
 					// delay PowerCaptchaWp.setup() method, so the div is already rendered
@@ -208,7 +208,7 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 						}
 					}, 1000);
 
-					return `<?php echo $this->power_captcha_integration->widget_html() ?>`;
+					return `<?php $this->power_captcha_integration->echo_widget_html() ?>`;
 				}, 10, 3
 			);
 		});

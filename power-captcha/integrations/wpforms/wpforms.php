@@ -31,7 +31,7 @@ class Integration_WP_Forms extends Integration {
 
     public function display_widget() {
         // $userInputField is selected in frontend via custom javascript
-        echo $this->widget_html('', false, 'wpforms-field', 'margin-top: -10px; margin-bottom: 10px');
+       parent::echo_widget_html('', false, 'wpforms-field', 'margin-top: -10px; margin-bottom: 10px');
     }
 
     public function enqueue_script() {

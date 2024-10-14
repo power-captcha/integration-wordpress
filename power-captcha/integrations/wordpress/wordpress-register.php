@@ -24,7 +24,7 @@ class Integration_WordPress_Register extends Integration {
     }
 
     public function display_widget() {
-        echo $this->widget_html('#user_email', true, '', 'margin-bottom: 16px');
+        parent::echo_widget_html('#user_email', true, '', 'margin-bottom: 16px');
     }
 
     public function enqueue_script() {

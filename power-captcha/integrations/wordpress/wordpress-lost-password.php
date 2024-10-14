@@ -35,11 +35,11 @@ class Integration_WordPress_WooCommerce_Lost_Password extends Integration {
     }
 
     public function display_widget_wordpress() {
-        echo $this->widget_html('#user_login', true, '', 'margin-bottom: 16px');
+        parent::echo_widget_html('#user_login', true, '', 'margin-bottom: 16px');
     }
 
     public function display_widget_woocomerce() {
-        echo $this->widget_html('#user_login', true, 'form-row');
+        parent::echo_widget_html('#user_login', true, 'form-row');
     }
 
     public function enqueue_script() {

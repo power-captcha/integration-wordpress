@@ -27,7 +27,7 @@ class Integration_WooCommerce_Checkout extends Integration {
     }
 
     public function display_widget() {
-        echo $this->widget_html('#billing_email', true, 'form-row');
+        parent::echo_widget_html('#billing_email', true, 'form-row');
     }
 
     public function enqueue_script() {
