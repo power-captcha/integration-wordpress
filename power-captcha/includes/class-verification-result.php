@@ -49,7 +49,7 @@ class VerificationResult {
         }
 
         $output .= ' '.sprintf(
-            /** translators %s: The error message */
+            /* translators: %s the error message */
             __('Error message: %s', 'power-captcha'),
             $error_message
         );
