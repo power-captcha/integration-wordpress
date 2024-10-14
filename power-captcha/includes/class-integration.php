@@ -83,7 +83,7 @@ abstract class Integration {
             'clientUid' => powercaptcha()->get_client_uid(),
             'name' => $username ?? ''
         );
-        $request_body = json_encode($request_body);
+        $request_body = wp_json_encode($request_body);
             
         $this->log('Token verification: Starting verification API request.', ['API URL' => $request_url, 'Request Body' => $request_body ]);
     
