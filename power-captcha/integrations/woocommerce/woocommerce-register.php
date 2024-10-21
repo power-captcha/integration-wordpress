@@ -34,11 +34,8 @@ class Integration_WooCommerce_Register extends Integration {
     }
 
     public function verification(\WP_Error $validation_error,  string $username, string $password, string $email) {
-        if(empty($_POST)) {
-            return $validation_error;
-        }
-    
-        $verification = $this->verify_token($_POST['email']);
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Input is only used to verify the request via POWER CAPTCHA API. Nonce generation and verification are managed by WooCommerce.
+        $verification = $this->verify_token($_POST['email'] ?? null);
         if(FALSE === $verification->is_success()) {
             $validation_error->add($verification->get_error_code(), $verification->get_user_message(false));
         }

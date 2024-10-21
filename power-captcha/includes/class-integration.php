@@ -46,7 +46,7 @@ abstract class Integration {
         if(!empty($userInputField)) {
             echo ' data-pc-wp-user-field="'.esc_attr($userInputField).'"';
             if($userInputFieldRequried) {
-                echo ' data-pc-wp-user-field-required ="1"';
+                echo ' data-pc-wp-user-field-required="1"';
             }
         }
         echo ' class="'.esc_attr($cssClass).'"';
@@ -55,11 +55,8 @@ abstract class Integration {
     }
 
     public function fetch_token_from_post_request() {
-        if(isset($_POST["pc-token"])) {
-            return $_POST["pc-token"];
-        } else {
-            return FALSE;
-        }
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: The token is used to verify the request via POWER CAPTCHA API. Nonce generation and verification are managed by the respective form plugin.
+        return isset($_POST['pc-token']) ? $_POST['pc-token'] : false;
     }
 
     public function verify_token(string $username = null, string $token = null, string $clientUid = null) : VerificationResult {
@@ -80,7 +77,7 @@ abstract class Integration {
         $request_body = array(
             'secret' => powercaptcha()->get_secret_key($this->get_id()),
             'token' => $token,
-            'clientUid' => powercaptcha()->get_client_uid(),
+            'clientUid' => $clientUid ?? powercaptcha()->get_client_uid(),
             'name' => $username ?? ''
         );
         $request_body = wp_json_encode($request_body);

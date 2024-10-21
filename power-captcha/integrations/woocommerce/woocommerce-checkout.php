@@ -45,7 +45,8 @@ class Integration_WooCommerce_Checkout extends Integration {
     }
 
     public function verification(array $fields, \WP_Error $errors) {
-        $verification = $this->verify_token($_POST['billing_email']);
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Input is only used to verify the request via POWER CAPTCHA API. Nonce generation and verification are managed by WooCommerce.
+        $verification = $this->verify_token($_POST['billing_email'] ?? null);
         if(FALSE === $verification->is_success()) {
             $errors->add($verification->get_error_code(), $verification->get_user_message());
         }
