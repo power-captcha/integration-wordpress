@@ -32,7 +32,7 @@ class Integration_WordPress_Register extends Integration {
     }
 
     public function verification(string $sanitized_user_login, string $user_email, \WP_Error $errors) {
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Input is only used to verify the request via POWER CAPTCHA API. Nonce generation and verification are managed by WordPress.
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Reason: The raw input is necessary and only used to verify the request via the POWER CAPTCHA API. Nonce generation and verification are handled by WordPress.
         $verification = $this->verify_token($_POST['user_email'] ?? null); 
         if(FALSE === $verification->is_success()) {
             $errors->add($verification->get_error_code(), $verification->get_user_message());

@@ -42,7 +42,7 @@ class Integration_WooCommerce_Login extends Integration {
 
         // TODO merge this verification with WordPress Login integration. note: wordpress login uses the field $_POST['log'] for username.
         
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Input is only used to verify the request via POWER CAPTCHA API. Nonce generation and verification are managed by WooCommerce.
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Reason: The raw input is necessary and only used to verify the request via the POWER CAPTCHA API. Nonce generation and verification are handled by WooCommerce.
         $verification = $this->verify_token($_POST['username'] ?? null);
         if(FALSE === $verification->is_success()) {
             $validation_error->add($verification->get_error_code(), $verification->get_user_message(false));

@@ -55,20 +55,20 @@ abstract class Integration {
     }
 
     public function fetch_token_from_post_request() {
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: The token is used to verify the request via POWER CAPTCHA API. Nonce generation and verification are managed by the respective form plugin.
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Reason: The raw token input is necessary and only used to verify the request via the POWER CAPTCHA API. Nonce generation and verification are handled by the respective form plugin.
         return isset($_POST['pc-token']) ? $_POST['pc-token'] : false;
     }
 
-    public function verify_token(string $username = null, string $token = null, string $clientUid = null) : VerificationResult {
-        if( is_null($token) ) {
-            $token = $this->fetch_token_from_post_request();
-            if($token === FALSE) {
+    public function verify_token(string $username_raw = null, string $token_raw = null, string $clientUid = null) : VerificationResult {
+        if( is_null($token_raw) ) {
+            $token_raw = $this->fetch_token_from_post_request();
+            if($token_raw === FALSE) {
                 $this->log('Token verification: The request does not contain a token field.');
                 return new VerificationResult(false, powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD);
             }
         }
 
-        if( empty ( $token ) ) {
+        if( empty ( $token_raw ) ) {
             $this->log('Token verification: The request contains an empty token.');
             return new VerificationResult(false, powercaptcha()::ERROR_CODE_MISSING_TOKEN);
         } 
@@ -76,9 +76,9 @@ abstract class Integration {
         $request_url = powercaptcha()->get_token_verification_url();
         $request_body = array(
             'secret' => powercaptcha()->get_secret_key($this->get_id()),
-            'token' => $token,
+            'token' => $token_raw,
             'clientUid' => $clientUid ?? powercaptcha()->get_client_uid(),
-            'name' => $username ?? ''
+            'name' => $username_raw ?? ''
         );
         $request_body = wp_json_encode($request_body);
             
