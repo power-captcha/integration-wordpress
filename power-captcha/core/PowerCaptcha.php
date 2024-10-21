@@ -199,6 +199,7 @@ final class PowerCaptcha {
     }
 
     public function integration_settings_ajax_callback() {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Reason: Nonce verification intentionally omitted to avoid caching problems. This action does not change any data.
         $integration = isset($_GET['integration']) ? sanitize_text_field($_GET['integration']) : null;
         wp_send_json([
             'apiKey' => $this->get_api_key($integration),
