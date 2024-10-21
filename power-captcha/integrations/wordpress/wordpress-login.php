@@ -36,9 +36,8 @@ class Integration_WordPress_Login extends Integration {
             return $user;
         }
 
-        // TODO use $_POST['log'] instead of $user to get the raw user input.
         // TODO merge this verification with WooCoommerce Login integration. note: WooCommerce login uses the field $_POST['username'] for username.
-        $verification = $this->verify_token($username); 
+        $verification = $this->verify_token($_POST['log'] ?? null); 
         if(FALSE === $verification->is_success()) {
             return new \WP_Error($verification->get_error_code(), $verification->get_user_message());
         }
