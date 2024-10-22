@@ -103,10 +103,10 @@ abstract class Integration {
         if($response_code == 200 && isset($response_body['success'])) {
             $verified = boolval($response_body['success']);
             if($verified) {
-                $this->log('Token verification: Token successfully verified.', ['Token' => $token ]);
+                $this->log('Token verification: Token successfully verified.', ['Token' => $token_raw ]);
                 return new VerificationResult(TRUE, NULL);
             } else {
-                $this->log('Token verification: Token not verified. Token was not solved by user or mismatch of clientUid or username.', ['Token' => $token ]);
+                $this->log('Token verification: Token not verified. Token was not solved by user or mismatch of clientUid or username.', ['Token' => $token_raw ]);
                 return new VerificationResult(FALSE, powercaptcha()::ERROR_CODE_TOKEN_NOT_VERIFIED);
             }
         } 
