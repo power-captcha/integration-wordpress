@@ -273,7 +273,9 @@ final class PowerCaptcha {
     }
 
     public function get_client_uid() {
-        return hash('sha256', $_SERVER['REMOTE_ADDR']);
+        $client_ip = isset ( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+        $client_uid = empty( $client_ip ) ? '' : hash('sha256', $client_ip); 
+        return $client_uid;
     }
 
     public function is_integration_enabled(string $id) {
