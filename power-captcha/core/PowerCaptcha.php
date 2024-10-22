@@ -142,14 +142,17 @@ final class PowerCaptcha {
         wp_register_script(
             'powercaptcha-library', 
             $this->get_javascript_url(),
-            // TODO verison
+            array(),
+            POWER_CAPTCHA_PLUGIN_VERSION,
+            true
         ); 
     
         wp_register_script(
             'powercaptcha-wp', 
             POWER_CAPTCHA_URL . 'public/power-captcha-wp.js', 
             array('powercaptcha-library', 'jquery'), 
-            POWER_CAPTCHA_PLUGIN_VERSION
+            POWER_CAPTCHA_PLUGIN_VERSION,
+            true
         );
     
         wp_localize_script(

@@ -41,7 +41,7 @@ class Integration_WP_Forms extends Integration {
             plugin_dir_url( __FILE__ )  . 'public/power-captcha-wpforms.js',  
             ['jquery', 'powercaptcha-wp'], 
             POWER_CAPTCHA_PLUGIN_VERSION, 
-            false 
+            true 
         );
     }
 

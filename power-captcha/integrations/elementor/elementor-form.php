@@ -34,7 +34,7 @@ class Integration_Elementor_Forms extends Integration {
             plugin_dir_url( __FILE__ )  . 'public/power-captcha-elementor.js',  
             ['jquery', 'powercaptcha-wp'], 
             POWER_CAPTCHA_PLUGIN_VERSION, 
-            false 
+            true 
         );
     }
 

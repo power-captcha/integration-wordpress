@@ -31,16 +31,13 @@ class Integration_WooCommerce_Checkout extends Integration {
     }
 
     public function enqueue_script() {
-        parent::enqueue_scripts(); // TODO is this needed?? 
-        // because is 'powercaptcha-woocommerce-checkout' depends on powercaptcha-wp 
-
         // enqueue additional javascript for woocommerce checkout
         wp_enqueue_script(
             'powercaptcha-woocommerce-checkout', 
             plugin_dir_url( __FILE__ )  . 'public/power-captcha-woocommerce-checkout.js',  
             ['jquery', 'powercaptcha-wp'], 
             POWER_CAPTCHA_PLUGIN_VERSION, 
-            false 
+            true 
         );
     }
 
