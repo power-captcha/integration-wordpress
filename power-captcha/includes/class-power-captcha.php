@@ -1,5 +1,4 @@
 <?php
-// TODO rename file to class-power-captcha.php
 
 namespace PowerCaptcha_WP;
 

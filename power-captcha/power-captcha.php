@@ -18,10 +18,10 @@ define('POWER_CAPTCHA_PATH', plugin_dir_path( POWER_CAPTCHA_PLUGIN_FILE ));
 define('POWER_CAPTCHA_URL', plugin_dir_url( POWER_CAPTCHA_PLUGIN_FILE ));
 
 // Init core
-require POWER_CAPTCHA_PATH . 'core/PowerCaptcha.php';
+require POWER_CAPTCHA_PATH . 'includes/class-power-captcha.php';
 PowerCaptcha_WP\PowerCaptcha::instance();
 
-require POWER_CAPTCHA_PATH . 'core/third-party-compatibility.php'; // TODO integrate into 
+require POWER_CAPTCHA_PATH . 'includes/third-party-compatibility.php'; // TODO integrate into 
 
 function powercaptcha() : PowerCaptcha_WP\PowerCaptcha {
     return PowerCaptcha_WP\PowerCaptcha::instance();
