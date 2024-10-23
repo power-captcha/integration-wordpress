@@ -1,8 +1,8 @@
 <?php
 
-namespace PowerCaptcha_WP;
+namespace Power_Captcha_WP;
 
-class VerificationResult {
+class Verification_Result {
 
     private bool $success;
     private string|null $error_code;

@@ -1,6 +1,6 @@
 <?php
 
-namespace PowerCaptcha_WP;
+namespace Power_Captcha_WP;
 
 defined('POWER_CAPTCHA_PATH') || exit;
 

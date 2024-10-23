@@ -1,10 +1,10 @@
 <?php
 // TODO rename file to class-power-captcha-admin-settings.php
-namespace PowerCaptcha_WP;
+namespace Power_Captcha_WP;
 
 defined('POWER_CAPTCHA_PATH') || exit;
 
-class PowerCaptcha_Admin_Settings {
+class Admin_Settings {
 
     public function __construct() {}
 
@@ -71,7 +71,7 @@ class PowerCaptcha_Admin_Settings {
         );
 
         // integration settings
-        foreach(PowerCaptcha::instance()->get_integrations() as $key => $integration) {
+        foreach(Power_Captcha::instance()->get_integrations() as $key => $integration) {
             /** @var Integration $integration */
             register_setting(
                 powercaptcha()::SETTING_GROUP_NAME,
@@ -178,7 +178,7 @@ class PowerCaptcha_Admin_Settings {
         );
 
         // integration settings
-        foreach(PowerCaptcha::instance()->get_integrations() as $key => $integration) {
+        foreach(Power_Captcha::instance()->get_integrations() as $key => $integration) {
             /** @var Integration $integration */
             $this->add_setting_checkbox_field(
                 powercaptcha()::SETTING_SECTION_INTEGRATION,

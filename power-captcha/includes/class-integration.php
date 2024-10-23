@@ -1,6 +1,6 @@
 <?php
 
-namespace PowerCaptcha_WP;
+namespace Power_Captcha_WP;
 
 abstract class Integration {
     const SETTING_ENABLED_NAME_PREFIX = 'powercaptcha_integration_enabled_';

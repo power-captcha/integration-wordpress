@@ -19,12 +19,12 @@ define('POWER_CAPTCHA_URL', plugin_dir_url( POWER_CAPTCHA_PLUGIN_FILE ));
 
 // Init core
 require POWER_CAPTCHA_PATH . 'includes/class-power-captcha.php';
-PowerCaptcha_WP\PowerCaptcha::instance();
+Power_Captcha_WP\Power_Captcha::instance();
 
 require POWER_CAPTCHA_PATH . 'includes/third-party-compatibility.php'; // TODO integrate into 
 
-function powercaptcha() : PowerCaptcha_WP\PowerCaptcha {
-    return PowerCaptcha_WP\PowerCaptcha::instance();
+function powercaptcha() : Power_Captcha_WP\Power_Captcha {
+    return Power_Captcha_WP\Power_Captcha::instance();
 }
 
 if(file_exists(WP_CONTENT_DIR . '/power-captcha-config.php')) {

@@ -1,5 +1,5 @@
 <?php
-namespace PowerCaptcha_WP {
+namespace Power_Captcha_WP {
 
     use WP_Error;
     use stdClass;
@@ -7,11 +7,11 @@ namespace PowerCaptcha_WP {
     defined('POWER_CAPTCHA_PATH') || exit;
     
     // create / init update check
-    new UpdateCheck;
+    new Update_Check;
     
     // based on https://rudrastyh.com/wordpress/self-hosted-plugin-update.html and 
     //          https://github.com/rudrastyh/misha-update-checker/blob/main/misha-update-checker.php
-    class UpdateCheck {
+    class Update_Check {
         
         const UPDATE_INFO_URL = 'https://power-captcha.com/wp-content/uploads/power-captcha-plugin/update-info.php';
         const CURRENT_VERSION = POWER_CAPTCHA_PLUGIN_VERSION;

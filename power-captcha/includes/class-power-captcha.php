@@ -1,6 +1,6 @@
 <?php
 
-namespace PowerCaptcha_WP;
+namespace Power_Captcha_WP;
 
 
 /**
@@ -18,7 +18,7 @@ namespace PowerCaptcha_WP;
  * @subpackage Plugin_Name/includes
  * @author     Your Name <email@example.com>
  */
-final class PowerCaptcha {
+final class Power_Captcha {
 
        
     const API_VERSION = 'v1';
@@ -113,7 +113,7 @@ final class PowerCaptcha {
         add_action('plugins_loaded', [$this, 'init_integrations']);
 
         // Init admin
-        $admin_settings = new PowerCaptcha_Admin_Settings();
+        $admin_settings = new Admin_Settings();
         add_action('init', [$admin_settings, 'init']);
 
         // Register scripts
