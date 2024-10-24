@@ -149,7 +149,7 @@ final class Power_Captcha {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin-settings.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-integration.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-verification-result.php';
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/third-party-compatibility.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-third-party-compatibility.php';
     }
 
     private function load_integrations() {
