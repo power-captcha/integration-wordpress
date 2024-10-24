@@ -17,6 +17,27 @@ class Admin_Settings {
         add_action( 'admin_init', [$this, 'register_settings'] );
         add_action( 'admin_init', [$this, 'init_settings_sections'] );
         add_action( 'admin_init', [$this, 'init_settings_fields'] );
+
+        add_filter( 'plugin_action_links_power-captcha/power-captcha.php', [$this, 'add_plugin_action_links']);
+    }
+
+    public function add_plugin_action_links( array $actions ) {
+        // adding link to settings page on the plugin list overview
+
+        // Build and escape the URL.
+        $url = esc_url( add_query_arg(
+            'page',
+            powercaptcha()::SETTING_PAGE,
+            get_admin_url() . 'admin.php'
+        ) );
+        // Create the link.
+        $settings_link = '<a href="'.$url.'">' . __( 'Settings' ) . '</a>';
+        // Adds the link to the end of the array.
+        array_push(
+            $actions,
+            $settings_link
+        );
+        return $actions;
     }
 
     public function init_admin_menu() {

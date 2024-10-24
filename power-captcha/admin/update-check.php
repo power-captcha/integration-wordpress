@@ -6,9 +6,15 @@ namespace Power_Captcha_WP {
     
     defined('POWER_CAPTCHA_PATH') || exit;
     
-    // create / init update check
-    new Update_Check;
-    
+    add_action('init', function () {
+        if(!current_user_can('manage_options') && !wp_doing_cron() && !(defined('WP_CLI'))) {
+            return; // do nothing
+        } else {
+            // init the update check if user is admin OR cronjob is running OR wp_cli is running
+            new Update_Check();
+        }
+    });
+
     // based on https://rudrastyh.com/wordpress/self-hosted-plugin-update.html and 
     //          https://github.com/rudrastyh/misha-update-checker/blob/main/misha-update-checker.php
     class Update_Check {

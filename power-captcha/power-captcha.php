@@ -33,4 +33,4 @@ if(file_exists(WP_CONTENT_DIR . '/power-captcha-config.php')) {
 
 
 
-require POWER_CAPTCHA_PATH . 'admin/plugin.php'; // TODO admin/settings.php
+require POWER_CAPTCHA_PATH . 'admin/update-check.php';
