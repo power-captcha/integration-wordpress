@@ -3,29 +3,10 @@
 namespace Power_Captcha_WP;
 
 
-/**
- * #### TODO ####
- * The core plugin class. 
- *
- * This is used to define internationalization, admin-specific hooks, and
- * public-facing site hooks.
- *
- * Also maintains the unique identifier of this plugin as well as the current
- * version of the plugin.
- *
- * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
- */
 final class Power_Captcha {
 
-       
     const API_VERSION = 'v1';
     const JS_VERSION = '1.2.2';
-
-    // Singelton instance
-    private static $instance;
 
     const SHOP_URL = 'https://power-captcha.com/power-captcha-shop/';
     const API_KEY_MANAGEMENT_URL = 'https://power-captcha.com/mein-konto/api-keys/';
@@ -77,11 +58,8 @@ final class Power_Captcha {
 
     const AJAX_ACTION_NAME_INTEGRATION_SETTING = 'powercaptcha_ajax_integration_setting';
 
-    protected $version;
-
-
+    // Singelton instance
 	protected static $_instance = null;
-
 
     /**
      * @var Integration[] $integrations
@@ -97,10 +75,7 @@ final class Power_Captcha {
 	}
 
     private function __construct() {
-        if( defined('POWER_CAPTCHA_PLUGIN_VERSION') ) {
-            $this->version = POWER_CAPTCHA_PLUGIN_VERSION;
-        }
-
+        
         // Load dependencies
         $this->load_dependencies();
         $this->load_integrations();
