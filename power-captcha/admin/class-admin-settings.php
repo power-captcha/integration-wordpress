@@ -1,5 +1,5 @@
 <?php
-// TODO rename file to class-power-captcha-admin-settings.php
+
 namespace Power_Captcha_WP;
 
 defined('POWER_CAPTCHA_PATH') || exit;

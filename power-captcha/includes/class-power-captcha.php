@@ -75,7 +75,7 @@ final class Power_Captcha {
 	}
 
     private function __construct() {
-        
+
         // Load dependencies
         $this->load_dependencies();
         $this->load_integrations();
@@ -142,7 +142,7 @@ final class Power_Captcha {
     }
 
     private function load_dependencies() {
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin-settings.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-integration.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-verification-result.php';
     }
