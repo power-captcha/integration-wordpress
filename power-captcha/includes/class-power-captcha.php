@@ -91,6 +91,10 @@ final class Power_Captcha {
         $admin_settings = new Admin_Settings();
         add_action('init', [$admin_settings, 'init']);
 
+        // Third party compatibility
+        $third_party_compatibility = new Third_Party_Compatibility();
+        $third_party_compatibility->init();
+
         // Register scripts
         add_action( 'wp_enqueue_scripts', [$this, 'register_scripts'] );
         // note: The 'wp_enqueue_scripts' hook is not executed on wordpress login, registration and lost-password pages.
@@ -145,6 +149,7 @@ final class Power_Captcha {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin-settings.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-integration.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-verification-result.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/third-party-compatibility.php';
     }
 
     private function load_integrations() {

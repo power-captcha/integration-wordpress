@@ -21,8 +21,6 @@ define('POWER_CAPTCHA_URL', plugin_dir_url( POWER_CAPTCHA_PLUGIN_FILE ));
 require POWER_CAPTCHA_PATH . 'includes/class-power-captcha.php';
 Power_Captcha_WP\Power_Captcha::instance();
 
-require POWER_CAPTCHA_PATH . 'includes/third-party-compatibility.php'; // TODO integrate into 
-
 function powercaptcha() : Power_Captcha_WP\Power_Captcha {
     return Power_Captcha_WP\Power_Captcha::instance();
 }
