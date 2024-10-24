@@ -79,7 +79,7 @@ class Integration_WP_Forms extends Integration {
         return null;
     }
 
-    private function report_to_wpforms_log(VerificationResult $verification, array $wpforms_form_data, array $wpforms_entry) {
+    private function report_to_wpforms_log(Verification_Result $verification, array $wpforms_form_data, array $wpforms_entry) {
         // Create a log entry in WPForms
         if($verification->get_error_code() === powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD) {
             $error_message = 'POWER CAPTCHA token was not present in post request.';

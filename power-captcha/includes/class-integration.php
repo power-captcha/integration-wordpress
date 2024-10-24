@@ -27,10 +27,6 @@ abstract class Integration {
         return $this->setting_description;
     }
 
-    // public function get_file_paths() : array {
-    //     return $this->file_paths;
-    // }
-
     public function is_enabled() {
         return (get_option($this->get_setting_name()) == 1);
     }
@@ -59,18 +55,18 @@ abstract class Integration {
         return isset($_POST['pc-token']) ? $_POST['pc-token'] : false;
     }
 
-    public function verify_token(string $username_raw = null, string $token_raw = null, string $clientUid = null) : VerificationResult {
+    public function verify_token(string $username_raw = null, string $token_raw = null, string $clientUid = null) : Verification_Result {
         if( is_null($token_raw) ) {
             $token_raw = $this->fetch_token_from_post_request();
             if($token_raw === FALSE) {
                 $this->log('Token verification: The request does not contain a token field.');
-                return new VerificationResult(false, powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD);
+                return new Verification_Result(false, powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD);
             }
         }
 
         if( empty ( $token_raw ) ) {
             $this->log('Token verification: The request contains an empty token.');
-            return new VerificationResult(false, powercaptcha()::ERROR_CODE_MISSING_TOKEN);
+            return new Verification_Result(false, powercaptcha()::ERROR_CODE_MISSING_TOKEN);
         } 
     
         $request_url = powercaptcha()->get_token_verification_url();
@@ -104,10 +100,10 @@ abstract class Integration {
             $verified = boolval($response_body['success']);
             if($verified) {
                 $this->log('Token verification: Token successfully verified.', ['Token' => $token_raw ]);
-                return new VerificationResult(TRUE, NULL);
+                return new Verification_Result(TRUE, NULL);
             } else {
                 $this->log('Token verification: Token not verified. Token was not solved by user or mismatch of clientUid or username.', ['Token' => $token_raw ]);
-                return new VerificationResult(FALSE, powercaptcha()::ERROR_CODE_TOKEN_NOT_VERIFIED);
+                return new Verification_Result(FALSE, powercaptcha()::ERROR_CODE_TOKEN_NOT_VERIFIED);
             }
         } 
       
@@ -135,7 +131,7 @@ abstract class Integration {
             $this->log('Token verification: Error verifiying the token.', ['Reason' => 'Unknown response from POWER CAPTCHA API.', 'Response code' => $response_code, 'Response body' => $response_body]);
         }
     
-        return new VerificationResult(false,  $error_code);
+        return new Verification_Result(false,  $error_code);
     }
 
     protected function log(string $message, array|object $data = null) {
