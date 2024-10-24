@@ -90,6 +90,10 @@ class Admin_Settings {
             powercaptcha()::SETTING_GROUP_NAME,
             powercaptcha()::SETTING_NAME_CHECK_MODE,
         );
+        register_setting(
+            powercaptcha()::SETTING_GROUP_NAME,
+            powercaptcha()::SETTING_NAME_API_ERROR_POLICY,
+        );
 
         // integration settings
         foreach(Power_Captcha::instance()->get_integrations() as $key => $integration) {
@@ -174,14 +178,14 @@ class Admin_Settings {
                 powercaptcha()::API_KEY_MANAGEMENT_URL
             )
         );
-
+        
         // captcha settings
         $this->add_setting_radio_field(
             powercaptcha()::SETTING_SECTION_CAPTCHA,
             powercaptcha()::SETTING_NAME_CHECK_MODE,
             [
                 'auto' => [
-                    'label' => __('Automatic', 'power-captcha'),
+                    'label' => __('Automatic (default)', 'power-captcha'),
                     'description' => __('The widget is always displayed and the security check is started automatically as soon as the form is filled in or after the corresponding field (e.g. user name or email address) has been filled in.  A click on the widget is only necessary if it is required to solve a captcha.', 'power-captcha'),
                 ],
                 'hidden' => [
@@ -195,7 +199,25 @@ class Admin_Settings {
             ],
             'auto',
             __('Check mode', 'power-captcha'),
-            ''
+            __('Configure the display of the widget and the behaviour of the security check.', 'power-captcha')
+        );
+
+        $this->add_setting_radio_field(
+            powercaptcha()::SETTING_SECTION_CAPTCHA,
+            powercaptcha()::SETTING_NAME_API_ERROR_POLICY,
+            [
+                'grant_access' => [
+                    'label' => __('Grant access (default)', 'power-captcha'),
+                    'description' => __('Access is granted if an API error occurs.', 'power-captcha')
+                ],
+                'block_access' => [
+                    'label' => __('Block access', 'power-captcha'),
+                    'description' => __('Access is blocked if an API error occurs. An error message is displayed requesting the user to try again later.', 'power-captcha')
+                ]
+            ],
+            'grant_access',
+            __('API Error Policy', 'power-captcha'),
+            __('Configure the behaviour in the case of errors during token verification via the POWER CAPTCHA API (e.g. connection problems to the API or incorrect configuration).', 'power-captcha')
         );
 
         // integration settings
@@ -313,8 +335,8 @@ class Admin_Settings {
 
     public function render_radio_field(array $render_args) {
         ?>
+        <p style="margin-bottom: 4px"><?php echo esc_html($render_args['label']) ?></p>
         <fieldset>
-        <legend><?php echo esc_html($render_args['label']) ?></legend>
         <?php
                 foreach($render_args['options'] as $option_value => $option_details):
                     $option_checked = checked($option_value, $render_args['value'], false);
@@ -353,7 +375,7 @@ class Admin_Settings {
 
     public function captcha_setting_section_description_content() {
         echo '<p>'.
-            esc_html__('You can configure the functionality and display of the captcha or widget here.', 'power-captcha')
+            esc_html('Adjust the display of the widget and the behavior of the security check, along with how errors during token verification are handled.', 'power-captcha')
             .'</p>';
     }
     

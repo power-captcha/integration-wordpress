@@ -33,6 +33,7 @@ final class Power_Captcha {
     // captcha settings
     const SETTING_SECTION_CAPTCHA = 'powercaptcha_setting_section_captcha';
     const SETTING_NAME_CHECK_MODE = 'powercaptcha_check_mode';
+    const SETTING_NAME_API_ERROR_POLICY = 'powercaptcha_api_error_policy';
     
     // integration settings
     const SETTING_SECTION_INTEGRATION = 'powercaptcha_setting_section_integration';
@@ -54,7 +55,6 @@ final class Power_Captcha {
     const SETTING_SECTION_ON_PREMISES = 'powercaptcha_setting_section_on_premises';
     const SETTING_NAME_ENDPOINT_BASE_URL = 'powercaptcha_endpoint_base_url';
     const SETTING_NAME_JAVASCRIPT_BASE_URL = 'powercaptcha_javascript_base_url';
-
 
     const AJAX_ACTION_NAME_INTEGRATION_SETTING = 'powercaptcha_ajax_integration_setting';
 
@@ -222,6 +222,10 @@ final class Power_Captcha {
 
     public function get_check_mode() : string {
         return get_option(self::SETTING_NAME_CHECK_MODE, 'auto');
+    }
+
+    public function get_api_error_policy() : string {
+        return get_option(self::SETTING_NAME_API_ERROR_POLICY, 'grant_access');
     }
 
     private function get_endpoint_base_url() {
