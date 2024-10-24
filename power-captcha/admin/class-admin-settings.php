@@ -295,7 +295,7 @@ class Admin_Settings {
     public function render_text_field(array $render_args){
         ?>
         <input type="text" id="<?php echo esc_attr($render_args['id']); ?>" name="<?php echo esc_attr($render_args['name']); ?>" value="<?php echo esc_attr($render_args['value']); ?>" autocomplete="none"> 
-        <label for="<?php echo esc_attr($render_args['id']); ?>" class="description"><?php echo esc_html($render_args['label']); ?></label>
+        <label for="<?php echo esc_attr($render_args['id']); ?>" class="description"><?php echo wp_kses_post($render_args['label']); ?></label>
         <?php
     }
 
@@ -306,7 +306,7 @@ class Admin_Settings {
             id="<?php echo esc_attr($render_args['id']); ?>" 
             name="<?php echo esc_attr($render_args['name']); ?>" value="1" <?php echo esc_attr($checked) ?>>
         <label for="<?php echo esc_attr($render_args['id']); ?>" class="description">
-            <?php echo esc_html($render_args['label']); ?>
+            <?php echo wp_kses_post($render_args['label']); ?>
         </label>
         <?php
     }
@@ -329,7 +329,7 @@ class Admin_Settings {
                     >
                     <strong><?php echo esc_html($option_details['label']); ?></strong>
                     <p class="description">
-                        <?php echo esc_html($option_details['description']); ?>
+                        <?php echo wp_kses_post($option_details['description']); ?>
                     </p>
                 </label>
             </div>
