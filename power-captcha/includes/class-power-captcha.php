@@ -14,12 +14,8 @@ final class Power_Captcha {
     const DEFAULT_ENDPOINT_BASE_URL = 'https://api.power-captcha.com';
     const DEFAULT_JAVASCRIPT_URL = 'https://cdn.power-captcha.com';
 
-    const ERROR_CODE_NO_TOKEN_FIELD = 'powercaptcha_error_no_token_field';
-    const ERROR_CODE_MISSING_TOKEN = 'powercaptcha_error_missing_token';
-    const ERROR_CODE_INVALID_TOKEN = 'powercaptcha_error_invalid_token';
-    const ERROR_CODE_TOKEN_NOT_VERIFIED = 'powercaptcha_error_token_not_verified';
-    const ERROR_CODE_INVALID_SECRET = 'powercaptcha_error_invalid_secret';
     const ERROR_CODE_API_ERROR = 'powercaptcha_api_error';
+    const ERROR_CODE_USER_ERROR = 'powercaptcha_user_error';
 
     // settings
     const SETTING_PAGE = 'powercaptcha_admin';
@@ -34,6 +30,8 @@ final class Power_Captcha {
     const SETTING_SECTION_CAPTCHA = 'powercaptcha_setting_section_captcha';
     const SETTING_NAME_CHECK_MODE = 'powercaptcha_check_mode';
     const SETTING_NAME_API_ERROR_POLICY = 'powercaptcha_api_error_policy';
+    const ERROR_POLICY_GRANT_ACCESS = 'grant_access';
+    const ERROR_POLICY_BLOCK_ACCESS = 'block_access';
     
     // integration settings
     const SETTING_SECTION_INTEGRATION = 'powercaptcha_setting_section_integration';
@@ -147,6 +145,8 @@ final class Power_Captcha {
 
     private function load_dependencies() {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin-settings.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-api-error.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-user-error.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-integration.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-verification-result.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-third-party-compatibility.php';

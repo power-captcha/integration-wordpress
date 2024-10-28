@@ -206,16 +206,16 @@ class Admin_Settings {
             powercaptcha()::SETTING_SECTION_CAPTCHA,
             powercaptcha()::SETTING_NAME_API_ERROR_POLICY,
             [
-                'grant_access' => [
+                powercaptcha()::ERROR_POLICY_GRANT_ACCESS => [
                     'label' => __('Grant access (default)', 'power-captcha'),
                     'description' => __('Access is granted if an API error occurs.', 'power-captcha')
                 ],
-                'block_access' => [
+                powercaptcha()::ERROR_POLICY_BLOCK_ACCESS => [
                     'label' => __('Block access', 'power-captcha'),
                     'description' => __('Access is blocked if an API error occurs. An error message is displayed requesting the user to try again later.', 'power-captcha')
                 ]
             ],
-            'grant_access',
+            powercaptcha()::ERROR_POLICY_GRANT_ACCESS,
             __('API Error Policy', 'power-captcha'),
             __('Configure the behaviour in the case of errors during token verification via the POWER CAPTCHA API (e.g. connection problems to the API or incorrect configuration).', 'power-captcha')
         );

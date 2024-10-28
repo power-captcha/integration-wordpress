@@ -16,44 +16,28 @@ class Verification_Result {
         return $this->success;
     }
 
-    public function get_error_code() : string {
+    public function get_error_code() : string|null {
         return $this->error_code;
     }
 
     public function get_user_message($error_prefix = true) : string {
+        if(is_null($this->error_code)) {
+            return '';
+        }
+        
         $output = '';
         if($error_prefix) {
             $output .= '<strong>'.__('Error:', 'power-captcha').'</strong>'.' ';
         }
-        
-        $output .= __('Submission of the form was blocked by POWER CAPTCHA. Please try again later.' , 'power-captcha');
 
-        if( is_null($this->error_code) ) {
-            return $output;
-        }
-
-        if($this->error_code === powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD) {
-            $error_message = __('The form does not contain a token field.', 'power-captcha');
-        } else if($this->error_code === powercaptcha()::ERROR_CODE_MISSING_TOKEN) {
-            $error_message = __('The token is empty.', 'power-captcha');
-        } else if($this->error_code === powercaptcha()::ERROR_CODE_INVALID_TOKEN) {
-            $error_message = __('The token is invalid.', 'power-captcha');
-        } else if($this->error_code === powercaptcha()::ERROR_CODE_TOKEN_NOT_VERIFIED) {
-            $error_message = __('The token has not been verified.', 'power-captcha');
-        } else if($this->error_code === powercaptcha()::ERROR_CODE_INVALID_SECRET) {
-            $error_message = __('The secret key is missing or invalid.', 'power-captcha');
-        } else if($this->error_code === powercaptcha()::ERROR_CODE_API_ERROR) {
-            $error_message = __('Error connecting to the API. API Key maybe invalid.', 'power-captcha');
+        if( powercaptcha()::ERROR_CODE_USER_ERROR == $this->error_code ) {
+            $output .= __('The POWER CAPTCHA security check was not confirmed.' , 'power-captcha');
+        } else if (powercaptcha()::ERROR_CODE_API_ERROR == $this->error_code) {
+            $output .= __('An internal error occurred during the POWER CAPTCHA security check. Please try again later.' , 'power-captcha');
         } else {
-            $error_message = $this->error_code; // fallback
+            $output .= __('An unkown error occurred during the POWER CAPTCHA security check. Please try again later.' , 'power-captcha');
         }
 
-        $output .= ' '.sprintf(
-            /* translators: %s the error message */
-            __('Error message: %s', 'power-captcha'),
-            $error_message
-        );
-        
         return $output;
     }
 

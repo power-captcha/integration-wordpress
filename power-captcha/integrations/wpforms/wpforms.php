@@ -81,10 +81,12 @@ class Integration_WP_Forms extends Integration {
 
     private function report_to_wpforms_log(Verification_Result $verification, array $wpforms_form_data, array $wpforms_entry) {
         // Create a log entry in WPForms
-        if($verification->get_error_code() === powercaptcha()::ERROR_CODE_NO_TOKEN_FIELD) {
-            $error_message = 'POWER CAPTCHA token was not present in post request.';
+        if(powercaptcha()::ERROR_CODE_USER_ERROR === $verification->get_error_code()) {
+            $error_message = 'POWER CAPTCHA security check was not confirmed by user.';
+        } else if(powercaptcha()::ERROR_CODE_API_ERROR === $verification->get_error_code()) {
+            $error_message = 'An internal error occurred during the POWER CAPTCHA token verification. Please check you API Key and Secret Key.';
         } else {
-            $error_message = 'POWER CAPTCHA token invalid.';
+            $error_message = 'An unkown error occurred during the POWER CAPTCHA token verification.';
         }
 
         // TODO better message for wpforms_log
@@ -92,7 +94,7 @@ class Integration_WP_Forms extends Integration {
             //@param string $title   Title of a log error_message.
             esc_html__( 'POWER CAPTCHA: Spam detected' , 'power-captcha' ) . uniqid(), 
             //@param mixed  $error_message Content of a log error_message.
-            [$error_message, $wpforms_entry], 
+            [esc_html($error_message), $wpforms_entry], 
             // @param array  $args    Expected keys: form_id, meta, parent.
             [ 
                 'type'    => ['spam'],
