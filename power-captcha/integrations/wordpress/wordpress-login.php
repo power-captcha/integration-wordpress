@@ -24,7 +24,7 @@ class Integration_WordPress_Login extends Integration {
     }
 
     public function display_widget() {
-        parent::echo_widget_html('#username', false, '', 'margin-bottom: 16px');
+        parent::echo_widget_html('#user_login', false, '', 'margin-bottom: 16px');
     }
 
     public function enqueue_script() {
