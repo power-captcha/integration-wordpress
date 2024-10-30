@@ -64,6 +64,7 @@ final class Power_Captcha {
      */
     private array $integrations = array();
 
+    private array $key_overwrites = array();
 
 	public static function instance() {
 		if ( is_null( self::$_instance ) ) {
@@ -106,10 +107,12 @@ final class Power_Captcha {
     }
 
     public function init_integrations() : void {
-        foreach( $this->integrations as $integration ) {
-            /** @var Integration $integration */
-            if( $integration->is_enabled() ) {
-                $integration->init();
+        if($this->is_configured()) {
+            foreach( $this->integrations as $integration ) {
+                /** @var Integration $integration */
+                if( $integration->is_enabled() ) {
+                    $integration->init();
+                }
             }
         }
     }
@@ -163,7 +166,6 @@ final class Power_Captcha {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'integrations/elementor/elementor-form.php';
     }
 
-    
     public function register_integration(Integration $integration) {
         $this->integrations[$integration->get_id()] = $integration;
     }
@@ -190,7 +192,6 @@ final class Power_Captcha {
         ]);
     }
 
-
     /**
      * @return Integration[] $integrations
      */
@@ -198,24 +199,30 @@ final class Power_Captcha {
         return $this->integrations;
     }
 
+    public function overwrite_keys($integration_id, $api_key, $secret_key) {
+        $this->key_overwrites[$integration_id] = [
+            'api_key' => $api_key,
+            'secret_key' => $secret_key
+        ];
+    }
 
     public function is_configured() {
         // only configured if api id and secret id are not empty
         return !empty($this->get_api_key()) && !empty($this->get_secret_key());
     }
 
-    public function get_api_key($integration = null) {
+    public function get_api_key($integration_id = null) {
         $api_key = self::get_setting_text(self::SETTING_NAME_API_KEY);
-        if($integration !== null && isset($this->key_overwrite[$integration]['api_key'])) {
-            $api_key = $this->key_overwrite[$integration]['api_key'];
+        if($integration_id !== null && isset($this->key_overwrites[$integration_id]['api_key'])) {
+            $api_key = $this->key_overwrites[$integration_id]['api_key'];
         }
         return $api_key;
     }
 
-    public function get_secret_key($integration = null) {
+    public function get_secret_key($integration_id = null) {
         $secret_key = self::get_setting_text(self::SETTING_NAME_SECRET_KEY);
-        if($integration !== null && isset($this->key_overwrite[$integration]['secret_key'])) {
-           $secret_key = $this->key_overwrite[$integration]['secret_key'];
+        if($integration_id !== null && isset($this->key_overwrites[$integration_id]['secret_key'])) {
+           $secret_key = $this->key_overwrites[$integration_id]['secret_key'];
         }
         return $secret_key;
     }
