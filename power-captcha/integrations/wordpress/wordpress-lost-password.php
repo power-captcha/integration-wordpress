@@ -34,6 +34,10 @@ class Integration_WordPress_WooCommerce_Lost_Password extends Integration {
         add_action('lostpassword_post', [$this, 'verification'], 10, 2);
     }
 
+    public function disable_verification() {
+        remove_action('lostpassword_post', [$this, 'verification'], 10);
+    }
+
     public function display_widget_wordpress() {
         parent::echo_widget_html('#user_login', true, '', 'margin-bottom: 16px');
     }

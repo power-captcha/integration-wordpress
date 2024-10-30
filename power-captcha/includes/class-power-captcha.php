@@ -264,6 +264,12 @@ final class Power_Captcha {
         return $client_uid;
     }
 
+    public function disable_integration_verification($integration_id) {
+        if(array_key_exists($integration_id, $this->integrations)) {
+            $this->integrations[$integration_id]->disable_verification();
+        }
+    }
+
     public function is_integration_enabled(string $id) {
         if(!$this->is_configured()) {
             return false;

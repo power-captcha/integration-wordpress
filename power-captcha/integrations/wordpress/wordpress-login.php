@@ -23,6 +23,10 @@ class Integration_WordPress_Login extends Integration {
         add_filter('authenticate', [$this, 'verification'], 20, 3);
     }
 
+    public function disable_verification() {
+        remove_filter('authenticate', [$this, 'verification'], 20);
+    }
+
     public function display_widget() {
         parent::echo_widget_html('#user_login', false, '', 'margin-bottom: 16px');
     }

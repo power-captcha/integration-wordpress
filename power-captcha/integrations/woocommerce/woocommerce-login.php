@@ -24,6 +24,10 @@ class Integration_WooCommerce_Login extends Integration {
         add_filter('woocommerce_process_login_errors', [$this, 'verification'], 20, 3);
     }
 
+    public function disable_verification() {
+        remove_filter('woocommerce_process_login_errors', [$this, 'verification'], 20);
+    }
+
     public function display_widget() {
         parent::echo_widget_html('#username', true, 'form-row');
     }

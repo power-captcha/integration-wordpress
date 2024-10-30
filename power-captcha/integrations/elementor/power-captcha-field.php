@@ -75,6 +75,11 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 	 * @return void
 	 */
 	public function validation( $field, $record, $ajax_handler ) {
+
+		if($this->power_captcha_integration->is_verification_disabled()) {
+			return; // skip validation if verification is disabled
+		}
+
 		$form = $ajax_handler->get_current_form();
 
 		$power_captcha_field_meta = array();

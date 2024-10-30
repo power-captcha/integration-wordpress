@@ -29,6 +29,10 @@ class Integration_WP_Forms extends Integration {
         add_action('wpforms_process', [$this, 'verification'], 10, 3);
     }
 
+    public function disable_verification() {
+        remove_action('wpforms_process', [$this, 'verification'], 10);
+    }
+
     public function display_widget() {
         // $userInputField is selected in frontend via custom javascript
        parent::echo_widget_html('', false, 'wpforms-field', 'margin-top: -10px; margin-bottom: 10px');

@@ -26,6 +26,10 @@ class Integration_WooCommerce_Checkout extends Integration {
         // as it is executed after the address and payment method have been validated.
     }
 
+    public function disable_verification() {
+        remove_action('woocommerce_after_checkout_validation', [$this, 'verification'], 10);
+    }
+
     public function display_widget() {
         parent::echo_widget_html('#billing_email', true, 'form-row');
     }

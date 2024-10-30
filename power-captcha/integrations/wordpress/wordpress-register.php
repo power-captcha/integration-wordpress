@@ -23,6 +23,10 @@ class Integration_WordPress_Register extends Integration {
         add_action('register_post', [$this, 'verification'], 10, 3);
     }
 
+    public function disable_verification() {
+        remove_action('register_post', [$this, 'verification'], 10);
+    }
+
     public function display_widget() {
         parent::echo_widget_html('#user_email', true, '', 'margin-bottom: 16px');
     }

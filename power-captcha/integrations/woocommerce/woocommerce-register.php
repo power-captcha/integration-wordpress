@@ -25,6 +25,10 @@ class Integration_WooCommerce_Register extends Integration {
         // This would lead to problems if the captcha is also enabled for the WooCommerce checkout.
     }
 
+    public function disable_verification() {
+        remove_filter('woocommerce_process_registration_errors', [$this, 'verification'], 10);
+    }
+
     public function display_widget() {
         parent::echo_widget_html('#reg_email', true, 'form-row');
     }

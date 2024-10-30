@@ -10,6 +10,8 @@ add_action('powercaptcha_register_integration', function ($powerCaptcha) {
 
 class Integration_Elementor_Forms extends Integration {
 
+    private bool $verification_disabled = false;
+
     public function __construct() {
         $this->id = 'elementor_form';
         $this->setting_title = __('Elementor Pro Forms', 'power-captcha');
@@ -24,6 +26,14 @@ class Integration_Elementor_Forms extends Integration {
 
         add_action( 'wp_enqueue_scripts', [$this, 'register_field_script'] );
         add_action( 'elementor_pro/forms/fields/register', [$this, 'register_field'] );
+    }
+
+    public function disable_verification() {
+        $this->verification_disabled = true;
+    }
+
+    public function is_verification_disabled() : bool {
+        return $this->verification_disabled;
     }
 
     public function register_field_script() {

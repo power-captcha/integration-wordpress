@@ -11,6 +11,10 @@ abstract class Integration {
 
     public function __construct() {}
 
+    public abstract function init();
+
+    public abstract function disable_verification();
+    
     public function get_id() : string {
         return $this->id;
     }
@@ -152,6 +156,5 @@ abstract class Integration {
         }
 
     }
-
-    public abstract function init();
+    
 }
