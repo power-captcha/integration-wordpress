@@ -36,8 +36,6 @@ class Integration_WordPress_Login extends Integration {
     }
 
     public function verification(null|\WP_User|\WP_Error $user, string $username, string $password) {
-        // TODO merge this verification with WooCoommerce Login integration. note: WooCommerce login uses the field $_POST['username'] for username.
-
         if( is_wp_error($user) ) {
             return $user;
         }

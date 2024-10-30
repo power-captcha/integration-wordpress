@@ -37,15 +37,11 @@ class Integration_WooCommerce_Login extends Integration {
     }
 
     public function verification(\WP_Error $validation_error, string $user_login, string $user_passsword) {
-        if(powercaptcha()->is_integration_enabled(powercaptcha()::WORDPRESS_LOGIN_INTEGRATION)) { //TODO powercaptcha()->get_integration('wordpress_login')->is_enabled()
-            // If the WordPress login integration is also enabled, the token will be verified later in the 'authenticate' filter, 
-            // because WoCommerce uses the wp_signon method that calls the 'authenticate' filter.
-            // Therefore, we can stop at this point.
-            return $validation_error;
-        }
+        // WooCommerce will later call the wp_signon method, which triggers the 'authenticate' filter.
+        // This 'authenticate' filter is also used to verifiy the token for the wordpress_login integration.
+        // To avoid double verification, we disable the wordpress_login verification here.
+        powercaptcha()->disable_integration_verification('wordpress_login');
 
-        // TODO merge this verification with WordPress Login integration. note: wordpress login uses the field $_POST['log'] for username.
-        
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Reason: The raw input is necessary and only used to verify the request via the POWER CAPTCHA API. Nonce generation and verification are handled by WooCommerce.
         $verification = $this->verify_token($_POST['username'] ?? null);
         if(FALSE === $verification->is_success()) {
