@@ -8,7 +8,10 @@
  * Requires PHP: 8.0
  * Author:      POWER CAPTCHA
  * Author URI:  https://power-captcha.com/
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0
  * Text Domain: power-captcha
+ * Domain Path: /languages
  */
  
 define('POWER_CAPTCHA_PLUGIN_VERSION', '0.3.0-dev'); 
