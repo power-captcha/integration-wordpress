@@ -1,0 +1,14 @@
+{
+    "require-dev": {
+        "wp-coding-standards/wpcs": "3.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "scripts": {
+        "cs": "./vendor/bin/phpcs --standard=WordPress -ps ./power-captcha",
+        "cbf": "./vendor/bin/phpcbf --standard=WordPress ./power-captcha"
+    }
+}
