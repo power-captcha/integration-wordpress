@@ -368,7 +368,7 @@ class Admin_Settings {
 		) . '</p>';
 		echo '<p>' . sprintf(
 			/* translators: %s: link to power captcha Shop page */
-			esc_html__( 'If you don\'t have an API Key yet, you can create one for free on %s.', 'power-captcha' ),
+			esc_html__( 'If you don\'t have an API Key yet, you can create one on %s.', 'power-captcha' ),
 			'<a href="' . esc_attr__( 'https://power-captcha.com/en/power-captcha-shop-licenses/', 'power-captcha' ) . '" target="_blank">' . esc_html__( 'POWER CAPTCHA', 'power-captcha' ) . '</a>'
 		) . '</p>';
 	}
