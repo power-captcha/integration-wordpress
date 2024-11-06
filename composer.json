@@ -8,7 +8,7 @@
         }
     },
     "scripts": {
-        "cs": "./vendor/bin/phpcs --standard=WordPress -ps ./power-captcha",
-        "cbf": "./vendor/bin/phpcbf --standard=WordPress ./power-captcha"
+        "cs": "./vendor/bin/phpcs --standard=./phpcs.xml -ps ./power-captcha",
+        "cbf": "./vendor/bin/phpcbf --standard=./phpcs.xml -p ./power-captcha"
     }
 }
