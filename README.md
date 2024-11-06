@@ -38,3 +38,107 @@ To automatically format and fix your code to match the WordPress Coding Standard
 cd integration-wordpress
 composer cbf
 ```
+
+## Translation
+
+### Update Translation Files
+
+1. After adding or editing translatable strings, you need to regenerate the POT file:
+   ```
+   cd integration-wordpress
+   composer make-pot
+   ```
+
+2. Next, update the PO files, which contain the language translations:
+   ```
+   composer update-po
+   ```
+
+3. Open the PO files (e.g., `power-captcha-de_DE.po`) and manually translate each string. Once all strings are translated, you must regenerate the JSON translation files:
+   ```
+   composer make-json
+   ```
+
+4. Finally, regenerate the MO files:
+   ```
+   composer make-mo
+   ```
+
+### Adding a New Language
+
+To add a new language translation, create a new PO file with the appropriate language code as the suffix. For example:
+`power-captcha/languages/power-captcha/power-captcha-es_ES.po`.
+
+After adding the file, follow the steps from *Update Translation Files* (as described above).
+
+
+
+
+
+Du:
+## Translation
+
+### Update Translation Files
+
+1. After adding or editing translatable strings, you need to regenerate the POT file:
+   
+cd integration-wordpress
+   composer make-pot
+
+
+2. Next, update the PO files, which contain the language translations:
+   
+composer update-po
+
+
+3. Open the PO files (e.g. power-captcha-de_DE.po) and manually translate each string. Once all strings are translated, you must regenerate the JSON translation files:
+   
+composer make-json
+
+
+4. Finally, regenerate the MO files:
+   
+composer make-mo
+
+
+### Adding a New Language
+
+To add a new language translation, create a new PO file in power-captcha/languages/power-captcha/ with the appropriate language code as the suffix. For example:
+power-captcha-es_ES.po.
+
+After adding the file, follow the steps from *Update Translation Files* (as described above).
+ChatGPT:
+ChatGPT
+markdown
+Code kopieren
+## Translation
+
+### Update Translation Files
+
+1. After adding or editing translatable strings, you need to regenerate the POT file:
+   ```
+   cd integration-wordpress
+   composer make-pot
+   ```
+
+2. Next, update the PO files, which contain the language translations:
+   ```
+   composer update-po
+   ```
+
+3. Open the PO files (e.g. `power-captcha-de_DE.po`) and manually translate each string. Once all strings are translated, you must regenerate the JSON translation files:
+   ```
+   composer make-json
+   ```
+
+4. Finally, regenerate the MO files:
+   ```
+   composer make-mo
+   ```
+
+### Adding a New Language
+
+To add a new language translation, create a new PO file in `power-captcha/languages/power-captcha/` with the appropriate language code as the suffix. For example:
+`power-captcha-es_ES.po`.
+
+After adding the file, follow the steps from *Update Translation Files* (as described above).

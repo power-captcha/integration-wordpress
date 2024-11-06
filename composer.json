@@ -1,7 +1,8 @@
 {
     "require-dev": {
         "wp-coding-standards/wpcs": "3.0",
-        "phpcompatibility/phpcompatibility-wp": "*"
+        "phpcompatibility/phpcompatibility-wp": "*",
+        "wp-cli/wp-cli-bundle": "^2.11"
     },
     "config": {
         "allow-plugins": {
@@ -10,6 +11,10 @@
     },
     "scripts": {
         "cs": "./vendor/bin/phpcs -ps ./power-captcha --standard=./phpcs.xml",
-        "cbf": "./vendor/bin/phpcbf -p ./power-captcha --standard=./phpcs.xml"
+        "cbf": "./vendor/bin/phpcbf -p ./power-captcha --standard=./phpcs.xml",
+        "make-pot": "./vendor/bin/wp i18n make-pot ./power-captcha ./power-captcha/languages/power-captcha.pot",
+        "update-po": "./vendor/bin/wp i18n update-po ./power-captcha/languages/power-captcha.pot",
+        "make-json": "./vendor/bin/wp i18n make-json ./power-captcha/languages --no-purge",
+        "make-mo": "./vendor/bin/wp i18n make-mo ./power-captcha/languages"
     }
 }
