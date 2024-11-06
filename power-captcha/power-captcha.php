@@ -13,23 +13,23 @@
  * Text Domain: power-captcha
  * Domain Path: /languages
  */
- 
-define('POWER_CAPTCHA_PLUGIN_VERSION', '0.3.0-dev'); 
-define('POWER_CAPTCHA_PLUGIN_FILE', __FILE__ );
-define('POWER_CAPTCHA_PLUGIN_DIR', __DIR__ );
-define('POWER_CAPTCHA_PATH', plugin_dir_path( POWER_CAPTCHA_PLUGIN_FILE ));
-define('POWER_CAPTCHA_URL', plugin_dir_url( POWER_CAPTCHA_PLUGIN_FILE ));
+
+define( 'POWER_CAPTCHA_PLUGIN_VERSION', '0.3.0-dev' );
+define( 'POWER_CAPTCHA_PLUGIN_FILE', __FILE__ );
+define( 'POWER_CAPTCHA_PLUGIN_DIR', __DIR__ );
+define( 'POWER_CAPTCHA_PATH', plugin_dir_path( POWER_CAPTCHA_PLUGIN_FILE ) );
+define( 'POWER_CAPTCHA_URL', plugin_dir_url( POWER_CAPTCHA_PLUGIN_FILE ) );
 
 // Init core
 require POWER_CAPTCHA_PATH . 'includes/class-power-captcha.php';
 Power_Captcha_WP\Power_Captcha::instance();
 
-function powercaptcha() : Power_Captcha_WP\Power_Captcha {
-    return Power_Captcha_WP\Power_Captcha::instance();
+function powercaptcha(): Power_Captcha_WP\Power_Captcha {
+	return Power_Captcha_WP\Power_Captcha::instance();
 }
 
-if(file_exists(WP_CONTENT_DIR . '/power-captcha-config.php')) {
-    require_once WP_CONTENT_DIR . '/power-captcha-config.php';
+if ( file_exists( WP_CONTENT_DIR . '/power-captcha-config.php' ) ) {
+	require_once WP_CONTENT_DIR . '/power-captcha-config.php';
 }
 
 

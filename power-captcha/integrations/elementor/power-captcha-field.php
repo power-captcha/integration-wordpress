@@ -2,14 +2,14 @@
 
 namespace Power_Captcha_WP;
 
-defined('POWER_CAPTCHA_PATH') || exit;
+defined( 'POWER_CAPTCHA_PATH' ) || exit;
 
 if ( ! class_exists( '\ElementorPro\Modules\Forms\Fields\Field_Base' ) ) {
 	die();
 }
 
 // source: https://developers.elementor.com/docs/form-fields/simple-example/
-//         and https://developers.elementor.com/docs/form-fields/advanced-example/
+// and https://developers.elementor.com/docs/form-fields/advanced-example/
 /**
  * Elementor Form Field - POWER CAPTCHA Field
  *
@@ -19,16 +19,16 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 
 	const FIELD_CONTROL_PC_USERNAME_ID = 'field_pc_username_id';
 
-    public $depended_scripts = [ 'powercaptcha-wp', 'powercaptcha-elementor' ];
+	public $depended_scripts = array( 'powercaptcha-wp', 'powercaptcha-elementor' );
 
 	private Integration_Elementor_Forms $power_captcha_integration;
 
-	public function __construct(Integration_Elementor_Forms $power_captcha_integration) {
+	public function __construct( Integration_Elementor_Forms $power_captcha_integration ) {
 		parent::__construct();
 		$this->power_captcha_integration = $power_captcha_integration;
 
 		// Used to add a script to the Elementor editor preview.
-		add_action( 'elementor/preview/init', [ $this, 'editor_preview_footer' ] );
+		add_action( 'elementor/preview/init', array( $this, 'editor_preview_footer' ) );
 	}
 
 	/**
@@ -58,12 +58,12 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 	 * @return void
 	 */
 	public function render( $item, $item_index, $form ) {
-		$userInputFieldSelector = '';
-		if(!empty($item[self::FIELD_CONTROL_PC_USERNAME_ID])) {
-			$userInputFieldSelector = '#form-field-'.$item[self::FIELD_CONTROL_PC_USERNAME_ID];
+		$user_input_field_selector = '';
+		if ( ! empty( $item[ self::FIELD_CONTROL_PC_USERNAME_ID ] ) ) {
+			$user_input_field_selector = '#form-field-' . $item[ self::FIELD_CONTROL_PC_USERNAME_ID ];
 		}
 
-		$this->power_captcha_integration->echo_widget_html($userInputFieldSelector);
+		$this->power_captcha_integration->echo_widget_html( $user_input_field_selector );
 	}
 
 	/**
@@ -76,7 +76,7 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 	 */
 	public function validation( $field, $record, $ajax_handler ) {
 
-		if($this->power_captcha_integration->is_verification_disabled()) {
+		if ( $this->power_captcha_integration->is_verification_disabled() ) {
 			return; // skip validation if verification is disabled
 		}
 
@@ -84,34 +84,34 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 
 		$power_captcha_field_meta = array();
 		// find the field_meta of power captcha field in form
-		foreach($form['settings']['form_fields'] as $index => $field_meta) {
-			if($field_meta['field_type'] == $this->get_type() && $field_meta['custom_id'] == $field['id']) {
+		foreach ( $form['settings']['form_fields'] as $index => $field_meta ) {
+			if ( $field_meta['field_type'] === $this->get_type() && $field_meta['custom_id'] === $field['id'] ) {
 				$power_captcha_field_meta = $field_meta;
 				break;
 			}
 		}
 
-		$username_field_id = $power_captcha_field_meta[self::FIELD_CONTROL_PC_USERNAME_ID] ?? '';
-		$username_value = null;
-		if(!empty($username_field_id)) {
+		$username_field_id = $power_captcha_field_meta[ self::FIELD_CONTROL_PC_USERNAME_ID ] ?? '';
+		$username_value    = null;
+		if ( ! empty( $username_field_id ) ) {
 			// get the raw field value which contains the username protected by POWER CAPTCHA
-			foreach($record->get('fields') as $name => $field_data) {
-				if($field_data['id'] == $username_field_id) {
+			foreach ( $record->get( 'fields' ) as $name => $field_data ) {
+				if ( $field_data['id'] === $username_field_id ) {
 					$username_value = $field_data['raw_value'];
 					break;
 				}
 			}
 		}
 
-        $verification = $this->power_captcha_integration->verify_token($username_value);
-        if(FALSE === $verification->is_success()) {
+		$verification = $this->power_captcha_integration->verify_token( $username_value );
+		if ( false === $verification->is_success() ) {
 			// TODO find a way to display the error message in frontend
-            $ajax_handler->add_error($field['id'], $verification->get_user_message());
-            return;
-        }
-    }
-    
-     /**
+			$ajax_handler->add_error( $field['id'], $verification->get_user_message() );
+			return;
+		}
+	}
+
+	/**
 	 * Update form widget controls.
 	 *
 	 * @param \Elementor\Widget_Base $widget The form widget instance.
@@ -127,49 +127,51 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 		}
 
 		// dont show 'required' control for power captcha field
-		$control_data['fields']['required']['conditions']['terms'][] = [
-			'name' => 'field_type',
+		$control_data['fields']['required']['conditions']['terms'][] = array(
+			'name'     => 'field_type',
 			'operator' => '!in',
-			'value' => [$this->get_type()]
-		];
+			'value'    => array( $this->get_type() ),
+		);
 
 		// dont show 'field_label' for power captcha field
-		$control_data['fields']['field_label']['conditions']['terms'][] = [
-			'name' => 'field_type',
+		$control_data['fields']['field_label']['conditions']['terms'][] = array(
+			'name'     => 'field_type',
 			'operator' => '!in',
-			'value' => [$this->get_type()]
-		];
+			'value'    => array( $this->get_type() ),
+		);
 
 		// dont show 'column width' control for power captcha field
-		$control_data['fields']['width']['conditions']['terms'][] = [
-			'name' => 'field_type',
+		$control_data['fields']['width']['conditions']['terms'][] = array(
+			'name'     => 'field_type',
 			'operator' => '!in',
-			'value' => [$this->get_type()]
-		];
+			'value'    => array( $this->get_type() ),
+		);
 
 		// add control for username field id
-		$control_data['fields'][self::FIELD_CONTROL_PC_USERNAME_ID] = [
-			'name' => self::FIELD_CONTROL_PC_USERNAME_ID,
+		$control_data['fields'][ self::FIELD_CONTROL_PC_USERNAME_ID ] = array(
+			'name'         => self::FIELD_CONTROL_PC_USERNAME_ID,
 			// TODO better label
-			'label' => esc_html__( 'PC Username Field ID', 'power-captcha' ),
-			'type' => \Elementor\Controls_Manager::TEXT,
-			'description' => 
+			'label'        => esc_html__( 'PC Username Field ID', 'power-captcha' ),
+			'type'         => \Elementor\Controls_Manager::TEXT,
+			'description'  =>
 				// TODO better description
-				esc_html__('(optional) Specify the ID of the field that should be additionally protected with POWER CAPTCHA (e.g. user name or e-mail address). You can find the field ID in the "Advanced" tab of the corresponding field.', 
-					'power-captcha'),
-			'default' => '',
-			'required' => false,
-			'dynamic' => [
+				esc_html__(
+					'(optional) Specify the ID of the field that should be additionally protected with POWER CAPTCHA (e.g. user name or e-mail address). You can find the field ID in the "Advanced" tab of the corresponding field.',
+					'power-captcha'
+				),
+			'default'      => '',
+			'required'     => false,
+			'dynamic'      => array(
 				'active' => false,
-			],
-			'condition' => [
+			),
+			'condition'    => array(
 				'field_type' => $this->get_type(),
-			],
+			),
 			'tab'          => 'content',
 			'inner_tab'    => 'form_fields_content_tab',
 			'tabs_wrapper' => 'form_fields_tabs',
-		];
-		
+		);
+
 		$widget->update_control( 'form_fields', $control_data );
 	}
 
@@ -183,7 +185,7 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 	 * @return void
 	 */
 	public function editor_preview_footer() {
-		add_action( 'wp_footer', [ $this, 'content_template_script' ] );
+		add_action( 'wp_footer', array( $this, 'content_template_script' ) );
 	}
 
 	/**
@@ -200,7 +202,7 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 		<script>
 		jQuery( document ).ready( () => {
 			elementor.hooks.addFilter(
-				'elementor_pro/forms/content_template/field/<?php echo esc_js($this->get_type()); ?>',
+				'elementor_pro/forms/content_template/field/<?php echo esc_js( $this->get_type() ); ?>',
 				function ( inputField, item, i ) {
 					
 					// delay PowerCaptchaWp.setup() method, so the div is already rendered
@@ -213,12 +215,11 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 						}
 					}, 1000);
 
-					return `<?php $this->power_captcha_integration->echo_widget_html() ?>`;
+					return `<?php $this->power_captcha_integration->echo_widget_html(); ?>`;
 				}, 10, 3
 			);
 		});
 		</script>
 		<?php
 	}
-
 }
