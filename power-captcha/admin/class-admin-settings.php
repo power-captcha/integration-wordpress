@@ -164,7 +164,7 @@ class Admin_Settings {
 			sprintf(
 				/* translators: %s: url to power captcha API Key management page */
 				__( 'Enter your POWER CAPTCHA API Key. You can find your API Key in the <a href="%s" target="_blank">API Key Management</a>.', 'power-captcha' ),
-				powercaptcha()::API_KEY_MANAGEMENT_URL
+				__( 'https://power-captcha.com/en/my-account/api-keys/', 'power-captcha' )
 			)
 		);
 		$this->add_setting_text_field(
@@ -175,7 +175,7 @@ class Admin_Settings {
 			sprintf(
 				/* translators: %s url to power captcha API Key management page */
 				__( 'Enter your POWER CAPTCHA Secret Key. You can find your Secret Key in the <a href="%s" target="_blank">API Key Management</a>.', 'power-captcha' ),
-				powercaptcha()::API_KEY_MANAGEMENT_URL
+				__( 'https://power-captcha.com/en/my-account/api-keys/', 'power-captcha' )
 			)
 		);
 
@@ -364,12 +364,12 @@ class Admin_Settings {
 		echo '<p>' . sprintf(
 			/* translators: %s: url to power captcha API Key management page */
 			esc_html__( 'The API Key and the Secret Key must be provided for the POWER CAPTCHA to activate. Both keys can be found in the %s.', 'power-captcha' ),
-			'<a href="' . esc_attr( powercaptcha()::API_KEY_MANAGEMENT_URL ) . '" target="_blank">' . esc_html__( 'API Key Management', 'power-captcha' ) . '</a>'
+			'<a href="' . esc_attr__( 'https://power-captcha.com/en/my-account/api-keys/', 'power-captcha' ) . '" target="_blank">' . esc_html__( 'API Key Management', 'power-captcha' ) . '</a>'
 		) . '</p>';
 		echo '<p>' . sprintf(
 			/* translators: %s: link to power captcha Shop page */
 			esc_html__( 'If you don\'t have an API Key yet, you can create one for free on %s.', 'power-captcha' ),
-			'<a href="' . esc_attr( powercaptcha()::SHOP_URL ) . '" target="_blank">' . esc_html__( 'POWER CAPTCHA', 'power-captcha' ) . '</a>'
+			'<a href="' . esc_attr__( 'https://power-captcha.com/en/power-captcha-shop-licenses/', 'power-captcha' ) . '" target="_blank">' . esc_html__( 'POWER CAPTCHA', 'power-captcha' ) . '</a>'
 		) . '</p>';
 	}
 
