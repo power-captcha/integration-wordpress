@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name: POWER CAPTCHA
- * Plugin URI:  https://power-captcha.com/
+ * Plugin URI:  https://power-captcha.com/en/
  * Description: POWER CAPTCHA protects your WordPress website and WordPress forms against bots and unauthorized persons. GDPR compliant!
  * Version:     0.3.0-dev
  * Requires at least: 6.0
  * Requires PHP: 8.0
  * Author:      POWER CAPTCHA
- * Author URI:  https://power-captcha.com/
+ * Author URI:  https://power-captcha.com/en/
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0
  * Text Domain: power-captcha
