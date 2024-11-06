@@ -7,11 +7,11 @@ defined( 'POWER_CAPTCHA_PATH' ) || exit;
 add_action(
 	'powercaptcha_register_integration',
 	function ( $power_captcha ) {
-		$power_captcha->register_integration( new Integration_WooCommerce_Checkout() );
+		$power_captcha->register_integration( new WooCommerce_Checkout_Integration() );
 	}
 );
 
-class Integration_WooCommerce_Checkout extends Integration {
+class WooCommerce_Checkout_Integration extends Integration {
 
 	public function __construct() {
 		$this->id                  = 'woocommerce_checkout';

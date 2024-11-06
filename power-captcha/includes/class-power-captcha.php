@@ -156,14 +156,14 @@ final class Power_Captcha {
 	}
 
 	private function load_integrations() {
-		require_once plugin_dir_path( __DIR__ ) . 'integrations/wordpress/wordpress-login.php';
-		require_once plugin_dir_path( __DIR__ ) . 'integrations/wordpress/wordpress-register.php';
-		require_once plugin_dir_path( __DIR__ ) . 'integrations/wordpress/wordpress-lost-password.php';
-		require_once plugin_dir_path( __DIR__ ) . 'integrations/woocommerce/woocommerce-checkout.php';
-		require_once plugin_dir_path( __DIR__ ) . 'integrations/woocommerce/woocommerce-login.php';
-		require_once plugin_dir_path( __DIR__ ) . 'integrations/woocommerce/woocommerce-register.php';
-		require_once plugin_dir_path( __DIR__ ) . 'integrations/wpforms/wpforms.php';
-		require_once plugin_dir_path( __DIR__ ) . 'integrations/elementor/elementor-form.php';
+		require_once plugin_dir_path( __DIR__ ) . 'integrations/wordpress/class-wordpress-login-integration.php';
+		require_once plugin_dir_path( __DIR__ ) . 'integrations/wordpress/class-wordpress-register-integration.php';
+		require_once plugin_dir_path( __DIR__ ) . 'integrations/wordpress/class-wordpress-woocommerce-lost-password-integration.php';
+		require_once plugin_dir_path( __DIR__ ) . 'integrations/woocommerce/class-woocommerce-checkout-integration.php';
+		require_once plugin_dir_path( __DIR__ ) . 'integrations/woocommerce/class-woocommerce-login-integration.php';
+		require_once plugin_dir_path( __DIR__ ) . 'integrations/woocommerce/class-woocommerce-register-integration.php';
+		require_once plugin_dir_path( __DIR__ ) . 'integrations/wpforms/class-wpforms-integration.php';
+		require_once plugin_dir_path( __DIR__ ) . 'integrations/elementor/class-elementor-form-integration.php';
 	}
 
 	public function register_integration( Integration $integration ) {

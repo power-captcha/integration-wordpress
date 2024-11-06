@@ -8,11 +8,11 @@ defined( 'POWER_CAPTCHA_PATH' ) || exit;
 add_action(
 	'powercaptcha_register_integration',
 	function ( $power_captcha ) {
-		$power_captcha->register_integration( new Integration_WooCommerce_Login() );
+		$power_captcha->register_integration( new WooCommerce_Login_Integration() );
 	}
 );
 
-class Integration_WooCommerce_Login extends Integration {
+class WooCommerce_Login_Integration extends Integration {
 
 	public function __construct() {
 		$this->id                  = 'woocommerce_login';

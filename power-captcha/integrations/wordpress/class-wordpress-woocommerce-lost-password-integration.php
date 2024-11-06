@@ -7,12 +7,12 @@ defined( 'POWER_CAPTCHA_PATH' ) || exit;
 add_action(
 	'powercaptcha_register_integration',
 	function ( $power_captcha ) {
-		$power_captcha->register_integration( new Integration_WordPress_WooCommerce_Lost_Password() );
+		$power_captcha->register_integration( new WordPress_WooCommerce_Lost_Password_Integration() );
 	}
 );
 
 
-class Integration_WordPress_WooCommerce_Lost_Password extends Integration {
+class WordPress_WooCommerce_Lost_Password_Integration extends Integration {
 
 	// Note: We use a single integration for both the WordPress Lost Password and WooCommerce Lost Password functionality.
 	// This is necessary because the WooCommerce process_lost_password function also triggers the WordPress lostpassword_post action.

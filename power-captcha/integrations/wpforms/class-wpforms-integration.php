@@ -7,11 +7,11 @@ defined( 'POWER_CAPTCHA_PATH' ) || exit;
 add_action(
 	'powercaptcha_register_integration',
 	function ( $power_captcha ) {
-		$power_captcha->register_integration( new Integration_WP_Forms() );
+		$power_captcha->register_integration( new WPForms_Integration() );
 	}
 );
 
-class Integration_WP_Forms extends Integration {
+class WPForms_Integration extends Integration {
 
 	public function __construct() {
 		$this->id                  = 'wpforms';

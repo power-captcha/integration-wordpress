@@ -7,11 +7,11 @@ defined( 'POWER_CAPTCHA_PATH' ) || exit;
 add_action(
 	'powercaptcha_register_integration',
 	function ( $power_captcha ) {
-		$power_captcha->register_integration( new Integration_Elementor_Forms() );
+		$power_captcha->register_integration( new Elementor_Form_Integration() );
 	}
 );
 
-class Integration_Elementor_Forms extends Integration {
+class Elementor_Form_Integration extends Integration {
 
 	private bool $verification_disabled = false;
 
