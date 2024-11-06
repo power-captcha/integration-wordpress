@@ -1,6 +1,7 @@
 {
     "require-dev": {
-        "wp-coding-standards/wpcs": "3.0"
+        "wp-coding-standards/wpcs": "3.0",
+        "phpcompatibility/phpcompatibility-wp": "*"
     },
     "config": {
         "allow-plugins": {
@@ -8,7 +9,7 @@
         }
     },
     "scripts": {
-        "cs": "./vendor/bin/phpcs --standard=./phpcs.xml -ps ./power-captcha",
-        "cbf": "./vendor/bin/phpcbf --standard=./phpcs.xml -p ./power-captcha"
+        "cs": "./vendor/bin/phpcs -ps ./power-captcha --standard=./phpcs.xml",
+        "cbf": "./vendor/bin/phpcbf -p ./power-captcha --standard=./phpcs.xml"
     }
 }
