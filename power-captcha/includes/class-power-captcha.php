@@ -5,7 +5,7 @@ namespace Power_Captcha_WP;
 final class Power_Captcha {
 
 	const API_VERSION = 'v1';
-	const JS_VERSION  = '1.2.2';
+	const JS_VERSION  = '1.2.5';
 
 	const DEFAULT_ENDPOINT_BASE_URL = 'https://api.power-captcha.com';
 	const DEFAULT_JAVASCRIPT_URL    = 'https://cdn.power-captcha.com';
