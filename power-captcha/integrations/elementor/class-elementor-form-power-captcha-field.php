@@ -21,9 +21,9 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 
 	public $depended_scripts = array( 'powercaptcha-wp', 'powercaptcha-elementor' );
 
-	private Integration_Elementor_Forms $power_captcha_integration;
+	private Elementor_Form_Integration $power_captcha_integration;
 
-	public function __construct( Integration_Elementor_Forms $power_captcha_integration ) {
+	public function __construct( Elementor_Form_Integration $power_captcha_integration ) {
 		parent::__construct();
 		$this->power_captcha_integration = $power_captcha_integration;
 

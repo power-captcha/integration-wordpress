@@ -57,7 +57,7 @@ class Elementor_Form_Integration extends Integration {
 	 * @return void
 	 */
 	public function register_field( $form_fields_registrar ) {
-		require_once __DIR__ . '/power-captcha-field.php';
+		require_once __DIR__ . '/class-elementor-form-power-captcha-field.php';
 
 		$form_fields_registrar->register( new Elementor_Form_Power_Captcha_Field( $this ) );
 	}
