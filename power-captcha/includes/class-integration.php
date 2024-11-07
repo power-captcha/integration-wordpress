@@ -127,7 +127,7 @@ abstract class Integration {
 				throw new User_Error( 'Token was not solved by user or mismatch of clientUid or username.' );
 			}
 
-			if ( 400 === $response_code && is_array( $response_body['errors'], true ) ) {
+			if ( 400 === $response_code && is_array( $response_body['errors'] ) ) {
 				$errors = $response_body['errors'];
 				if ( ( in_array( 'MISSING_SECRET', $errors, true ) || in_array( 'INVALID_SECRET', $errors, true ) ) ) {
 					throw new Api_Error( 'Secret Key is invalid or missing in request. Please check your Secret Key!' );
