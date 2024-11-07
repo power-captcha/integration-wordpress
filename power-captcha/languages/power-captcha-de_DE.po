@@ -23,7 +23,7 @@ msgstr ""
 #. Author URI of the plugin
 #: power-captcha.php
 msgid "https://power-captcha.com/en/"
-msgstr ""
+msgstr "https://power-captcha.com/"
 
 #. Description of the plugin
 #: power-captcha.php
@@ -196,14 +196,6 @@ msgstr "Aktiviert den Schutz für <a href=\"https://elementor.com/pro/\" target=
 msgid "After enabling, you need to add a 'POWER CAPTCHA'-field to your desired Elementor form."
 msgstr "Nach der Aktivierung muss ein 'POWER CAPTCHA'-Feld zum gewünschten Elementor-Formular hinzugefügt werden."
 
-#: integrations/elementor/class-elementor-form-power-captcha-field.php:154
-msgid "PC Username Field ID"
-msgstr "Feld-ID des Benutzernamen Felds"
-
-#: integrations/elementor/class-elementor-form-power-captcha-field.php:158
-msgid "(optional) Specify the ID of the field that should be additionally protected with POWER CAPTCHA (e.g. user name or e-mail address). You can find the field ID in the \"Advanced\" tab of the corresponding field."
-msgstr "(optional) Gib die ID des Feldes an, das zusätzlich mit POWER CAPTCHA geschützt werden soll (z. B. Benutzername oder E-Mail-Adresse). Sie finden die Feld-ID im Tab \"Erweitert\" des entsprechenden Feldes."
-
 #: integrations/woocommerce/class-woocommerce-checkout-integration.php:18
 msgid "WooCommerce Checkout"
 msgstr "WooCommerce Checkout"
@@ -264,23 +256,19 @@ msgstr "Aktivieren Sie den Schutz für <a href=\"https://wordpress.org/plugins/w
 msgid "POWER CAPTCHA: Spam detected"
 msgstr "POWER CAPTCHA: Spam erkannt"
 
-#: admin/class-admin-settings.php:167
-#: admin/class-admin-settings.php:178
-#: admin/class-admin-settings.php:367
-msgid "https://power-captcha.com/en/my-account/api-keys/"
-msgstr "https://power-captcha.com/mein-konto/api-keys/"
-
 #: admin/class-admin-settings.php:372
 msgid "https://power-captcha.com/en/power-captcha-shop-licenses/"
 msgstr "https://power-captcha.com/power-captcha-shop/"
-
-#. Plugin URI of the plugin
-#. Author URI of the plugin
-#: power-captcha.php
-msgid "https://power-captcha.com/en/"
-msgstr "https://power-captcha.com/"
 
 #. translators: %s: link to power captcha Shop page
 #: admin/class-admin-settings.php:371
 msgid "If you don't have an API Key yet, you can create one on %s."
 msgstr "Wenn du noch keinen API-Key hast, kannst du einen auf %s erstellen."
+
+#: integrations/elementor/class-elementor-form-power-captcha-field.php:153
+msgid "ID of the field to be protected"
+msgstr "ID des zu schützenden Felds"
+
+#: integrations/elementor/class-elementor-form-power-captcha-field.php:156
+msgid "(optional, Enterprise only) Provide the ID of the field which should additionally be protected by POWER CAPTCHA (e.g. user name or email address). You can find the ID in the corresponding field under 'Advanced'."
+msgstr "(optional, nur Enterpise) Gib die ID des Feldes an, das zusätzlich mit POWER CAPTCHA geschützt werden soll (z. B. Benutzername oder E-Mail-Adresse). Die ID findest du im entsprechenden Feld unter \"Erweitert\"."

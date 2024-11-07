@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-06T18:00:53+01:00\n"
+"POT-Creation-Date: 2024-11-07T17:56:30+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: power-captcha\n"
@@ -208,12 +208,12 @@ msgstr ""
 msgid "After enabling, you need to add a 'POWER CAPTCHA'-field to your desired Elementor form."
 msgstr ""
 
-#: integrations/elementor/class-elementor-form-power-captcha-field.php:154
-msgid "PC Username Field ID"
+#: integrations/elementor/class-elementor-form-power-captcha-field.php:153
+msgid "ID of the field to be protected"
 msgstr ""
 
-#: integrations/elementor/class-elementor-form-power-captcha-field.php:158
-msgid "(optional) Specify the ID of the field that should be additionally protected with POWER CAPTCHA (e.g. user name or e-mail address). You can find the field ID in the \"Advanced\" tab of the corresponding field."
+#: integrations/elementor/class-elementor-form-power-captcha-field.php:156
+msgid "(optional, Enterprise only) Provide the ID of the field which should additionally be protected by POWER CAPTCHA (e.g. user name or email address). You can find the ID in the corresponding field under 'Advanced'."
 msgstr ""
 
 #: integrations/woocommerce/class-woocommerce-checkout-integration.php:18

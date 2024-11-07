@@ -150,13 +150,11 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 		// add control for username field id
 		$control_data['fields'][ self::FIELD_CONTROL_PC_USERNAME_ID ] = array(
 			'name'         => self::FIELD_CONTROL_PC_USERNAME_ID,
-			// TODO better label
-			'label'        => esc_html__( 'PC Username Field ID', 'power-captcha' ),
+			'label'        => esc_html__( 'ID of the field to be protected', 'power-captcha' ),
 			'type'         => \Elementor\Controls_Manager::TEXT,
 			'description'  =>
-				// TODO better description
 				esc_html__(
-					'(optional) Specify the ID of the field that should be additionally protected with POWER CAPTCHA (e.g. user name or e-mail address). You can find the field ID in the "Advanced" tab of the corresponding field.',
+					'(optional, Enterprise only) Provide the ID of the field which should additionally be protected by POWER CAPTCHA (e.g. user name or email address). You can find the ID in the corresponding field under \'Advanced\'.',
 					'power-captcha'
 				),
 			'default'      => '',
