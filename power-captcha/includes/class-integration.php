@@ -31,8 +31,8 @@ abstract class Integration {
 		return $this->setting_description;
 	}
 
-	public function is_enabled() {
-		return ( get_option( $this->get_setting_name() ) === 1 );
+	public function is_enabled(): bool {
+		return boolval( get_option( $this->get_setting_name() ) );
 	}
 
 	public function enqueue_scripts() {
