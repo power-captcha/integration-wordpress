@@ -66,3 +66,10 @@ To add a new language translation, create a new PO file in `power-captcha/langua
 `power-captcha-es_ES.po`.
 
 After adding the file, follow the steps from *Update Translation Files* (as described above).
+
+## Archive
+To create a ZIP archive of the current project state, run:
+```
+composer build
+```
+This command will generate a ZIP archive located at `power-captcha/target/power-captcha-snapshot.zip`.

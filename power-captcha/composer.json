@@ -15,6 +15,10 @@
         "make-pot": "./vendor/bin/wp i18n make-pot ./ ./languages/power-captcha.pot",
         "update-po": "./vendor/bin/wp i18n update-po ./languages/power-captcha.pot",
         "make-json": "./vendor/bin/wp i18n make-json ./languages --no-purge",
-        "make-mo": "./vendor/bin/wp i18n make-mo ./languages"
+        "make-mo": "./vendor/bin/wp i18n make-mo ./languages",
+        "build-zip": "@composer archive --format=zip --dir=./target --file=power-captcha-snapshot"
+    },
+    "archive": {
+        "exclude": ["/vendor", "/target"]
     }
 }
