@@ -87,6 +87,15 @@ class Admin_Settings {
 			powercaptcha()::SETTING_NAME_SECRET_KEY
 		);
 
+		// integration settings
+		foreach ( Power_Captcha::instance()->get_integrations() as $key => $integration ) {
+			/** @var Integration $integration */
+			register_setting(
+				powercaptcha()::SETTING_GROUP_NAME,
+				$integration->get_setting_name()
+			);
+		}
+
 		// captcha settings
 		register_setting(
 			powercaptcha()::SETTING_GROUP_NAME,
@@ -96,15 +105,6 @@ class Admin_Settings {
 			powercaptcha()::SETTING_GROUP_NAME,
 			powercaptcha()::SETTING_NAME_API_ERROR_POLICY,
 		);
-
-		// integration settings
-		foreach ( Power_Captcha::instance()->get_integrations() as $key => $integration ) {
-			/** @var Integration $integration */
-			register_setting(
-				powercaptcha()::SETTING_GROUP_NAME,
-				$integration->get_setting_name()
-			);
-		}
 
 		// on premises settings
 		register_setting(
@@ -128,19 +128,19 @@ class Admin_Settings {
 			powercaptcha()::SETTING_PAGE
 		);
 
-		// captcha settings section
-		add_settings_section(
-			powercaptcha()::SETTING_SECTION_CAPTCHA,
-			__( 'Captcha settings', 'power-captcha' ),
-			array( $this, 'captcha_setting_section_description_content' ),
-			powercaptcha()::SETTING_PAGE
-		);
-
 		// integration setting section
 		add_settings_section(
 			powercaptcha()::SETTING_SECTION_INTEGRATION,
 			__( 'Integration settings', 'power-captcha' ),
 			array( $this, 'integration_setting_section_description_content' ),
+			powercaptcha()::SETTING_PAGE
+		);
+
+		// captcha settings section
+		add_settings_section(
+			powercaptcha()::SETTING_SECTION_CAPTCHA,
+			__( 'Captcha settings', 'power-captcha' ),
+			array( $this, 'captcha_setting_section_description_content' ),
 			powercaptcha()::SETTING_PAGE
 		);
 
