@@ -1,7 +1,7 @@
 {
     "require-dev": {
         "wp-coding-standards/wpcs": "3.0",
-        "phpcompatibility/phpcompatibility-wp": "*",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
         "wp-cli/wp-cli-bundle": "^2.11"
     },
     "config": {
