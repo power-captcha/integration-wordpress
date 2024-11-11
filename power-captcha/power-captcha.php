@@ -31,7 +31,3 @@ function powercaptcha(): Power_Captcha_WP\Power_Captcha {
 if ( file_exists( WP_CONTENT_DIR . '/power-captcha-config.php' ) ) {
 	require_once WP_CONTENT_DIR . '/power-captcha-config.php';
 }
-
-
-
-require POWER_CAPTCHA_PATH . 'admin/update-check.php';
