@@ -1,8 +1,6 @@
 # Development
 
-Note that the plugin itself is located in the `power-captcha` directory and does not use Composer. 
-
-Composer is only used for development to check and fix WordPress Coding Standards.
+Note that the plugin itself is located in the `power-captcha` and Composer is only used for development to check and fix WordPress Coding Standards.
 
 ## Setup for Development
 
@@ -12,7 +10,7 @@ Composer is only used for development to check and fix WordPress Coding Standard
 2. **Install development dependencies**  
    Install the required dependencies via Composer:
    ```
-   cd integration-wordpress
+   cd integration-wordpress/power-captcha
    composer install --dev
    ```
 
@@ -28,14 +26,12 @@ Composer is only used for development to check and fix WordPress Coding Standard
 ### Test code against WordPress Coding Standards (WPCS)
 To check whether your code complies with the WordPress Coding Standards, execute this command to get a report:
 ```
-cd integration-wordpress
 composer cs
 ```
 
 ### Fix code to comply with WordPress Coding Standards
 To automatically format and fix your code to match the WordPress Coding Standards, use:
 ```
-cd integration-wordpress
 composer cbf
 ```
 
