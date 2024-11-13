@@ -4,7 +4,7 @@ Tags: captcha, security, protection, bot, spam
 Requires at least: 6.0
 Tested up to: 6.6.2
 Requires PHP: 8.0
-Stable tag: 1.0.0
+Stable tag: 1.2.0
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0
 
@@ -57,7 +57,7 @@ TODO
 
 == Changelog ==
 
-= 1.0.0 =
+= 1.2.0 =
 * Refactored and overhauled the code and plugin structure to an object-oriented approach
 * Improved code style to comply with WordPress Coding Standards
 * Added German translation
