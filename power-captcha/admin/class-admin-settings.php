@@ -162,9 +162,9 @@ class Admin_Settings {
 			'',
 			__( 'API Key', 'power-captcha' ),
 			sprintf(
-				/* translators: %s: url to power captcha API Key management page */
-				__( 'Enter your POWER CAPTCHA API Key. You can find your API Key in the <a href="%s" target="_blank">API Key Management</a>.', 'power-captcha' ),
-				__( 'https://power-captcha.com/en/my-account/api-keys/', 'power-captcha' )
+				/* translators: %s: link to power captcha customer area */
+				__( 'Enter your POWER CAPTCHA API Key. You can find your API Key in our %s.', 'power-captcha' ),
+				'<a href="' . esc_attr__( 'https://power-captcha.com/en/my-account/api-keys/', 'power-captcha' ) . '" target="_blank">' . esc_html__( 'customer area', 'power-captcha' ) . '</a>'
 			)
 		);
 		$this->add_setting_text_field(
@@ -173,9 +173,9 @@ class Admin_Settings {
 			'',
 			__( 'Secret Key', 'power-captcha' ),
 			sprintf(
-				/* translators: %s url to power captcha API Key management page */
-				__( 'Enter your POWER CAPTCHA Secret Key. You can find your Secret Key in the <a href="%s" target="_blank">API Key Management</a>.', 'power-captcha' ),
-				__( 'https://power-captcha.com/en/my-account/api-keys/', 'power-captcha' )
+				/* translators: %s link to power captcha customer area */
+				__( 'Enter your POWER CAPTCHA Secret Key. You can find your Secret Key in our %s.', 'power-captcha' ),
+				'<a href="' . esc_attr__( 'https://power-captcha.com/en/my-account/api-keys/', 'power-captcha' ) . '" target="_blank">' . esc_html__( 'customer area', 'power-captcha' ) . '</a>'
 			)
 		);
 
@@ -186,15 +186,15 @@ class Admin_Settings {
 			array(
 				'auto'   => array(
 					'label'       => __( 'Automatic (default)', 'power-captcha' ),
-					'description' => __( 'The widget is always displayed and the security check is started automatically as soon as the form is filled in or after the corresponding field (e.g. user name or email address) has been filled in.  A click on the widget is only necessary if it is required to solve a captcha.', 'power-captcha' ),
+					'description' => __( 'The widget is always displayed and the security check starts automatically as soon as the form is filled in or after the corresponding field (e.g. user name or email address) has been filled in.  A click on the widget is only necessary if it is required to solve a captcha.', 'power-captcha' ),
 				),
 				'hidden' => array(
 					'label'       => __( 'Hidden', 'power-captcha' ),
-					'description' => __( 'The widget is not displayed initially and the security check is started automatically as soon as the form is filled in or after the corresponding field (e.g. user name or e-mail address) has been filled in. The widget is only displayed if it is required to solve a captcha.', 'power-captcha' ),
+					'description' => __( 'The widget is not displayed initially and the security check starts automatically as soon as the form is filled in or after the corresponding field (e.g. user name or e-mail address) has been filled in. The widget is only displayed if it is required to solve a captcha.', 'power-captcha' ),
 				),
 				'manu'   => array(
 					'label'       => __( 'Manual', 'power-captcha' ),
-					'description' => __( 'The widget is always displayed and the security check is only started when the widget is clicked. The click is always required.', 'power-captcha' ),
+					'description' => __( 'The widget is always displayed and the security check is only starts when the widget is clicked. The click is always required.', 'power-captcha' ),
 				),
 			),
 			'auto',
@@ -362,9 +362,9 @@ class Admin_Settings {
 
 	public function general_setting_section_description_content() {
 		echo '<p>' . sprintf(
-			/* translators: %s: url to power captcha API Key management page */
-			esc_html__( 'The API Key and the Secret Key must be provided for the POWER CAPTCHA to activate. Both keys can be found in the %s.', 'power-captcha' ),
-			'<a href="' . esc_attr__( 'https://power-captcha.com/en/my-account/api-keys/', 'power-captcha' ) . '" target="_blank">' . esc_html__( 'API Key Management', 'power-captcha' ) . '</a>'
+			/* translators: %s: link to power captcha customer area */
+			esc_html__( 'To activate POWER CAPTCHA, an API Key and a Secret Key are required. You can find both in our %s.', 'power-captcha' ),
+			'<a href="' . esc_attr__( 'https://power-captcha.com/en/my-account/api-keys/', 'power-captcha' ) . '" target="_blank">' . esc_html__( 'customer area', 'power-captcha' ) . '</a>'
 		) . '</p>';
 		echo '<p>' . sprintf(
 			/* translators: %s: link to power captcha Shop page */
@@ -375,7 +375,7 @@ class Admin_Settings {
 
 	public function captcha_setting_section_description_content() {
 		echo '<p>' .
-			esc_html__( 'Adjust the display of the widget and the behavior of the security check, along with how errors during token verification are handled.', 'power-captcha' )
+			esc_html__( 'In these settings you can adjust the widget display and the security check behavior, along with how errors during token verification are handled.', 'power-captcha' )
 			. '</p>';
 	}
 

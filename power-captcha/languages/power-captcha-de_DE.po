@@ -39,11 +39,11 @@ msgstr "POWER CAPTCHA Einstellungen"
 msgid "General settings"
 msgstr "Allgemeine Einstellungen"
 
-#: admin/class-admin-settings.php:134
+#: admin/class-admin-settings.php:142
 msgid "Captcha settings"
 msgstr "Captcha-Einstellungen"
 
-#: admin/class-admin-settings.php:142
+#: admin/class-admin-settings.php:134
 msgid "Integration settings"
 msgstr "Einstellungen zur Integration"
 
@@ -55,11 +55,6 @@ msgstr "On-Premises Einstellungen"
 msgid "API Key"
 msgstr "API-Key"
 
-#. translators: %s: url to power captcha API Key management page
-#: admin/class-admin-settings.php:166
-msgid "Enter your POWER CAPTCHA API Key. You can find your API Key in the <a href=\"%s\" target=\"_blank\">API Key Management</a>."
-msgstr "Gib deinen POWER CAPTCHA API-Key ein. Den API-Key findest du im <a href=\"%s\" target=\"_blank\">API-Key Management</a>."
-
 #: admin/class-admin-settings.php:167
 #: admin/class-admin-settings.php:178
 #: admin/class-admin-settings.php:367
@@ -70,34 +65,17 @@ msgstr "https://power-captcha.com/mein-konto/api-keys/"
 msgid "Secret Key"
 msgstr "Secret-Key"
 
-#. translators: %s url to power captcha API Key management page
-#: admin/class-admin-settings.php:177
-msgid "Enter your POWER CAPTCHA Secret Key. You can find your Secret Key in the <a href=\"%s\" target=\"_blank\">API Key Management</a>."
-msgstr "Gib deinen POWER CAPTCHA Secret-Key ein. Den Secret-Key findest du im <a href=\"%s\" target=\"_blank\">API-Key Management</a>."
-
 #: admin/class-admin-settings.php:188
 msgid "Automatic (default)"
 msgstr "Automatisch (Standard)"
-
-#: admin/class-admin-settings.php:189
-msgid "The widget is always displayed and the security check is started automatically as soon as the form is filled in or after the corresponding field (e.g. user name or email address) has been filled in.  A click on the widget is only necessary if it is required to solve a captcha."
-msgstr "Das Widget wird immer angezeigt und die Sicherheitsprüfung wird automatisch gestartet, sobald das Formular ausgefüllt wird oder nachdem das entsprechende Feld (z.B. Benutzername oder E-Mail-Adresse) ausgefüllt wurde. Ein Klick auf die Checkbox im Widget ist nur notwendig, wenn ein Captcha gelöst werden muss."
 
 #: admin/class-admin-settings.php:192
 msgid "Hidden"
 msgstr "Versteckt"
 
-#: admin/class-admin-settings.php:193
-msgid "The widget is not displayed initially and the security check is started automatically as soon as the form is filled in or after the corresponding field (e.g. user name or e-mail address) has been filled in. The widget is only displayed if it is required to solve a captcha."
-msgstr "Das Widget wird zunächst nicht angezeigt und die Sicherheitsprüfung wird automatisch gestartet, sobald das Formular ausgefüllt wird oder nachdem das entsprechende Feld (z. B. Benutzername oder E-Mail-Adresse) ausgefüllt wurde. Das Widget wird nur eingeblendet, wenn ein Captcha gelöst werden muss."
-
 #: admin/class-admin-settings.php:196
 msgid "Manual"
 msgstr "Manuell"
-
-#: admin/class-admin-settings.php:197
-msgid "The widget is always displayed and the security check is only started when the widget is clicked. The click is always required."
-msgstr "Das Widget wird immer angezeigt, und die Sicherheitsprüfung wird erst gestartet, wenn auf die Checkbox im Widget geklickt wird."
 
 #: admin/class-admin-settings.php:201
 msgid "Check mode"
@@ -146,19 +124,6 @@ msgstr "JavaScript Basis-URL (optional)"
 #: admin/class-admin-settings.php:249
 msgid "Only required if you have an on-premises version with self-hosted POWER CAPTCHA JavaScript."
 msgstr "Nur erforderlich, wenn du eine On-Premises-Lösung mit selbst gehostetem POWER CAPTCHA-JavaScript hast."
-
-#. translators: %s: url to power captcha API Key management page
-#: admin/class-admin-settings.php:366
-msgid "The API Key and the Secret Key must be provided for the POWER CAPTCHA to activate. Both keys can be found in the %s."
-msgstr "Der API-Key und der Secret-Key müssen angegeben werden, damit POWER CAPTCHA akitv wird. Beide Keys findest du im %s."
-
-#: admin/class-admin-settings.php:367
-msgid "API Key Management"
-msgstr "API-Key Management"
-
-#: admin/class-admin-settings.php:378
-msgid "Adjust the display of the widget and the behavior of the security check, along with how errors during token verification are handled."
-msgstr "Einstellen der Anzeige des Widgets und des Verhaltens der Sicherheitsüberprüfung sowie der Behandlung von Fehlern während der Token-Verifizierung."
 
 #: admin/class-admin-settings.php:384
 msgid "Specify which sections or plugins should be protected with POWER CAPTCHA."
@@ -272,3 +237,40 @@ msgstr "ID des zu schützenden Felds"
 #: integrations/elementor/class-elementor-form-power-captcha-field.php:156
 msgid "(optional, Enterprise only) Provide the ID of the field which should additionally be protected by POWER CAPTCHA (e.g. user name or email address). You can find the ID in the corresponding field under 'Advanced'."
 msgstr "(optional, nur Enterpise) Gib die ID des Feldes an, das zusätzlich mit POWER CAPTCHA geschützt werden soll (z. B. Benutzername oder E-Mail-Adresse). Die ID findest du im entsprechenden Feld unter \"Erweitert\"."
+
+#: admin/class-admin-settings.php:167
+#: admin/class-admin-settings.php:178
+#: admin/class-admin-settings.php:367
+msgid "customer area"
+msgstr "Kundenbereich"
+
+#: admin/class-admin-settings.php:189
+msgid "The widget is always displayed and the security check starts automatically as soon as the form is filled in or after the corresponding field (e.g. user name or email address) has been filled in.  A click on the widget is only necessary if it is required to solve a captcha."
+msgstr "Das Widget wird immer angezeigt und die Sicherheitsprüfung startet automatisch, sobald das Formular ausgefüllt wird oder nachdem das entsprechende Feld (z.B. Benutzername oder E-Mail-Adresse) ausgefüllt wurde. Ein Klick auf die Checkbox im Widget ist nur notwendig, wenn ein Captcha gelöst werden muss."
+
+#: admin/class-admin-settings.php:193
+msgid "The widget is not displayed initially and the security check starts automatically as soon as the form is filled in or after the corresponding field (e.g. user name or e-mail address) has been filled in. The widget is only displayed if it is required to solve a captcha."
+msgstr "Das Widget wird zunächst nicht angezeigt und die Sicherheitsprüfung startet automatisch, sobald das Formular ausgefüllt wird oder nachdem das entsprechende Feld (z. B. Benutzername oder E-Mail-Adresse) ausgefüllt wurde. Das Widget wird nur eingeblendet, wenn ein Captcha gelöst werden muss."
+
+#: admin/class-admin-settings.php:197
+msgid "The widget is always displayed and the security check is only starts when the widget is clicked. The click is always required."
+msgstr "Das Widget wird immer angezeigt, und die Sicherheitsprüfung startet erst, wenn auf die Checkbox im Widget geklickt wird."
+
+#: admin/class-admin-settings.php:378
+msgid "In these settings you can adjust the widget display and the security check behavior, along with how errors during token verification are handled."
+msgstr "In diesen Einstellungen kannst du die Anzeige des Widgets und des Verhaltens der Sicherheitsüberprüfung sowie der Behandlung von Fehlern während der Token-Verifizierung anpassen."
+
+#. translators: %s: link to power captcha customer area
+#: admin/class-admin-settings.php:166
+msgid "Enter your POWER CAPTCHA API Key. You can find your API Key in our %s."
+msgstr "Gib deinen POWER CAPTCHA API-Key ein. Den API-Key findest du in unserem %s."
+
+#. translators: %s link to power captcha customer area
+#: admin/class-admin-settings.php:177
+msgid "Enter your POWER CAPTCHA Secret Key. You can find your Secret Key in our %s."
+msgstr "Gib deinen POWER CAPTCHA Secret-Key ein. Den Secret-Key findest du in unserem %s."
+
+#. translators: %s: link to power captcha customer area
+#: admin/class-admin-settings.php:366
+msgid "To activate POWER CAPTCHA, an API Key and a Secret Key are required. You can find both in our %s."
+msgstr "Zur Aktivierung von POWER CAPTCHA sind ein API-Key und ein Secret-Key erforderlich. Beide Keys findest du in unserem %s."
