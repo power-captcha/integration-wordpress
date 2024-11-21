@@ -12,22 +12,36 @@ POWER CAPTCHA protects your WordPress website and WordPress forms against bots a
 
 == Description ==
 
-= Bot and hacker protection =
+= STOP BOT AND HACKER ATTACKS =
 
-POWER CAPTCHA does not primarily differentiate between human and automated interactions, but uses individually adjustable parameters to check whether access is fundamentally authorized – and is GDPR-compliant! You have control over the balance between user-friendliness, accessibility and security level.
+Safeguard your website’s forms and login areas from misuse, spam, and data theft caused by both bots AND hackers. POWER CAPTCHA uses customizable parameters to verify whether access is legitimate, either granting or denying access based on your chosen criteria.
 
-= Accessible - GDPR-compliant - developed in Germany =
+= MORE THAN JUST BOT PROTECTION =
+
+While many captchas only focus on stopping bots, they often fail to guard against unauthorized access by real users, such as someone repeatedly trying to guess login credentials or submitting forms multiple times. POWER CAPTCHA goes beyond traditional bot detection by evaluating all interactions, regardless of whether they're human or automated. It uses flexible criteria— e.g. usernames, email addresses, IP addresses, and/or login attempts within specific timeframes—to assess if access is genuinely authorized.
+
+Each interaction generates an encrypted code, or "client footprint," which POWER CAPTCHA stores and analyzes. For future attempts, it can, for example, increase the challenge level or temporarily block further actions. With customizable settings based on your license, POWER CAPTCHA adapts to your specific security needs. You can also configure it as a no-captcha option. 
+
+= GDPR-COMPLIANT, ACCESSIBLE, AND BUILT IN GERMANY =
+
+POWER CAPTCHA is cookie-free, GDPR-compliant, and easy to integrate with most systems. For added security and accessibility, the Enterprise Plan includes features like two-factor authentication.
 
 = Supported Plugins and Forms =
 
-* **WordPress Core:** Login, Registration, Lost Password
-* **WooCommerce:** Login, Registration, Lost Password, Checkout
-* **WPForms / WPForms lite**
+* **WordPress** Login 
+* **WordPress** Registration 
+* **WordPress** Lost Password 
+* **WooCommerce** Login
+* **WooCommerce** Registration
+* **WooCommerce** Lost Password
+* **WooCommerce** Checkout
+* **WPForms**
+* **WPForms lite**
 * **Elementor Pro Forms**
 
 == Installation ==
 
-To use POWER CAPTCHA, you’ll need an API Key. Select a plan on [power-captcha.com](https://power-captcha.com/en/power-captcha-shop-licenses/), add your domain in the API Key Management, and obtain your unique key.
+To use POWER CAPTCHA, you need an API Key. Select a plan on <a href="https://power-captcha.com/en/power-captcha-shop-licenses/">power-captcha.com</a>, add your domain in the customer area on our website, and obtain your API Key.
 
 ### Installation from within WordPress 
 
@@ -38,7 +52,7 @@ To use POWER CAPTCHA, you’ll need an API Key. Select a plan on [power-captcha.
 
 ### Manual Installation
 
-1. Upload the `power-catcha` folder to your `/wp-content/plugins/` directory
+1. Upload the `power-captcha` folder to your `/wp-content/plugins/` directory
 2. Activate the POWER CAPTCHA plugin through the Plugins menu in your WordPress dashboard.
 3. Follow the configuration instructions below.
 
@@ -50,7 +64,18 @@ To use POWER CAPTCHA, you’ll need an API Key. Select a plan on [power-captcha.
 4. Test your configuration to ensure everything is working as expected.
 
 == Frequently Asked Questions ==
-TODO
+
+= How to start with POWER CAPTCHA =
+
+To install the application, first select a license on <a href="https://power-captcha.com/en/power-captcha-plans-and-additional-options/">POWER CAPTCHA</a>. With your license, you’ll automatically receive an API key to access our interfaces. Then, follow the step-by-step instructions in the "Installation" tab to integrate POWER CAPTCHA into your website.
+
+= How to configure POWER CAPTCHA to your needs =
+
+Depending on your license, you can adapt POWER CAPTCHA to your individual needs. Your can find examples and configuration options to effectively protect your forms and login areas on <a href="https://power-captcha.com/en/power-captcha-feature-details/#Konfiguration"our website</a>.
+
+= How to get support =
+
+You use POWER CAPTCHA and have questions about the installation or a technical problem? You can contact our support team <a href="https://power-captcha.com/en/contact-support/">here</a>. 
 
 == Screenshots ==
 TODO
