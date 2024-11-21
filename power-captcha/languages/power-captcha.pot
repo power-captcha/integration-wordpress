@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-20T17:52:53+01:00\n"
+"POT-Creation-Date: 2024-11-21T11:03:33+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: power-captcha\n"
@@ -171,7 +171,7 @@ msgid "https://power-captcha.com/en/power-captcha-shop-licenses/"
 msgstr ""
 
 #: admin/class-admin-settings.php:378
-msgid "In these settings you can adjust the widget display and the security check behavior, along with how errors during token verification are handled."
+msgid "In these settings, you can adjust the widget display, the security check behavior, and how errors during token verification are handled."
 msgstr ""
 
 #: admin/class-admin-settings.php:384

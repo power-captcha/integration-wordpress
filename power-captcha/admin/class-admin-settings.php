@@ -375,7 +375,7 @@ class Admin_Settings {
 
 	public function captcha_setting_section_description_content() {
 		echo '<p>' .
-			esc_html__( 'In these settings you can adjust the widget display and the security check behavior, along with how errors during token verification are handled.', 'power-captcha' )
+			esc_html__( 'In these settings, you can adjust the widget display, the security check behavior, and how errors during token verification are handled.', 'power-captcha' )
 			. '</p>';
 	}
 

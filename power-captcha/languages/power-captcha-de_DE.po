@@ -256,10 +256,6 @@ msgstr "Das Widget wird zunächst nicht angezeigt und die Sicherheitsprüfung st
 msgid "The widget is always displayed and the security check is only starts when the widget is clicked. The click is always required."
 msgstr "Das Widget wird immer angezeigt, und die Sicherheitsprüfung startet erst, wenn auf die Checkbox im Widget geklickt wird."
 
-#: admin/class-admin-settings.php:378
-msgid "In these settings you can adjust the widget display and the security check behavior, along with how errors during token verification are handled."
-msgstr "In diesen Einstellungen kannst du die Anzeige des Widgets und des Verhaltens der Sicherheitsüberprüfung sowie der Behandlung von Fehlern während der Token-Verifizierung anpassen."
-
 #. translators: %s: link to power captcha customer area
 #: admin/class-admin-settings.php:166
 msgid "Enter your POWER CAPTCHA API Key. You can find your API Key in our %s."
@@ -274,3 +270,7 @@ msgstr "Gib deinen POWER CAPTCHA Secret-Key ein. Den Secret-Key findest du in un
 #: admin/class-admin-settings.php:366
 msgid "To activate POWER CAPTCHA, an API Key and a Secret Key are required. You can find both in our %s."
 msgstr "Zur Aktivierung von POWER CAPTCHA sind ein API-Key und ein Secret-Key erforderlich. Beide Keys findest du in unserem %s."
+
+#: admin/class-admin-settings.php:378
+msgid "In these settings, you can adjust the widget display, the security check behavior, and how errors during token verification are handled."
+msgstr "In diesen Einstellungen kannst du die Anzeige des Widgets, das Verhaltens der Sicherheitsüberprüfung und die Behandlung von Fehlern während der Token-Verifizierung anpassen."
