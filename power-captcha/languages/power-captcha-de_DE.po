@@ -19,7 +19,6 @@ msgstr ""
 msgid "POWER CAPTCHA"
 msgstr ""
 
-#. Plugin URI of the plugin
 #. Author URI of the plugin
 #: power-captcha.php
 msgid "https://power-captcha.com/en/"
@@ -274,3 +273,7 @@ msgstr "Zur Aktivierung von POWER CAPTCHA sind ein API-Key und ein Secret-Key er
 #: admin/class-admin-settings.php:378
 msgid "In these settings, you can adjust the widget display, the security check behavior, and how errors during token verification are handled."
 msgstr "In diesen Einstellungen kannst du die Anzeige des Widgets, das Verhaltens der Sicherheitsüberprüfung und die Behandlung von Fehlern während der Token-Verifizierung anpassen."
+
+#: admin/class-admin-settings.php:36
+msgid "Settings"
+msgstr "Einstellungen"

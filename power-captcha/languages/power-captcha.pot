@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-21T11:03:33+01:00\n"
+"POT-Creation-Date: 2024-12-10T12:39:13+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: power-captcha\n"
@@ -22,15 +22,18 @@ msgstr ""
 msgid "POWER CAPTCHA"
 msgstr ""
 
-#. Plugin URI of the plugin
+#. Description of the plugin
+#: power-captcha.php
+msgid "POWER CAPTCHA protects your WordPress website and WordPress forms against bots and unauthorized persons. GDPR compliant!"
+msgstr ""
+
 #. Author URI of the plugin
 #: power-captcha.php
 msgid "https://power-captcha.com/en/"
 msgstr ""
 
-#. Description of the plugin
-#: power-captcha.php
-msgid "POWER CAPTCHA protects your WordPress website and WordPress forms against bots and unauthorized persons. GDPR compliant!"
+#: admin/class-admin-settings.php:36
+msgid "Settings"
 msgstr ""
 
 #: admin/class-admin-settings.php:48

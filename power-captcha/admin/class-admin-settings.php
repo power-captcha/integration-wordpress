@@ -33,9 +33,9 @@ class Admin_Settings {
 			)
 		);
 		// Create the link.
-		$settings_link = '<a href="' . $url . '">' . __( 'Settings' ) . '</a>';
-		// Adds the link to the end of the array.
-		array_push(
+		$settings_link = '<a href="' . $url . '">' . __( 'Settings', 'power-captcha' ) . '</a>';
+		// Adds the link to the beginning of the array.
+		array_unshift(
 			$actions,
 			$settings_link
 		);
