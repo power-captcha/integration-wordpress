@@ -2,9 +2,9 @@
 Contributors: power-captcha
 Tags: captcha, security, protection, bot, spam
 Requires at least: 6.0
-Tested up to: 6.7
+Tested up to: 6.7.1
 Requires PHP: 8.0
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0
 
@@ -81,6 +81,9 @@ You use POWER CAPTCHA and have questions about the installation or a technical p
 TODO
 
 == Changelog ==
+
+= 1.2.1 =
+* Added missing translation and adjusted plugin action links
 
 = 1.2.0 =
 * Refactored and overhauled the code and plugin structure to an object-oriented approach
