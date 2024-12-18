@@ -1,5 +1,5 @@
 === POWER CAPTCHA ===
-Contributors: power-captcha
+Contributors: powercaptcha
 Tags: captcha, security, protection, bot, spam
 Requires at least: 6.0
 Tested up to: 6.7.1
