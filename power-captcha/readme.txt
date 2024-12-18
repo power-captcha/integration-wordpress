@@ -84,6 +84,9 @@ TODO
 == Changelog ==
 
 = 1.2.1 =
+* Added integration for Contact From 7
+
+= 1.2.1 =
 * Added missing translation and adjusted plugin action links
 
 = 1.2.0 =
