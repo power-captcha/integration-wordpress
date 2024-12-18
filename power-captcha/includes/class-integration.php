@@ -40,18 +40,24 @@ abstract class Integration {
 	}
 
 	public function echo_widget_html( $user_input_field = '', $user_input_field_required = false, $css_class = '', $style = '' ) {
-		echo '<div ';
-		echo ' data-pc-wp-check-mode="' . esc_attr( powercaptcha()->get_check_mode() ) . '"';
-		echo ' data-pc-wp-integration="' . esc_attr( $this->id ) . '"';
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Reason: Output is escaped by widget_html.
+		echo $this->widget_html( $user_input_field, $user_input_field_required, $css_class, $style );
+	}
+
+	public function widget_html( $user_input_field = '', $user_input_field_required = false, $css_class = '', $style = '' ) {
+		$result  = '<div ';
+		$result .= ' data-pc-wp-check-mode="' . esc_attr( powercaptcha()->get_check_mode() ) . '"';
+		$result .= ' data-pc-wp-integration="' . esc_attr( $this->id ) . '"';
 		if ( ! empty( $user_input_field ) ) {
-			echo ' data-pc-wp-user-field="' . esc_attr( $user_input_field ) . '"';
+			$result .= ' data-pc-wp-user-field="' . esc_attr( $user_input_field ) . '"';
 			if ( $user_input_field_required ) {
-				echo ' data-pc-wp-user-field-required="1"';
+				$result .= ' data-pc-wp-user-field-required="1"';
 			}
 		}
-		echo ' class="' . esc_attr( $css_class ) . '"';
-		echo ' style="' . esc_attr( $style ) . '"';
-		echo '></div>';
+		$result .= ' class="' . esc_attr( $css_class ) . '"';
+		$result .= ' style="' . esc_attr( $style ) . '"';
+		$result .= '></div>';
+		return $result;
 	}
 
 	public function fetch_token_from_post_request() {

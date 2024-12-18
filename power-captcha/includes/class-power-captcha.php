@@ -161,6 +161,7 @@ final class Power_Captcha {
 		require_once plugin_dir_path( __DIR__ ) . 'integrations/woocommerce/class-woocommerce-register-integration.php';
 		require_once plugin_dir_path( __DIR__ ) . 'integrations/wpforms/class-wpforms-integration.php';
 		require_once plugin_dir_path( __DIR__ ) . 'integrations/elementor/class-elementor-form-integration.php';
+		require_once plugin_dir_path( __DIR__ ) . 'integrations/contact-form-7/class-contact-form-7-integration.php';
 	}
 
 	public function register_integration( Integration $integration ) {
