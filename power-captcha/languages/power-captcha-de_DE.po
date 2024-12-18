@@ -15,6 +15,8 @@ msgstr ""
 #. Author of the plugin
 #: power-captcha.php
 #: admin/class-admin-settings.php:372
+#: integrations/contact-form-7/class-contact-form-7-integration.php:57
+#: integrations/contact-form-7/class-contact-form-7-integration.php:68
 #: integrations/elementor/class-elementor-form-power-captcha-field.php:49
 msgid "POWER CAPTCHA"
 msgstr ""
@@ -214,7 +216,7 @@ msgstr ""
 
 #: integrations/wpforms/class-wpforms-integration.php:19
 msgid "Enable protection for <a href=\"https://wordpress.org/plugins/wpforms/\" target=\"_blank\">WPForms</a> and <a href=\"https://wordpress.org/plugins/wpforms-lite/\" target=\"_blank\">WPForms lite</a>."
-msgstr "Aktivieren Sie den Schutz für <a href=\"https://wordpress.org/plugins/wpforms/\" target=\"_blank\">WPForms</a> und <a href=\"https://wordpress.org/plugins/wpforms-lite/\" target=\"_blank\">WPForms lite</a>."
+msgstr "Aktiviert den Schutz für <a href=\"https://wordpress.org/plugins/wpforms/\" target=\"_blank\">WPForms</a> und <a href=\"https://wordpress.org/plugins/wpforms-lite/\" target=\"_blank\">WPForms lite</a>."
 
 #: integrations/wpforms/class-wpforms-integration.php:102
 msgid "POWER CAPTCHA: Spam detected"
@@ -277,3 +279,35 @@ msgstr "In diesen Einstellungen kannst du die Anzeige des Widgets, das Verhalten
 #: admin/class-admin-settings.php:36
 msgid "Settings"
 msgstr "Einstellungen"
+
+#: integrations/contact-form-7/class-contact-form-7-integration.php:20
+msgid "Contact Form 7"
+msgstr "Contact Form 7"
+
+#: integrations/contact-form-7/class-contact-form-7-integration.php:22
+msgid "Enable protection for Contact Form 7."
+msgstr "Aktiviert den Schutz für Contact Form 7."
+
+#: integrations/contact-form-7/class-contact-form-7-integration.php:24
+msgid "Note: After enabling, you need to add a 'POWER CAPTCHA'-field to your desired Contact Form 7."
+msgstr "Hinweis: Nach der Aktivierung muss ein 'POWER CAPTCHA'-Feld zum gewünschten Contact Form 7-Formular hinzugefügt werden."
+
+#: integrations/contact-form-7/class-contact-form-7-integration.php:69
+msgid "POWER CAPTCHA form-tag generator"
+msgstr "POWER CAPTCHA Formular-Tag Generator"
+
+#: integrations/contact-form-7/class-contact-form-7-integration.php:70
+msgid "Generates a form-tag to protect the form with POWER CAPTCHA."
+msgstr "Generiert ein Formular-Tag zum Schutz des Formulars mit POWER CAPTCHA."
+
+#: integrations/contact-form-7/class-contact-form-7-integration.php:95
+msgid "Additional field protection (optional, Enterprise only)"
+msgstr "Zusätzlicher Feldschutz (optional, nur Enterprise)"
+
+#: integrations/contact-form-7/class-contact-form-7-integration.php:108
+msgid "Provide the name of the field which should additionally be protected by POWER CAPTCHA (e.g. user name or email address)."
+msgstr "Gib den Namen des Feldes an, das zusätzlich durch POWER CAPTCHA geschützt werden soll (z.B. Benutzername oder E-Mail-Adresse)."
+
+#: integrations/contact-form-7/class-contact-form-7-integration.php:110
+msgid "The field-name can be found in the second argument of the form-tag (see <a href=\"https://contactform7.com/tag-syntax/#form_tag\" target=\"_blank\">Form-tag syntax</a>)."
+msgstr "Der Feldname ist im zweiten Argument des Form-Tags zu finden (siehe <a href=\"https://contactform7.com/tag-syntax/#form_tag\" target=\"_blank\">Form-Tag Syntax</a>)."
