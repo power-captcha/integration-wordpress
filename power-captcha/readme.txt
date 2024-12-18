@@ -4,7 +4,7 @@ Tags: captcha, security, protection, bot, spam
 Requires at least: 6.0
 Tested up to: 6.7.1
 Requires PHP: 8.0
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0
 
@@ -38,6 +38,7 @@ POWER CAPTCHA is cookie-free, GDPR-compliant, and easy to integrate with most sy
 * **WPForms**
 * **WPForms lite**
 * **Elementor Pro Forms**
+* **Contact Form 7**
 
 == Installation ==
 
