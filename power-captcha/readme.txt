@@ -83,7 +83,7 @@ TODO
 
 == Changelog ==
 
-= 1.2.1 =
+= 1.2.2 =
 * Added integration for Contact From 7
 
 = 1.2.1 =
