@@ -80,11 +80,21 @@ class Admin_Settings {
 		register_setting(
 			powercaptcha()::SETTING_GROUP_NAME,
 			powercaptcha()::SETTING_NAME_API_KEY,
-			array( 'default' => '' ) // args (data used to describe settings when registered) type, description, santizize_callback, show_in_rest, default; TODO is this needed? also for the other options?
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => '',
+			)
 		);
+
 		register_setting(
 			powercaptcha()::SETTING_GROUP_NAME,
-			powercaptcha()::SETTING_NAME_SECRET_KEY
+			powercaptcha()::SETTING_NAME_SECRET_KEY,
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => '',
+			)
 		);
 
 		// integration settings
@@ -92,7 +102,12 @@ class Admin_Settings {
 			/** @var Integration $integration */
 			register_setting(
 				powercaptcha()::SETTING_GROUP_NAME,
-				$integration->get_setting_name()
+				$integration->get_setting_name(),
+				array(
+					'type'              => 'boolean',
+					'sanitize_callback' => array( $this, 'sanitize_checkbox' ),
+					'default'           => false,
+				)
 			);
 		}
 
@@ -100,20 +115,40 @@ class Admin_Settings {
 		register_setting(
 			powercaptcha()::SETTING_GROUP_NAME,
 			powercaptcha()::SETTING_NAME_CHECK_MODE,
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => array( $this, 'sanitize_check_mode' ),
+				'default'           => 'auto',
+			)
 		);
 		register_setting(
 			powercaptcha()::SETTING_GROUP_NAME,
 			powercaptcha()::SETTING_NAME_API_ERROR_POLICY,
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => array( $this, 'sanitize_api_error_policy' ),
+				'default'           => powercaptcha()::ERROR_POLICY_GRANT_ACCESS,
+			)
 		);
 
 		// on premises settings
 		register_setting(
 			powercaptcha()::SETTING_GROUP_NAME,
-			powercaptcha()::SETTING_NAME_ENDPOINT_BASE_URL
+			powercaptcha()::SETTING_NAME_ENDPOINT_BASE_URL,
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_url',
+				'default'           => '',
+			)
 		);
 		register_setting(
 			powercaptcha()::SETTING_GROUP_NAME,
-			powercaptcha()::SETTING_NAME_JAVASCRIPT_BASE_URL
+			powercaptcha()::SETTING_NAME_JAVASCRIPT_BASE_URL,
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_url',
+				'default'           => '',
+			)
 		);
 	}
 
@@ -389,5 +424,17 @@ class Admin_Settings {
 		echo '<p>' .
 			esc_html__( 'These settings are only relevant if you are running a self-hosted POWER CAPTCHA instance. Otherwise you can leave these settings empty.', 'power-captcha' )
 			. '</p>';
+	}
+
+	public function sanitize_checkbox( $input ) {
+		return ( isset( $input ) && true === boolval( $input ) ? true : false );
+	}
+
+	public function sanitize_check_mode( $input ) {
+		return ( in_array( $input, array( 'auto', 'hidden', 'manu' ), true ) ? $input : 'auto' );
+	}
+
+	public function sanitize_api_error_policy( $input ) {
+		return ( in_array( $input, array( powercaptcha()::ERROR_POLICY_GRANT_ACCESS, powercaptcha()::ERROR_POLICY_BLOCK_ACCESS ), true ) ? $input : powercaptcha()::ERROR_POLICY_GRANT_ACCESS );
 	}
 }
