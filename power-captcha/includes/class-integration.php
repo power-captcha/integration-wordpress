@@ -62,28 +62,27 @@ abstract class Integration {
 		return $result;
 	}
 
-	public function fetch_token_from_post_request() {
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Reason: The raw token input is necessary and only used to verify the request via the POWER CAPTCHA API. Nonce generation and verification are handled by the respective form plugin.
-		return isset( $_POST['pc-token'] ) ? $_POST['pc-token'] : false;
-	}
-
 	public function verify_token( string $username_raw = null, string $token_raw = null, string $client_uid = null ): Verification_Result {
 		try {
 			if ( is_null( $token_raw ) ) {
-				$token_raw = $this->fetch_token_from_post_request();
-				if ( false === $token_raw ) {
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: The token input is only used to verify the request via the POWER CAPTCHA API. Nonce generation and verification are handled by the respective form plugin.
+				if ( false === isset( $_POST['pc-token'] ) ) {
 					throw new User_Error( 'The user request does not contain a token field.' );
 				}
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: The token input is only used to verify the request via the POWER CAPTCHA API. Nonce generation and verification are handled by the respective form plugin.
+				$token = sanitize_text_field( wp_unslash( $_POST['pc-token'] ) );
+			} else {
+				$token = sanitize_text_field( wp_unslash( $token_raw ) );
 			}
 
-			if ( empty( $token_raw ) ) {
+			if ( empty( $token ) ) {
 				throw new User_Error( 'The user request contains an empty token.' );
 			}
 
 			$request_url  = powercaptcha()->get_token_verification_url();
 			$request_body = array(
 				'secret'    => powercaptcha()->get_secret_key( $this->get_id() ),
-				'token'     => $token_raw,
+				'token'     => $token,
 				'clientUid' => $client_uid ?? powercaptcha()->get_client_uid(),
 				'name'      => $username_raw ?? '',
 			);
