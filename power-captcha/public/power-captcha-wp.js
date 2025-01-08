@@ -111,7 +111,9 @@ window.PowerCaptchaWp = (function (conf) {
 					}
 				);
 				autoCaptchas.push( captcha );
-				console.log( 'collected captcha: ', captcha );
+				if (wp_script_debug) {
+					console.debug( 'collected captcha: ', captcha );
+				}
 			}
 		);
 	}
