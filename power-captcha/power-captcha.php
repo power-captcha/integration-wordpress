@@ -13,6 +13,8 @@
  * Domain Path: /languages
  */
 
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly
+
 define( 'POWER_CAPTCHA_PLUGIN_VERSION', '1.2.2' );
 define( 'POWER_CAPTCHA_PLUGIN_FILE', __FILE__ );
 define( 'POWER_CAPTCHA_PLUGIN_DIR', __DIR__ );

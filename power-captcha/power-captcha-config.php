@@ -7,7 +7,7 @@
  * Note: You still need to assign a global API and Secret Key via the 'POWER CAPTCHA Settings' in the WordPress dashboard.
  */
 
-defined( 'POWER_CAPTCHA_PATH' ) || exit;
+ defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
 // Example of overriding the API Key and Secret Keys for WPForms integration.
 // powercaptcha()->overwrite_keys('wpforms', 'your_api_key', 'your_secret_key');

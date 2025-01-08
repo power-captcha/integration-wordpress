@@ -2,6 +2,8 @@
 
 namespace Power_Captcha_WP;
 
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly
+
 class Verification_Result {
 
 	private bool $success;

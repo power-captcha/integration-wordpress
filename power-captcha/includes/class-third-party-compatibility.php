@@ -2,7 +2,7 @@
 
 namespace Power_Captcha_WP;
 
-defined( 'POWER_CAPTCHA_PATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
 class Third_Party_Compatibility {
 

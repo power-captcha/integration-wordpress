@@ -2,6 +2,8 @@
 
 namespace Power_Captcha_WP;
 
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly
+
 abstract class Integration {
 	const SETTING_ENABLED_NAME_PREFIX = 'powercaptcha_integration_enabled_';
 

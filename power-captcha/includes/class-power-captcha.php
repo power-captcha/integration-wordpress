@@ -2,6 +2,8 @@
 
 namespace Power_Captcha_WP;
 
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly
+
 final class Power_Captcha {
 
 	const API_VERSION = 'v1';
