@@ -48,6 +48,15 @@ class Elementor_Form_Integration extends Integration {
 			POWER_CAPTCHA_PLUGIN_VERSION,
 			true
 		);
+
+		// register preview script
+		wp_register_script(
+			'powercaptcha-elementor-preview',
+			plugin_dir_url( __FILE__ ) . 'public/power-captcha-elementor-preview.js',
+			array( 'powercaptcha-elementor' ),
+			POWER_CAPTCHA_PLUGIN_VERSION,
+			true
+		);
 	}
 
 	/**

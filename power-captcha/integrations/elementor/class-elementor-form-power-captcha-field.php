@@ -28,7 +28,7 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 		$this->power_captcha_integration = $power_captcha_integration;
 
 		// Used to add a script to the Elementor editor preview.
-		add_action( 'elementor/preview/init', array( $this, 'editor_preview_footer' ) );
+		add_action( 'elementor/preview/init', array( $this, 'enqueue_editor_preview_scripts' ) );
 	}
 
 	/**
@@ -186,38 +186,7 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 		add_action( 'wp_footer', array( $this, 'content_template_script' ) );
 	}
 
-	/**
-	 * Content template script.
-	 *
-	 * Add content template alternative, to display the field in Elementor editor.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function content_template_script() {
-		?>
-		<script>
-		jQuery( document ).ready( () => {
-			elementor.hooks.addFilter(
-				'elementor_pro/forms/content_template/field/<?php echo esc_js( $this->get_type() ); ?>',
-				function ( inputField, item, i ) {
-					
-					// delay PowerCaptchaWp.setup() method, so the div is already rendered
-					setTimeout(function () {
-						if(window.PowerCaptchaWp) {
-							window.PowerCaptchaWp.destroyAll();
-							window.PowerCaptchaWp.setup();
-						} else {
-							console.warn('PowerCaptchaWp not found');
-						}
-					}, 1000);
-
-					return `<?php $this->power_captcha_integration->echo_widget_html(); ?>`;
-				}, 10, 3
-			);
-		});
-		</script>
-		<?php
+	public function enqueue_editor_preview_scripts() {
+		wp_enqueue_script( 'powercaptcha-elementor-preview' );
 	}
 }
