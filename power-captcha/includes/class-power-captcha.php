@@ -133,15 +133,18 @@ final class Power_Captcha {
 			true
 		);
 
-		wp_localize_script(
+		wp_add_inline_script(
 			'powercaptcha-wp',
-			'powercaptcha_ajax_conf',
-			array(
-				'ajaxurl'                    => admin_url( 'admin-ajax.php' ),
-				'action_integration_setting' => self::AJAX_ACTION_NAME_INTEGRATION_SETTING,
-				'wp_locale'                  => get_locale(),
-				'is_debug'                   => ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ),
-			)
+			'const powercaptcha_ajax_conf = ' .
+			wp_json_encode(
+				array(
+					'ajaxurl'                    => admin_url( 'admin-ajax.php' ),
+					'action_integration_setting' => self::AJAX_ACTION_NAME_INTEGRATION_SETTING,
+					'wp_locale'                  => get_locale(),
+					'is_debug'                   => ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ),
+				)
+			),
+			'before'
 		);
 	}
 
