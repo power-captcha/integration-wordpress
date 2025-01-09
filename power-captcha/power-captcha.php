@@ -2,7 +2,7 @@
 /**
  * Plugin Name: POWER CAPTCHA
  * Description: POWER CAPTCHA protects your WordPress website and WordPress forms against bots and unauthorized persons. GDPR compliant!
- * Version:     1.2.2
+ * Version:     1.2.3
  * Requires at least: 6.0
  * Requires PHP: 8.0
  * Author:      POWER CAPTCHA
