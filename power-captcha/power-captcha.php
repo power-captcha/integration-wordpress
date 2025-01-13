@@ -15,7 +15,7 @@
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
-define( 'POWER_CAPTCHA_PLUGIN_VERSION', '1.2.2' );
+define( 'POWER_CAPTCHA_PLUGIN_VERSION', '1.2.3' );
 define( 'POWER_CAPTCHA_PLUGIN_FILE', __FILE__ );
 define( 'POWER_CAPTCHA_PLUGIN_DIR', __DIR__ );
 define( 'POWER_CAPTCHA_PATH', plugin_dir_path( POWER_CAPTCHA_PLUGIN_FILE ) );
