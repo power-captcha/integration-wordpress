@@ -49,8 +49,9 @@ class WooCommerce_Checkout_Integration extends Integration {
 	}
 
 	public function verification( array $fields, \WP_Error $errors ) {
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Reason: The raw input is necessary and only used to verify the request via the POWER CAPTCHA API. Nonce generation and verification are handled by WooCommerce.
-		$verification = $this->verify_token( $_POST['billing_email'] ?? null );
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Nonce generation and verification are handled by WooCommerce.
+		$username     = isset( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : null;
+		$verification = $this->verify_token( $username );
 		if ( false === $verification->is_success() ) {
 			$errors->add( $verification->get_error_code(), $verification->get_user_message() );
 		}

@@ -182,14 +182,10 @@ class Contact_Form_7_Integration extends Integration {
 	}
 
 	public function verification( \WPCF7_Validation $result, \WPCF7_FormTag $tag ) {
-		$username_raw   = null;
 		$username_field = $tag->get_option( 'userfield', '', true );
-		if ( ! empty( $username_field ) ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Reason: The raw input is necessary and only used to verify the request via the POWER CAPTCHA API. Nonce generation and verification are handled by Contact Form 7.
-			$username_raw = $_POST[ $username_field ] ?? '';
-		}
-
-		$verification = $this->verify_token( $username_raw );
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Nonce generation and verification are handled by Contact Form 7.
+		$username     = ( ! empty( $username_field ) && isset( $_POST[ $username_field ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $username_field ] ) ) : null;
+		$verification = $this->verify_token( $username );
 		if ( false === $verification->is_success() ) {
 			$result->invalidate( $tag, $verification->get_user_message( false ) );
 		}

@@ -54,8 +54,9 @@ class WordPress_WooCommerce_Lost_Password_Integration extends Integration {
 	}
 
 	public function verification( \WP_Error $errors, \WP_User|false $user_data ) {
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Reason: The raw input is necessary and only used to verify the request via the POWER CAPTCHA API. Nonce generation and verification are handled by WordPress.
-		$verification = $this->verify_token( $_POST['user_login'] ?? null );
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Nonce generation and verification are handled by WordPress.
+		$username     = isset( $_POST['user_login'] ) ? sanitize_text_field( wp_unslash( $_POST['user_login'] ) ) : null;
+		$verification = $this->verify_token( $username );
 		if ( false === $verification->is_success() ) {
 			$errors->add( $verification->get_error_code(), $verification->get_user_message() );
 		}

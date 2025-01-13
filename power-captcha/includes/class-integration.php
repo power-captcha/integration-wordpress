@@ -62,17 +62,15 @@ abstract class Integration {
 		return $result;
 	}
 
-	public function verify_token( string $username_raw = null, string $token_raw = null, string $client_uid = null ): Verification_Result {
+	public function verify_token( string $username = null, string $token = null, string $client_uid = null ): Verification_Result {
 		try {
-			if ( is_null( $token_raw ) ) {
+			if ( is_null( $token ) ) {
 				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: The token input is only used to verify the request via the POWER CAPTCHA API. Nonce generation and verification are handled by the respective form plugin.
 				if ( false === isset( $_POST['pc-token'] ) ) {
 					throw new User_Error( 'The user request does not contain a token field.' );
 				}
 				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: The token input is only used to verify the request via the POWER CAPTCHA API. Nonce generation and verification are handled by the respective form plugin.
 				$token = sanitize_text_field( wp_unslash( $_POST['pc-token'] ) );
-			} else {
-				$token = sanitize_text_field( wp_unslash( $token_raw ) );
 			}
 
 			if ( empty( $token ) ) {
@@ -84,7 +82,7 @@ abstract class Integration {
 				'secret'    => powercaptcha()->get_secret_key( $this->get_id() ),
 				'token'     => $token,
 				'clientUid' => $client_uid ?? powercaptcha()->get_client_uid(),
-				'name'      => $username_raw ?? '',
+				'name'      => $username ?? '',
 			);
 
 			$this->debug_log(
@@ -127,7 +125,7 @@ abstract class Integration {
 
 			if ( 200 === $response_code ) {
 				if ( isset( $response_body['success'] ) && boolval( $response_body['success'] ) ) {
-					$this->debug_log( 'Token verification: Token successfully verified.', array( 'Token' => $token_raw ) );
+					$this->debug_log( 'Token verification: Token successfully verified.', array( 'Token' => $token ) );
 					return new Verification_Result( true, null );
 				}
 

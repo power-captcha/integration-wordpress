@@ -44,8 +44,9 @@ class WooCommerce_Login_Integration extends Integration {
 		// To avoid double verification, we disable the wordpress_login verification here.
 		powercaptcha()->disable_integration_verification( 'wordpress_login' );
 
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Reason: The raw input is necessary and only used to verify the request via the POWER CAPTCHA API. Nonce generation and verification are handled by WooCommerce.
-		$verification = $this->verify_token( $_POST['username'] ?? null );
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Nonce generation and verification are handled by WooCommerce.
+		$username     = isset( $_POST['username'] ) ? sanitize_text_field( wp_unslash( $_POST['username'] ) ) : null;
+		$verification = $this->verify_token( $username );
 		if ( false === $verification->is_success() ) {
 			$validation_error->add( $verification->get_error_code(), $verification->get_user_message( false ) );
 		}
