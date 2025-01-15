@@ -1,8 +1,7 @@
 name: Deploy to WordPress.org Plugin Directory
 on:
-  push:
-    tags:
-    - "v*"
+  release:
+    types: [released]
 jobs:
   deploy_to_wp_repository:
     name: Deploy to WordPress.org Repository
