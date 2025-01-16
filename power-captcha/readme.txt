@@ -18,7 +18,7 @@ Safeguard your website’s forms and login areas from misuse, spam, and data the
 
 = MORE THAN JUST BOT PROTECTION =
 
-While many captchas only focus on stopping bots, they often fail to guard against unauthorized access by real users, such as someone repeatedly trying to guess login credentials or submitting forms multiple times. POWER CAPTCHA goes beyond traditional bot detection by evaluating all interactions, regardless of whether they're human or automated. It uses flexible criteria— e.g. usernames, email addresses, IP addresses, and/or login attempts within specific timeframes—to assess if access is genuinely authorized.
+While many captchas only focus on stopping bots, they often fail to guard against unauthorized access by real users, such as someone repeatedly trying to guess login credentials or submitting forms multiple times. POWER CAPTCHA goes beyond traditional bot detection by evaluating all interactions, regardless of whether they're human or automated. It uses flexible criteria — e.g. usernames, email addresses, IP addresses, and/or login attempts within specific timeframes — to assess if access is genuinely authorized.
 
 Each interaction generates an encrypted code, or "client footprint," which POWER CAPTCHA stores and analyzes. For future attempts, it can, for example, increase the challenge level or temporarily block further actions. With customizable settings based on your license, POWER CAPTCHA adapts to your specific security needs. You can also configure it as a no-captcha option. 
 
@@ -72,7 +72,7 @@ To install the application, first select a license on <a href="https://power-cap
 
 = How to configure POWER CAPTCHA to your needs =
 
-Depending on your license, you can adapt POWER CAPTCHA to your individual needs. Your can find examples and configuration options to effectively protect your forms and login areas on <a href="https://power-captcha.com/en/power-captcha-feature-details/#Konfiguration"our website</a>.
+Depending on your license, you can adapt POWER CAPTCHA to your individual needs. Your can find examples and configuration options to effectively protect your forms and login areas on <a href="https://power-captcha.com/en/power-captcha-feature-details/#Konfiguration">our website</a>.
 
 = How to get support =
 
