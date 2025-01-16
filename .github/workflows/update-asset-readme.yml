@@ -1,0 +1,26 @@
+name: Update assets and readme.txt to WordPress.org Plugin Directory  
+on:
+  push:
+    branches:
+    - main
+jobs:
+  update_asset_readme:
+    name: Push to trunk WordPress.org Repository
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Install SVN ( Subversion )
+      run: |
+        sudo apt-get update
+        sudo apt-get install subversion
+    # Move readme.txt to the root directory
+    - name: Move readme.txt
+      run: mv power-captcha/readme.txt ./readme.txt
+    - name: WordPress.org plugin assets and readme.txt update
+      uses: 10up/action-wordpress-plugin-asset-update@stable
+      env:
+        SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+        ASSET_DIR: .wordpress-org
+        SLUG: power-captcha
+        IGNORE_OTHER_FILES: true
