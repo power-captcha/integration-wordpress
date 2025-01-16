@@ -79,7 +79,11 @@ Depending on your license, you can adapt POWER CAPTCHA to your individual needs.
 You use POWER CAPTCHA and have questions about the installation or a technical problem? You can contact our support team <a href="https://power-captcha.com/en/contact-support/">here</a>. 
 
 == Screenshots ==
-TODO
+
+1. WordPress Login protected by POWER CAPTCHA
+2. Display of a CAPTCHA
+3. Individual integration settings
+4. Individual configuration of the widget display
 
 == Changelog ==
 
