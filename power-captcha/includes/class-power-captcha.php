@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 final class Power_Captcha {
 
 	const API_VERSION = 'v1';
-	const JS_VERSION  = '1.2.5';
+	const JS_VERSION  = '1.2.6';
 
 	const DEFAULT_ENDPOINT_BASE_URL = 'https://api.power-captcha.com';
 	const DEFAULT_JAVASCRIPT_URL    = 'https://cdn.power-captcha.com';
