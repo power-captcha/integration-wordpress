@@ -55,8 +55,8 @@ class WordPress_WooCommerce_Lost_Password_Integration extends Integration {
 
 	public function verification( \WP_Error $errors, \WP_User|false $user_data ) {
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Nonce generation and verification are handled by WordPress.
-		$username     = isset( $_POST['user_login'] ) ? sanitize_text_field( wp_unslash( $_POST['user_login'] ) ) : null;
-		$verification = $this->verify_token( $username );
+		$username_hash = $this->get_username_hash( 'user_login' );
+		$verification  = $this->verify_token( $username_hash );
 		if ( false === $verification->is_success() ) {
 			$errors->add( $verification->get_error_code(), $verification->get_user_message() );
 		}

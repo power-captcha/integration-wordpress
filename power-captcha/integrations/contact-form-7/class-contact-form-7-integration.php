@@ -183,9 +183,8 @@ class Contact_Form_7_Integration extends Integration {
 
 	public function verification( \WPCF7_Validation $result, \WPCF7_FormTag $tag ) {
 		$username_field = $tag->get_option( 'userfield', '', true );
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Nonce generation and verification are handled by Contact Form 7.
-		$username     = ( ! empty( $username_field ) && isset( $_POST[ $username_field ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $username_field ] ) ) : null;
-		$verification = $this->verify_token( $username );
+		$username_hash  = $this->get_username_hash( $username_field );
+		$verification   = $this->verify_token( $username_hash );
 		if ( false === $verification->is_success() ) {
 			$result->invalidate( $tag, $verification->get_user_message( false ) );
 		}

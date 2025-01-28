@@ -53,9 +53,8 @@ class WPForms_Integration extends Integration {
 	}
 
 	public function verification( array $fields, array $entry, array $form_data ) {
-		$pc_username_value = $this->find_user_field_value( $form_data, $entry );
-
-		$verification = $this->verify_token( $pc_username_value );
+		$username_hash = $this->hash_username( $this->find_user_field_value( $form_data, $entry ) );
+		$verification  = $this->verify_token( $username_hash );
 
 		if ( false === $verification->is_success() ) {
 
@@ -77,7 +76,7 @@ class WPForms_Integration extends Integration {
 					if ( is_array( $field_value ) ) {
 						return array_values( $field_value )[ $field_position ];
 					} else {
-						return $field_value;
+						return $field_value;  // TODO get raw input + hash username
 					}
 				}
 			}

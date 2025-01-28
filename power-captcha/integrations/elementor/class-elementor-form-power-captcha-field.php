@@ -92,18 +92,18 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 		}
 
 		$username_field_id = $power_captcha_field_meta[ self::FIELD_CONTROL_PC_USERNAME_ID ] ?? '';
-		$username_value    = null;
+		$username_hash     = null;
 		if ( ! empty( $username_field_id ) ) {
 			// get the raw field value which contains the username protected by POWER CAPTCHA
 			foreach ( $record->get( 'fields' ) as $name => $field_data ) {
 				if ( $field_data['id'] === $username_field_id ) {
-					$username_value = $field_data['raw_value'];
+					$username_hash = $this->power_captcha_integration->hash_username( $field_data['raw_value'] );
 					break;
 				}
 			}
 		}
 
-		$verification = $this->power_captcha_integration->verify_token( $username_value );
+		$verification = $this->power_captcha_integration->verify_token( $username_hash );
 		if ( false === $verification->is_success() ) {
 			// TODO find a way to display the error message in frontend
 			$ajax_handler->add_error( $field['id'], $verification->get_user_message() );

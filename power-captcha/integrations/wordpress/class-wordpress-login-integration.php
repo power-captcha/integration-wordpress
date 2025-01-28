@@ -43,9 +43,8 @@ class WordPress_Login_Integration extends Integration {
 			return $user;
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Nonce generation and verification are handled by WordPress.
-		$username     = isset( $_POST['log'] ) ? sanitize_text_field( wp_unslash( $_POST['log'] ) ) : null;
-		$verification = $this->verify_token( $username );
+		$username_hash = $this->get_username_hash( 'log' );
+		$verification  = $this->verify_token( $username_hash );
 		if ( false === $verification->is_success() ) {
 			return new \WP_Error( $verification->get_error_code(), $verification->get_user_message() );
 		}

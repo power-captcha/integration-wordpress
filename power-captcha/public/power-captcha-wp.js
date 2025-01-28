@@ -55,6 +55,7 @@ window.PowerCaptchaWp = (function (conf) {
 				formElement: captchaSettings.formElement || undefined,
 				widgetContainer: captchaSettings.widgetContainer,
 				userInputField: captchaSettings.userInputField || undefined,
+				hashUserInput: true,
 				checkMode: captchaSettings.checkMode || undefined,
 			}
 		);

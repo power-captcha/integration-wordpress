@@ -41,9 +41,8 @@ class WooCommerce_Register_Integration extends Integration {
 	}
 
 	public function verification( \WP_Error $validation_error, string $username, string $password, string $email ) {
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Nonce generation and verification are handled by WooCommerce.
-		$username     = isset( $_POST['email'] ) ? sanitize_text_field( wp_unslash( $_POST['email'] ) ) : null;
-		$verification = $this->verify_token( $username );
+		$username_hash = $this->get_username_hash( 'email' );
+		$verification  = $this->verify_token( $username_hash );
 		if ( false === $verification->is_success() ) {
 			$validation_error->add( $verification->get_error_code(), $verification->get_user_message( false ) );
 		}

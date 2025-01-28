@@ -62,7 +62,25 @@ abstract class Integration {
 		return $result;
 	}
 
-	public function verify_token( string $username = null, string $token = null, string $client_uid = null ): Verification_Result {
+	public function get_username_hash( ?string $field_name ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Nonce generation and verification are handled by the respective form plugin.
+		if ( ( empty( $field_name ) ) || ( false === isset( $_POST[ $field_name ] ) ) ) {
+			return null;
+		}
+
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Reason: The raw input is hashed using sha256 and sanitized after. Nonce generation and verification are handle by the respective form plugin.
+		return $this->hash_username( $_POST[ $field_name ] );
+	}
+
+	public function hash_username( ?string $username ) {
+		if ( empty( $username ) ) {
+			return null;
+		}
+
+		return sanitize_text_field( hash( 'sha256', $username ) );
+	}
+
+	public function verify_token( string $username_hash = null, string $token = null, string $client_uid = null ): Verification_Result {
 		try {
 			if ( is_null( $token ) ) {
 				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: The token input is only used to verify the request via the POWER CAPTCHA API. Nonce generation and verification are handled by the respective form plugin.
@@ -82,7 +100,7 @@ abstract class Integration {
 				'secret'    => powercaptcha()->get_secret_key( $this->get_id() ),
 				'token'     => $token,
 				'clientUid' => $client_uid ?? powercaptcha()->get_client_uid(),
-				'name'      => $username ?? '',
+				'name'      => $username_hash ?? '',
 			);
 
 			$this->debug_log(
