@@ -15,8 +15,6 @@ class WooCommerce_Login_Integration extends Integration {
 
 	public function __construct() {
 		$this->id                  = 'woocommerce_login';
-		$this->setting_title       = __( 'WooCommerce Login', 'power-captcha' );
-		$this->setting_description = __( 'Enable protection for the WooCommerce My Account login form.', 'power-captcha' );
 	}
 
 	public function init() {
@@ -24,6 +22,11 @@ class WooCommerce_Login_Integration extends Integration {
 		add_action( 'woocommerce_login_form', array( $this, 'enqueue_script' ), 10, 0 );
 
 		add_filter( 'woocommerce_process_login_errors', array( $this, 'verification' ), 20, 3 );
+	}
+
+	public function textdomain_loaded() {
+		$this->setting_title       = __( 'WooCommerce Login', 'power-captcha' );
+		$this->setting_description = __( 'Enable protection for the WooCommerce My Account login form.', 'power-captcha' );
 	}
 
 	public function disable_verification() {

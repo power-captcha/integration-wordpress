@@ -15,6 +15,8 @@ abstract class Integration {
 
 	abstract public function init();
 
+	abstract public function textdomain_loaded();
+	
 	abstract public function disable_verification();
 
 	public function get_id(): string {

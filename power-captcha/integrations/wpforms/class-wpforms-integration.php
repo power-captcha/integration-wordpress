@@ -15,8 +15,6 @@ class WPForms_Integration extends Integration {
 
 	public function __construct() {
 		$this->id                  = 'wpforms';
-		$this->setting_title       = __( 'WPForms', 'power-captcha' );
-		$this->setting_description = __( 'Enable protection for <a href="https://wordpress.org/plugins/wpforms/" target="_blank">WPForms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/" target="_blank">WPForms lite</a>.', 'power-captcha' );
 		// TODO add a notice to setting_description, that captcha is automatacally added to all WPForms forms
 		// TODO add a notice to setting_description, how username field is defined via css-classes in WPForms
 		// TODO replace hardcoded urls with placeholdes in setting_description
@@ -30,6 +28,11 @@ class WPForms_Integration extends Integration {
 
 		// Action that fires during form entry processing after initial field validation. (see https://wpforms.com/developers/wpforms_process/)
 		add_action( 'wpforms_process', array( $this, 'verification' ), 10, 3 );
+	}
+
+	public function textdomain_loaded() {
+		$this->setting_title       = __( 'WPForms', 'power-captcha' );
+		$this->setting_description = __( 'Enable protection for <a href="https://wordpress.org/plugins/wpforms/" target="_blank">WPForms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/" target="_blank">WPForms lite</a>.', 'power-captcha' );
 	}
 
 	public function disable_verification() {

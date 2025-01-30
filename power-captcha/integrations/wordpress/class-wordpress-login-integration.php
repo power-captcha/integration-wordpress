@@ -15,8 +15,6 @@ class WordPress_Login_Integration extends Integration {
 
 	public function __construct() {
 		$this->id                  = 'wordpress_login';
-		$this->setting_title       = __( 'WordPress Login', 'power-captcha' );
-		$this->setting_description = __( 'Enable protection for the WordPress login form.', 'power-captcha' );
 	}
 
 	public function init() {
@@ -24,6 +22,11 @@ class WordPress_Login_Integration extends Integration {
 		add_action( 'login_form', array( $this, 'enqueue_script' ), 11, 0 );
 
 		add_filter( 'authenticate', array( $this, 'verification' ), 20, 3 );
+	}
+
+	public function textdomain_loaded() {
+		$this->setting_title       = __( 'WordPress Login', 'power-captcha' );
+		$this->setting_description = __( 'Enable protection for the WordPress login form.', 'power-captcha' );
 	}
 
 	public function disable_verification() {

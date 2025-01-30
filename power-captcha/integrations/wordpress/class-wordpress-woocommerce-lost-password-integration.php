@@ -20,8 +20,6 @@ class WordPress_WooCommerce_Lost_Password_Integration extends Integration {
 
 	public function __construct() {
 		$this->id                  = 'wordpress_lost_password';
-		$this->setting_title       = __( 'WordPress / WooCommerce Lost Password', 'power-captcha' );
-		$this->setting_description = __( 'Enable protection for the WordPress and WooCommerce lost/reset password form.', 'power-captcha' );
 	}
 
 	public function init() {
@@ -35,6 +33,11 @@ class WordPress_WooCommerce_Lost_Password_Integration extends Integration {
 
 		// Verification for both WordPress and WooCommerce lost password
 		add_action( 'lostpassword_post', array( $this, 'verification' ), 10, 2 );
+	}
+
+	public function textdomain_loaded() {
+		$this->setting_title       = __( 'WordPress / WooCommerce Lost Password', 'power-captcha' );
+		$this->setting_description = __( 'Enable protection for the WordPress and WooCommerce lost/reset password form.', 'power-captcha' );
 	}
 
 	public function disable_verification() {

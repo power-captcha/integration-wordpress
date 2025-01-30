@@ -15,8 +15,6 @@ class WordPress_Register_Integration extends Integration {
 
 	public function __construct() {
 		$this->id                  = 'wordpress_register';
-		$this->setting_title       = __( 'WordPress Registration', 'power-captcha' );
-		$this->setting_description = __( 'Enable protection for the WordPress registration form.', 'power-captcha' );
 	}
 
 	public function init() {
@@ -24,6 +22,11 @@ class WordPress_Register_Integration extends Integration {
 		add_action( 'register_form', array( $this, 'enqueue_script' ) );
 
 		add_action( 'register_post', array( $this, 'verification' ), 10, 3 );
+	}
+	
+	public function textdomain_loaded() {
+		$this->setting_title       = __( 'WordPress Registration', 'power-captcha' );
+		$this->setting_description = __( 'Enable protection for the WordPress registration form.', 'power-captcha' );
 	}
 
 	public function disable_verification() {

@@ -17,11 +17,6 @@ class Contact_Form_7_Integration extends Integration {
 
 	public function __construct() {
 		$this->id                  = 'contact_form_7';
-		$this->setting_title       = __( 'Contact Form 7', 'power-captcha' );
-		$this->setting_description =
-			__( 'Enable protection for Contact Form 7.', 'power-captcha' )
-			. '<br/>'
-			. __( 'Note: After enabling, you need to add a \'POWER CAPTCHA\'-field to your desired Contact Form 7.', 'power-captcha' );
 	}
 
 	public function init() {
@@ -33,6 +28,14 @@ class Contact_Form_7_Integration extends Integration {
 
 		// add tag to contact form 7 editor
 		add_action( 'wpcf7_admin_init', array( $this, 'add_tag_generator' ), 30, 0 );
+	}
+
+	public function textdomain_loaded() {
+		$this->setting_title       = __( 'Contact Form 7', 'power-captcha' );
+		$this->setting_description =
+			__( 'Enable protection for Contact Form 7.', 'power-captcha' )
+			. '<br/>'
+			. __( 'Note: After enabling, you need to add a \'POWER CAPTCHA\'-field to your desired Contact Form 7.', 'power-captcha' );
 	}
 
 	public function add_form_tag() {

@@ -15,8 +15,6 @@ class WooCommerce_Register_Integration extends Integration {
 
 	public function __construct() {
 		$this->id                  = 'woocommerce_register';
-		$this->setting_title       = __( 'WooCommerce Registration', 'power-captcha' );
-		$this->setting_description = __( 'Enable protection for the WooCommerce My Account register form.', 'power-captcha' );
 	}
 
 	public function init() {
@@ -26,6 +24,11 @@ class WooCommerce_Register_Integration extends Integration {
 		add_filter( 'woocommerce_process_registration_errors', array( $this, 'verification' ), 10, 4 );
 		// Note: We can't use the woocommerce_register_post hook because it is also executed during checkout when registering.
 		// This would lead to problems if the captcha is also enabled for the WooCommerce checkout.
+	}
+
+	public function textdomain_loaded() {
+		$this->setting_title       = __( 'WooCommerce Registration', 'power-captcha' );
+		$this->setting_description = __( 'Enable protection for the WooCommerce My Account register form.', 'power-captcha' );
 	}
 
 	public function disable_verification() {
