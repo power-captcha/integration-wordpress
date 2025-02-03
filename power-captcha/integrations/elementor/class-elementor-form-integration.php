@@ -16,7 +16,7 @@ class Elementor_Form_Integration extends Integration {
 	private bool $verification_disabled = false;
 
 	public function __construct() {
-		$this->id                  = 'elementor_form';
+		$this->id = 'elementor_form';
 	}
 
 	public function init() {

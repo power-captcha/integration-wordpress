@@ -14,7 +14,7 @@ add_action(
 class WooCommerce_Checkout_Integration extends Integration {
 
 	public function __construct() {
-		$this->id                  = 'woocommerce_checkout';
+		$this->id = 'woocommerce_checkout';
 	}
 
 	public function init() {

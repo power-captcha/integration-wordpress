@@ -16,7 +16,7 @@ class Contact_Form_7_Integration extends Integration {
 	private string $wpcf7_tag_type = 'powercaptcha';
 
 	public function __construct() {
-		$this->id                  = 'contact_form_7';
+		$this->id = 'contact_form_7';
 	}
 
 	public function init() {

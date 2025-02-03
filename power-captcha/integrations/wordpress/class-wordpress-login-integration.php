@@ -14,7 +14,7 @@ add_action(
 class WordPress_Login_Integration extends Integration {
 
 	public function __construct() {
-		$this->id                  = 'wordpress_login';
+		$this->id = 'wordpress_login';
 	}
 
 	public function init() {

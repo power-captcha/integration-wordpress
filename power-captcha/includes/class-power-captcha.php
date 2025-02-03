@@ -82,8 +82,8 @@ final class Power_Captcha {
 		// Register and init integrations
 		add_action( 'plugins_loaded', array( $this, 'do_register_integrations' ) );
 		add_action( 'plugins_loaded', array( $this, 'init_integrations' ) );
-				
-		// Load textdomain 
+
+		// Load textdomain
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
 		// Init admin

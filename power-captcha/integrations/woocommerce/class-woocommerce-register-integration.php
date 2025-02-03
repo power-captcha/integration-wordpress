@@ -14,7 +14,7 @@ add_action(
 class WooCommerce_Register_Integration extends Integration {
 
 	public function __construct() {
-		$this->id                  = 'woocommerce_register';
+		$this->id = 'woocommerce_register';
 	}
 
 	public function init() {

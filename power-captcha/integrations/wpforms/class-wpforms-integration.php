@@ -14,7 +14,7 @@ add_action(
 class WPForms_Integration extends Integration {
 
 	public function __construct() {
-		$this->id                  = 'wpforms';
+		$this->id = 'wpforms';
 		// TODO add a notice to setting_description, that captcha is automatacally added to all WPForms forms
 		// TODO add a notice to setting_description, how username field is defined via css-classes in WPForms
 		// TODO replace hardcoded urls with placeholdes in setting_description

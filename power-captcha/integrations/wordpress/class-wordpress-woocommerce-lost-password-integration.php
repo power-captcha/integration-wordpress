@@ -19,7 +19,7 @@ class WordPress_WooCommerce_Lost_Password_Integration extends Integration {
 	// As a result, we cannot distinguish during token verification whether the request originates from the WooCommerce form or the WordPress form.
 
 	public function __construct() {
-		$this->id                  = 'wordpress_lost_password';
+		$this->id = 'wordpress_lost_password';
 	}
 
 	public function init() {

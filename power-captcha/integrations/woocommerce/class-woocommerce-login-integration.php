@@ -14,7 +14,7 @@ add_action(
 class WooCommerce_Login_Integration extends Integration {
 
 	public function __construct() {
-		$this->id                  = 'woocommerce_login';
+		$this->id = 'woocommerce_login';
 	}
 
 	public function init() {
