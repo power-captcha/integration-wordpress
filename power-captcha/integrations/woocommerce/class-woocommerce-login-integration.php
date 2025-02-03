@@ -14,9 +14,7 @@ add_action(
 class WooCommerce_Login_Integration extends Integration {
 
 	public function __construct() {
-		$this->id                  = 'woocommerce_login';
-		$this->setting_title       = __( 'WooCommerce Login', 'power-captcha' );
-		$this->setting_description = __( 'Enable protection for the WooCommerce My Account login form.', 'power-captcha' );
+		$this->id = 'woocommerce_login';
 	}
 
 	public function init() {
@@ -24,6 +22,11 @@ class WooCommerce_Login_Integration extends Integration {
 		add_action( 'woocommerce_login_form', array( $this, 'enqueue_script' ), 10, 0 );
 
 		add_filter( 'woocommerce_process_login_errors', array( $this, 'verification' ), 20, 3 );
+	}
+
+	public function textdomain_loaded() {
+		$this->setting_title       = __( 'WooCommerce Login', 'power-captcha' );
+		$this->setting_description = __( 'Enable protection for the WooCommerce My Account login form.', 'power-captcha' );
 	}
 
 	public function disable_verification() {
@@ -44,9 +47,8 @@ class WooCommerce_Login_Integration extends Integration {
 		// To avoid double verification, we disable the wordpress_login verification here.
 		powercaptcha()->disable_integration_verification( 'wordpress_login' );
 
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Nonce generation and verification are handled by WooCommerce.
-		$username     = isset( $_POST['username'] ) ? sanitize_text_field( wp_unslash( $_POST['username'] ) ) : null;
-		$verification = $this->verify_token( $username );
+		$username_hash = $this->get_username_hash( 'username' );
+		$verification  = $this->verify_token( $username_hash );
 		if ( false === $verification->is_success() ) {
 			$validation_error->add( $verification->get_error_code(), $verification->get_user_message( false ) );
 		}

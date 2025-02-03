@@ -19,9 +19,7 @@ class WordPress_WooCommerce_Lost_Password_Integration extends Integration {
 	// As a result, we cannot distinguish during token verification whether the request originates from the WooCommerce form or the WordPress form.
 
 	public function __construct() {
-		$this->id                  = 'wordpress_lost_password';
-		$this->setting_title       = __( 'WordPress / WooCommerce Lost Password', 'power-captcha' );
-		$this->setting_description = __( 'Enable protection for the WordPress and WooCommerce lost/reset password form.', 'power-captcha' );
+		$this->id = 'wordpress_lost_password';
 	}
 
 	public function init() {
@@ -35,6 +33,11 @@ class WordPress_WooCommerce_Lost_Password_Integration extends Integration {
 
 		// Verification for both WordPress and WooCommerce lost password
 		add_action( 'lostpassword_post', array( $this, 'verification' ), 10, 2 );
+	}
+
+	public function textdomain_loaded() {
+		$this->setting_title       = __( 'WordPress / WooCommerce Lost Password', 'power-captcha' );
+		$this->setting_description = __( 'Enable protection for the WordPress and WooCommerce lost/reset password form.', 'power-captcha' );
 	}
 
 	public function disable_verification() {
@@ -55,8 +58,8 @@ class WordPress_WooCommerce_Lost_Password_Integration extends Integration {
 
 	public function verification( \WP_Error $errors, \WP_User|false $user_data ) {
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Nonce generation and verification are handled by WordPress.
-		$username     = isset( $_POST['user_login'] ) ? sanitize_text_field( wp_unslash( $_POST['user_login'] ) ) : null;
-		$verification = $this->verify_token( $username );
+		$username_hash = $this->get_username_hash( 'user_login' );
+		$verification  = $this->verify_token( $username_hash );
 		if ( false === $verification->is_success() ) {
 			$errors->add( $verification->get_error_code(), $verification->get_user_message() );
 		}

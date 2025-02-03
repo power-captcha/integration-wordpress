@@ -14,9 +14,7 @@ add_action(
 class WooCommerce_Checkout_Integration extends Integration {
 
 	public function __construct() {
-		$this->id                  = 'woocommerce_checkout';
-		$this->setting_title       = __( 'WooCommerce Checkout', 'power-captcha' );
-		$this->setting_description = __( 'Enable protection for the WooCommerce checkout form.', 'power-captcha' );
+		$this->id = 'woocommerce_checkout';
 	}
 
 	public function init() {
@@ -27,6 +25,11 @@ class WooCommerce_Checkout_Integration extends Integration {
 		// Note: We can't use the woocommerce_before_checkout_validation hook because it is executed multiple times during the checkout.
 		// Another hook alternative could be woocommerce_checkout_process, but woocommerce_after_checkout_validation seems to be the most suitable,
 		// as it is executed after the address and payment method have been validated.
+	}
+
+	public function textdomain_loaded() {
+		$this->setting_title       = __( 'WooCommerce Checkout', 'power-captcha' );
+		$this->setting_description = __( 'Enable protection for the WooCommerce checkout form.', 'power-captcha' );
 	}
 
 	public function disable_verification() {
@@ -49,9 +52,8 @@ class WooCommerce_Checkout_Integration extends Integration {
 	}
 
 	public function verification( array $fields, \WP_Error $errors ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Nonce generation and verification are handled by WooCommerce.
-		$username     = isset( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : null;
-		$verification = $this->verify_token( $username );
+		$username_hash = $this->get_username_hash( 'billing_email' );
+		$verification  = $this->verify_token( $username_hash );
 		if ( false === $verification->is_success() ) {
 			$errors->add( $verification->get_error_code(), $verification->get_user_message() );
 		}

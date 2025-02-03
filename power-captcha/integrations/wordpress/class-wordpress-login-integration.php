@@ -14,9 +14,7 @@ add_action(
 class WordPress_Login_Integration extends Integration {
 
 	public function __construct() {
-		$this->id                  = 'wordpress_login';
-		$this->setting_title       = __( 'WordPress Login', 'power-captcha' );
-		$this->setting_description = __( 'Enable protection for the WordPress login form.', 'power-captcha' );
+		$this->id = 'wordpress_login';
 	}
 
 	public function init() {
@@ -24,6 +22,11 @@ class WordPress_Login_Integration extends Integration {
 		add_action( 'login_form', array( $this, 'enqueue_script' ), 11, 0 );
 
 		add_filter( 'authenticate', array( $this, 'verification' ), 20, 3 );
+	}
+
+	public function textdomain_loaded() {
+		$this->setting_title       = __( 'WordPress Login', 'power-captcha' );
+		$this->setting_description = __( 'Enable protection for the WordPress login form.', 'power-captcha' );
 	}
 
 	public function disable_verification() {
@@ -43,9 +46,8 @@ class WordPress_Login_Integration extends Integration {
 			return $user;
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Nonce generation and verification are handled by WordPress.
-		$username     = isset( $_POST['log'] ) ? sanitize_text_field( wp_unslash( $_POST['log'] ) ) : null;
-		$verification = $this->verify_token( $username );
+		$username_hash = $this->get_username_hash( 'log' );
+		$verification  = $this->verify_token( $username_hash );
 		if ( false === $verification->is_success() ) {
 			return new \WP_Error( $verification->get_error_code(), $verification->get_user_message() );
 		}

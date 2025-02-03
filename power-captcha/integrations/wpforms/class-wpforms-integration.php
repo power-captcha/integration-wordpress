@@ -14,9 +14,7 @@ add_action(
 class WPForms_Integration extends Integration {
 
 	public function __construct() {
-		$this->id                  = 'wpforms';
-		$this->setting_title       = __( 'WPForms', 'power-captcha' );
-		$this->setting_description = __( 'Enable protection for <a href="https://wordpress.org/plugins/wpforms/" target="_blank">WPForms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/" target="_blank">WPForms lite</a>.', 'power-captcha' );
+		$this->id = 'wpforms';
 		// TODO add a notice to setting_description, that captcha is automatacally added to all WPForms forms
 		// TODO add a notice to setting_description, how username field is defined via css-classes in WPForms
 		// TODO replace hardcoded urls with placeholdes in setting_description
@@ -30,6 +28,11 @@ class WPForms_Integration extends Integration {
 
 		// Action that fires during form entry processing after initial field validation. (see https://wpforms.com/developers/wpforms_process/)
 		add_action( 'wpforms_process', array( $this, 'verification' ), 10, 3 );
+	}
+
+	public function textdomain_loaded() {
+		$this->setting_title       = __( 'WPForms', 'power-captcha' );
+		$this->setting_description = __( 'Enable protection for <a href="https://wordpress.org/plugins/wpforms/" target="_blank">WPForms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/" target="_blank">WPForms lite</a>.', 'power-captcha' );
 	}
 
 	public function disable_verification() {
@@ -53,9 +56,8 @@ class WPForms_Integration extends Integration {
 	}
 
 	public function verification( array $fields, array $entry, array $form_data ) {
-		$pc_username_value = $this->find_user_field_value( $form_data, $entry );
-
-		$verification = $this->verify_token( $pc_username_value );
+		$username_hash = $this->hash_username( $this->find_user_field_value( $form_data, $entry ) );
+		$verification  = $this->verify_token( $username_hash );
 
 		if ( false === $verification->is_success() ) {
 
@@ -77,7 +79,7 @@ class WPForms_Integration extends Integration {
 					if ( is_array( $field_value ) ) {
 						return array_values( $field_value )[ $field_position ];
 					} else {
-						return $field_value;
+						return $field_value;  // TODO get raw input + hash username
 					}
 				}
 			}

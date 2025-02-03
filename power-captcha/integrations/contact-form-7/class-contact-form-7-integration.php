@@ -16,12 +16,7 @@ class Contact_Form_7_Integration extends Integration {
 	private string $wpcf7_tag_type = 'powercaptcha';
 
 	public function __construct() {
-		$this->id                  = 'contact_form_7';
-		$this->setting_title       = __( 'Contact Form 7', 'power-captcha' );
-		$this->setting_description =
-			__( 'Enable protection for Contact Form 7.', 'power-captcha' )
-			. '<br/>'
-			. __( 'Note: After enabling, you need to add a \'POWER CAPTCHA\'-field to your desired Contact Form 7.', 'power-captcha' );
+		$this->id = 'contact_form_7';
 	}
 
 	public function init() {
@@ -33,6 +28,14 @@ class Contact_Form_7_Integration extends Integration {
 
 		// add tag to contact form 7 editor
 		add_action( 'wpcf7_admin_init', array( $this, 'add_tag_generator' ), 30, 0 );
+	}
+
+	public function textdomain_loaded() {
+		$this->setting_title       = __( 'Contact Form 7', 'power-captcha' );
+		$this->setting_description =
+			__( 'Enable protection for Contact Form 7.', 'power-captcha' )
+			. '<br/>'
+			. __( 'Note: After enabling, you need to add a \'POWER CAPTCHA\'-field to your desired Contact Form 7.', 'power-captcha' );
 	}
 
 	public function add_form_tag() {
@@ -183,9 +186,8 @@ class Contact_Form_7_Integration extends Integration {
 
 	public function verification( \WPCF7_Validation $result, \WPCF7_FormTag $tag ) {
 		$username_field = $tag->get_option( 'userfield', '', true );
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Reason: Nonce generation and verification are handled by Contact Form 7.
-		$username     = ( ! empty( $username_field ) && isset( $_POST[ $username_field ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $username_field ] ) ) : null;
-		$verification = $this->verify_token( $username );
+		$username_hash  = $this->get_username_hash( $username_field );
+		$verification   = $this->verify_token( $username_hash );
 		if ( false === $verification->is_success() ) {
 			$result->invalidate( $tag, $verification->get_user_message( false ) );
 		}
