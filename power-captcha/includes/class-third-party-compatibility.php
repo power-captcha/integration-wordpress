@@ -21,6 +21,7 @@ class Third_Party_Compatibility {
 
 	public function wp_rocket_js_exclusions( $excluded = array() ) {
 		$excluded[] = 'power-captcha(.*)\.js';
+		$excluded[] = 'powercaptcha'; // also exclude our inline js (powercaptcha_ajax_conf)
 		return $excluded;
 	}
 }
