@@ -14,12 +14,14 @@ msgstr ""
 #. Plugin Name of the plugin
 #. Author of the plugin
 #: power-captcha.php
+#: admin/class-admin-settings.php:48
+#: admin/class-admin-settings.php:49
 #: admin/class-admin-settings.php:407
 #: integrations/contact-form-7/class-contact-form-7-integration.php:60
 #: integrations/contact-form-7/class-contact-form-7-integration.php:71
 #: integrations/elementor/class-elementor-form-power-captcha-field.php:49
 msgid "POWER CAPTCHA"
-msgstr ""
+msgstr "POWER CAPTCHA"
 
 #. Author URI of the plugin
 #: power-captcha.php
@@ -29,12 +31,7 @@ msgstr "https://power-captcha.com/"
 #. Description of the plugin
 #: power-captcha.php
 msgid "POWER CAPTCHA protects your WordPress website and WordPress forms against bots and unauthorized persons. GDPR compliant!"
-msgstr "POWER CAPTCHA schützt deine WordPress Website und WordPress Formulare gegen Bots und unberechtigte Personen. DSGVO-konform!"
-
-#: admin/class-admin-settings.php:48
-#: admin/class-admin-settings.php:49
-msgid "POWER CAPTCHA Settings"
-msgstr "POWER CAPTCHA Einstellungen"
+msgstr "POWER CAPTCHA schützt deine WordPress-Website und WordPress-Formulare gegen Bots und unberechtigte Personen. DSGVO-konform!"
 
 #: admin/class-admin-settings.php:161
 msgid "General settings"
@@ -50,11 +47,11 @@ msgstr "Einstellungen zur Integration"
 
 #: admin/class-admin-settings.php:185
 msgid "On-premises settings"
-msgstr "On-Premises Einstellungen"
+msgstr "On-Premises-Einstellungen"
 
 #: admin/class-admin-settings.php:198
 msgid "API Key"
-msgstr "API-Key"
+msgstr "API-Schlüssel (API-Key)"
 
 #: admin/class-admin-settings.php:202
 #: admin/class-admin-settings.php:213
@@ -64,7 +61,7 @@ msgstr "https://power-captcha.com/mein-konto/api-keys/"
 
 #: admin/class-admin-settings.php:209
 msgid "Secret Key"
-msgstr "Secret-Key"
+msgstr "Geheimschlüssel (Secret-Key)"
 
 #: admin/class-admin-settings.php:223
 msgid "Automatic (default)"
@@ -108,7 +105,7 @@ msgstr "Richtlinie bei API-Fehlern"
 
 #: admin/class-admin-settings.php:255
 msgid "Configure the behaviour in the case of errors during token verification via the POWER CAPTCHA API (e.g. connection problems to the API or incorrect configuration)."
-msgstr "Konfiguration des Verhaltens bei Fehlern während der Token-Verifizierung über die POWER CAPTCHA API (z.B. bei Verbindungsproblemen zur API oder fehlerhafter Konfiguration)."
+msgstr "Konfiguration des Verhaltens bei Fehlern während der Token-Verifizierung über die POWER-CAPTCHA-API (z.B. bei Verbindungsproblemen zur API oder fehlerhafter Konfiguration)."
 
 #: admin/class-admin-settings.php:276
 msgid "Endpoint base URL (optional)"
@@ -116,15 +113,15 @@ msgstr "Basis-URL des Endpunktes (optional)"
 
 #: admin/class-admin-settings.php:277
 msgid "Only required if you have an on-premises version with self-hosted POWER CAPTCHA endpoint."
-msgstr "Nur erforderlich, wenn du eine On-Premises-Lösung mit selbst gehostetem POWER CAPTCHA Endpunkt hast."
+msgstr "Nur erforderlich, wenn du eine On-Premises-Lösung mit selbst gehostetem POWER-CAPTCHA-Endpunkt hast."
 
 #: admin/class-admin-settings.php:283
 msgid "JavaScript base URL (optional)"
-msgstr "JavaScript Basis-URL (optional)"
+msgstr "Basis-URL für das JavaScript (optional)"
 
 #: admin/class-admin-settings.php:284
 msgid "Only required if you have an on-premises version with self-hosted POWER CAPTCHA JavaScript."
-msgstr "Nur erforderlich, wenn du eine On-Premises-Lösung mit selbst gehostetem POWER CAPTCHA-JavaScript hast."
+msgstr "Nur erforderlich, wenn du eine On-Premises-Lösung mit selbst gehostetem POWER-CAPTCHA-JavaScript hast."
 
 #: admin/class-admin-settings.php:419
 msgid "Specify which sections or plugins should be protected with POWER CAPTCHA."
@@ -132,7 +129,7 @@ msgstr "Lege fest, welche Bereiche oder Plugins mit POWER CAPTCHA geschützt wer
 
 #: admin/class-admin-settings.php:425
 msgid "These settings are only relevant if you are running a self-hosted POWER CAPTCHA instance. Otherwise you can leave these settings empty."
-msgstr "Diese Einstellungen sind nur relevant, wenn du eine selbst gehostete POWER CAPTCHA-Instanz betreiben. Ansonsten kannst du diese Einstellungen leer lassen."
+msgstr "Diese Einstellungen sind nur relevant, wenn du eine selbst gehostete POWER-CAPTCHA-Instanz betreiben. Ansonsten kannst du diese Einstellungen leer lassen."
 
 #: includes/class-verification-result.php:32
 msgid "Error:"
@@ -140,55 +137,55 @@ msgstr "Fehler:"
 
 #: includes/class-verification-result.php:36
 msgid "The POWER CAPTCHA security check was not confirmed."
-msgstr "Die POWER CAPTCHA Sicherheitsprüfung wurde nicht bestätigt."
+msgstr "Die Sicherheitsprüfung von POWER CAPTCHA wurde nicht bestätigt."
 
 #: includes/class-verification-result.php:38
 msgid "An internal error occurred during the POWER CAPTCHA security check. Please try again later."
-msgstr "Bei der POWER CAPTCHA Sicherheitsüberprüfung ist ein interner Fehler aufgetreten. Bitte versuchen es später erneut."
+msgstr "Bei der Sicherheitsüberprüfung von POWER CAPTCHA ist ein interner Fehler aufgetreten. Bitte versuchen es später erneut."
 
 #: includes/class-verification-result.php:40
 msgid "An unkown error occurred during the POWER CAPTCHA security check. Please try again later."
-msgstr "Bei der POWER CAPTCHA Sicherheitsüberprüfung ist ein unbekannter Fehler aufgetreten. Bitte versuchen es später erneut."
+msgstr "Bei der Sicherheitsüberprüfung von POWER CAPTCHA ist ein unbekannter Fehler aufgetreten. Bitte versuchen es später erneut."
 
 #: integrations/elementor/class-elementor-form-integration.php:29
 msgid "Elementor Pro Forms"
-msgstr ""
+msgstr "Elementor Pro Forms"
 
 #: integrations/elementor/class-elementor-form-integration.php:31
 msgid "Enable protection for <a href=\"https://elementor.com/pro/\" target=\"_blank\">Elementor Pro</a> Forms."
-msgstr "Aktiviert den Schutz für <a href=\"https://elementor.com/pro/\" target=\"_blank\">Elementor Pro</a> Formulare."
+msgstr "Aktiviert den Schutz für <a href=\"https://elementor.com/pro/\" target=\"_blank\">Elementor-Pro</a>-Formulare."
 
 #: integrations/elementor/class-elementor-form-integration.php:33
 msgid "After enabling, you need to add a 'POWER CAPTCHA'-field to your desired Elementor form."
-msgstr "Nach der Aktivierung muss ein 'POWER CAPTCHA'-Feld zum gewünschten Elementor-Formular hinzugefügt werden."
+msgstr "Nach der Aktivierung muss ein „POWER CAPTCHA“-Feld zum gewünschten Elementor-Formular hinzugefügt werden."
 
 #: integrations/woocommerce/class-woocommerce-checkout-integration.php:31
 msgid "WooCommerce Checkout"
-msgstr "WooCommerce Checkout"
+msgstr "WooCommerce-Checkout"
 
 #: integrations/woocommerce/class-woocommerce-checkout-integration.php:32
 msgid "Enable protection for the WooCommerce checkout form."
-msgstr "Aktiviert den Schutz für den WooCommerce Checkout (Kassen-Seite)."
+msgstr "Aktiviert den Schutz für den WooCommerce-Checkout (Kassen-Seite)."
 
 #: integrations/woocommerce/class-woocommerce-login-integration.php:28
 msgid "WooCommerce Login"
-msgstr "WooCommerce Login"
+msgstr "WooCommerce-Login"
 
 #: integrations/woocommerce/class-woocommerce-login-integration.php:29
 msgid "Enable protection for the WooCommerce My Account login form."
-msgstr "Aktiviert den Schutz für das Login-Formular von WooCommerce Mein Konto."
+msgstr "Aktiviert den Schutz für das Login-Formular von WooCommerce-Mein-Konto."
 
 #: integrations/woocommerce/class-woocommerce-register-integration.php:30
 msgid "WooCommerce Registration"
-msgstr "WooCommerce Registrierung"
+msgstr "WooCommerce-Registrierung"
 
 #: integrations/woocommerce/class-woocommerce-register-integration.php:31
 msgid "Enable protection for the WooCommerce My Account register form."
-msgstr "Aktiviert den Schutz für das Registrierungsformular von WooCommerce Mein Konto."
+msgstr "Aktiviert den Schutz für das Registrierungsformular von WooCommerce-Mein-Konto."
 
 #: integrations/wordpress/class-wordpress-login-integration.php:28
 msgid "WordPress Login"
-msgstr "WordPress Login"
+msgstr "WordPress-Login"
 
 #: integrations/wordpress/class-wordpress-login-integration.php:29
 msgid "Enable protection for the WordPress login form."
@@ -196,7 +193,7 @@ msgstr "Aktiviert den Schutz für das Login-Formular von WordPress."
 
 #: integrations/wordpress/class-wordpress-register-integration.php:28
 msgid "WordPress Registration"
-msgstr "WordPress Registrierung"
+msgstr "WordPress-Registrierung"
 
 #: integrations/wordpress/class-wordpress-register-integration.php:29
 msgid "Enable protection for the WordPress registration form."
@@ -212,7 +209,7 @@ msgstr "Aktiviert den Schutz für das WordPress- und WooCommerce-Formular zum Zu
 
 #: integrations/wpforms/class-wpforms-integration.php:34
 msgid "WPForms"
-msgstr ""
+msgstr "WPForms"
 
 #: integrations/wpforms/class-wpforms-integration.php:35
 msgid "Enable protection for <a href=\"https://wordpress.org/plugins/wpforms/\" target=\"_blank\">WPForms</a> and <a href=\"https://wordpress.org/plugins/wpforms-lite/\" target=\"_blank\">WPForms lite</a>."
@@ -229,7 +226,7 @@ msgstr "https://power-captcha.com/power-captcha-shop/"
 #. translators: %s: link to power captcha Shop page
 #: admin/class-admin-settings.php:406
 msgid "If you don't have an API Key yet, you can create one on %s."
-msgstr "Wenn du noch keinen API-Key hast, kannst du einen auf %s erstellen."
+msgstr "Wenn du noch keinen API-Schlüssel hast, kannst du einen auf %s erstellen."
 
 #: integrations/elementor/class-elementor-form-power-captcha-field.php:153
 msgid "ID of the field to be protected"
@@ -237,17 +234,17 @@ msgstr "ID des zu schützenden Felds"
 
 #: integrations/elementor/class-elementor-form-power-captcha-field.php:156
 msgid "(optional, Enterprise only) Provide the ID of the field which should additionally be protected by POWER CAPTCHA (e.g. user name or email address). You can find the ID in the corresponding field under 'Advanced'."
-msgstr "(optional, nur Enterpise) Gib die ID des Feldes an, das zusätzlich mit POWER CAPTCHA geschützt werden soll (z. B. Benutzername oder E-Mail-Adresse). Die ID findest du im entsprechenden Feld unter \"Erweitert\"."
+msgstr "(optional, nur Enterpise) Gib die ID des Feldes an, das zusätzlich mit POWER CAPTCHA geschützt werden soll (z. B. Benutzername oder E-Mail-Adresse). Die ID findest du im entsprechenden Feld unter ‚Erweitert‘."
 
 #: admin/class-admin-settings.php:202
 #: admin/class-admin-settings.php:213
 #: admin/class-admin-settings.php:402
 msgid "customer area"
-msgstr "Kundenbereich"
+msgstr "Kunden-Bereich"
 
 #: admin/class-admin-settings.php:224
 msgid "The widget is always displayed and the security check starts automatically as soon as the form is filled in or after the corresponding field (e.g. user name or email address) has been filled in.  A click on the widget is only necessary if it is required to solve a captcha."
-msgstr "Das Widget wird immer angezeigt und die Sicherheitsprüfung startet automatisch, sobald das Formular ausgefüllt wird oder nachdem das entsprechende Feld (z.B. Benutzername oder E-Mail-Adresse) ausgefüllt wurde. Ein Klick auf die Checkbox im Widget ist nur notwendig, wenn ein Captcha gelöst werden muss."
+msgstr "Das Widget wird immer angezeigt und die Sicherheitsprüfung startet automatisch, sobald das Formular ausgefüllt wird oder nachdem das entsprechende Feld (z.B. Benutzername oder E-Mail-Adresse) ausgefüllt wurde. Ein Klick auf das Kontrollkästchen im Widget ist nur notwendig, wenn ein Captcha gelöst werden muss."
 
 #: admin/class-admin-settings.php:228
 msgid "The widget is not displayed initially and the security check starts automatically as soon as the form is filled in or after the corresponding field (e.g. user name or e-mail address) has been filled in. The widget is only displayed if it is required to solve a captcha."
@@ -255,22 +252,22 @@ msgstr "Das Widget wird zunächst nicht angezeigt und die Sicherheitsprüfung st
 
 #: admin/class-admin-settings.php:232
 msgid "The widget is always displayed and the security check is only starts when the widget is clicked. The click is always required."
-msgstr "Das Widget wird immer angezeigt, und die Sicherheitsprüfung startet erst, wenn auf die Checkbox im Widget geklickt wird."
+msgstr "Das Widget wird immer angezeigt, und die Sicherheitsprüfung startet erst, wenn auf das Kontrollkästchen im Widget geklickt wird."
 
 #. translators: %s: link to power captcha customer area
 #: admin/class-admin-settings.php:201
 msgid "Enter your POWER CAPTCHA API Key. You can find your API Key in our %s."
-msgstr "Gib deinen POWER CAPTCHA API-Key ein. Den API-Key findest du in unserem %s."
+msgstr "Gib deinen API-Schlüssel für POWER CAPTCHA ein. Den API-Schlüssel (API-Key) findest du in unserem %s."
 
 #. translators: %s link to power captcha customer area
 #: admin/class-admin-settings.php:212
 msgid "Enter your POWER CAPTCHA Secret Key. You can find your Secret Key in our %s."
-msgstr "Gib deinen POWER CAPTCHA Secret-Key ein. Den Secret-Key findest du in unserem %s."
+msgstr "Gib deinen Geheimschlüssel für POWER CAPTCHA ein. Den Geheimschlüssel (Secret-Key) findest du in unserem %s."
 
 #. translators: %s: link to power captcha customer area
 #: admin/class-admin-settings.php:401
 msgid "To activate POWER CAPTCHA, an API Key and a Secret Key are required. You can find both in our %s."
-msgstr "Zur Aktivierung von POWER CAPTCHA sind ein API-Key und ein Secret-Key erforderlich. Beide Keys findest du in unserem %s."
+msgstr "Zur Aktivierung von POWER CAPTCHA sind ein API-Schlüssel und ein Geheimschlüssel erforderlich. Beide Schlüssel findest du in unserem %s."
 
 #: admin/class-admin-settings.php:413
 msgid "In these settings, you can adjust the widget display, the security check behavior, and how errors during token verification are handled."
@@ -290,11 +287,11 @@ msgstr "Aktiviert den Schutz für Contact Form 7."
 
 #: integrations/contact-form-7/class-contact-form-7-integration.php:38
 msgid "Note: After enabling, you need to add a 'POWER CAPTCHA'-field to your desired Contact Form 7."
-msgstr "Hinweis: Nach der Aktivierung muss ein 'POWER CAPTCHA'-Feld zum gewünschten Contact Form 7-Formular hinzugefügt werden."
+msgstr "Hinweis: Nach der Aktivierung muss ein „POWER CAPTCHA“-Feld zum gewünschten Contact-Form-7-Formular hinzugefügt werden."
 
 #: integrations/contact-form-7/class-contact-form-7-integration.php:72
 msgid "POWER CAPTCHA form-tag generator"
-msgstr "POWER CAPTCHA Formular-Tag Generator"
+msgstr "Formular-Tag-Generator für POWER CAPTCHA"
 
 #: integrations/contact-form-7/class-contact-form-7-integration.php:73
 msgid "Generates a form-tag to protect the form with POWER CAPTCHA."
@@ -310,4 +307,4 @@ msgstr "Gib den Namen des Feldes an, das zusätzlich durch POWER CAPTCHA geschü
 
 #: integrations/contact-form-7/class-contact-form-7-integration.php:113
 msgid "The field-name can be found in the second argument of the form-tag (see <a href=\"https://contactform7.com/tag-syntax/#form_tag\" target=\"_blank\">Form-tag syntax</a>)."
-msgstr "Der Feldname ist im zweiten Argument des Form-Tags zu finden (siehe <a href=\"https://contactform7.com/tag-syntax/#form_tag\" target=\"_blank\">Form-Tag Syntax</a>)."
+msgstr "Der Feldname ist im zweiten Argument des Form-Tags zu finden (siehe <a href=\"https://contactform7.com/tag-syntax/#form_tag\" target=\"_blank\">Form-Tag-Syntax</a>)."

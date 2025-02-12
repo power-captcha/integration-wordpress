@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-12T12:33:00+01:00\n"
+"POT-Creation-Date: 2025-02-12T13:26:22+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: power-captcha\n"
@@ -17,6 +17,8 @@ msgstr ""
 #. Plugin Name of the plugin
 #. Author of the plugin
 #: power-captcha.php
+#: admin/class-admin-settings.php:48
+#: admin/class-admin-settings.php:49
 #: admin/class-admin-settings.php:407
 #: integrations/contact-form-7/class-contact-form-7-integration.php:60
 #: integrations/contact-form-7/class-contact-form-7-integration.php:71
@@ -36,11 +38,6 @@ msgstr ""
 
 #: admin/class-admin-settings.php:36
 msgid "Settings"
-msgstr ""
-
-#: admin/class-admin-settings.php:48
-#: admin/class-admin-settings.php:49
-msgid "POWER CAPTCHA Settings"
 msgstr ""
 
 #: admin/class-admin-settings.php:161
