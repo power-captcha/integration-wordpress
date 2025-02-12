@@ -4,7 +4,7 @@ Tags: captcha, security, protection, bot, spam
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0
 
@@ -86,6 +86,10 @@ You use POWER CAPTCHA and have questions about the installation or a technical p
 4. Individual configuration of the widget display
 
 == Changelog ==
+
+= 1.2.5 =
+* Fixed a compatibility issue with WPRocket
+* Minor code and translation improvements
 
 = 1.2.4 =
 * Updated JavaScript library to v1.2.6
