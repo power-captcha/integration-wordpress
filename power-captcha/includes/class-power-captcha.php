@@ -143,7 +143,7 @@ final class Power_Captcha {
 					'wp_locale'                  => get_locale(),
 					'is_debug'                   => ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ),
 				)
-			),
+			) . ';',
 			'before'
 		);
 	}

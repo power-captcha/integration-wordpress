@@ -79,7 +79,7 @@ class WPForms_Integration extends Integration {
 					if ( is_array( $field_value ) ) {
 						return array_values( $field_value )[ $field_position ];
 					} else {
-						return $field_value;  // TODO get raw input + hash username
+						return $field_value;
 					}
 				}
 			}

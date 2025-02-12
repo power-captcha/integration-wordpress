@@ -45,8 +45,8 @@ class Admin_Settings {
 	public function init_admin_menu() {
 		// https://codex.wordpress.org/Administration_Menus
 		add_options_page(
-			__( 'POWER CAPTCHA Settings', 'power-captcha' ), // page_title
-			__( 'POWER CAPTCHA Settings', 'power-captcha' ), // menu_title
+			__( 'POWER CAPTCHA', 'power-captcha' ), // page_title
+			__( 'POWER CAPTCHA', 'power-captcha' ), // menu_title
 			'manage_options', // capability
 			powercaptcha()::SETTING_PAGE, // menu_slug
 			array( $this, 'admin_page_content' ),

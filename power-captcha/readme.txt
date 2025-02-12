@@ -4,7 +4,7 @@ Tags: captcha, security, protection, bot, spam
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0
 
@@ -59,7 +59,7 @@ To use POWER CAPTCHA, you need an API Key. Select a plan on <a href="https://pow
 
 ### Configuration
 
-1. Go to *Settings* > *POWER CAPTCHA Settings* in your WordPress dashboard.
+1. Go to *Settings* > *POWER CAPTCHA* in your WordPress dashboard.
 2. Enter your **API Key** and **Secret Key** in the *General settings* section.
 3. Enable the desired integrations under *Integration settings* based on the forms you want to protect.
 4. Test your configuration to ensure everything is working as expected.
@@ -86,6 +86,10 @@ You use POWER CAPTCHA and have questions about the installation or a technical p
 4. Individual configuration of the widget display
 
 == Changelog ==
+
+= 1.2.5 =
+* Fixed a compatibility issue with WPRocket
+* Minor code and translation improvements
 
 = 1.2.4 =
 * Updated JavaScript library to v1.2.6
