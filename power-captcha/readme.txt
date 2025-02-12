@@ -59,7 +59,7 @@ To use POWER CAPTCHA, you need an API Key. Select a plan on <a href="https://pow
 
 ### Configuration
 
-1. Go to *Settings* > *POWER CAPTCHA Settings* in your WordPress dashboard.
+1. Go to *Settings* > *POWER CAPTCHA* in your WordPress dashboard.
 2. Enter your **API Key** and **Secret Key** in the *General settings* section.
 3. Enable the desired integrations under *Integration settings* based on the forms you want to protect.
 4. Test your configuration to ensure everything is working as expected.
