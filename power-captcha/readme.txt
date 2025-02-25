@@ -20,7 +20,7 @@ Safeguard your website’s forms and login areas from misuse, spam, and data the
 
 While many captchas only focus on stopping bots, they often fail to guard against unauthorized access by real users, such as someone repeatedly trying to guess login credentials or submitting forms multiple times. POWER CAPTCHA goes beyond traditional bot detection by evaluating all interactions, regardless of whether they're human or automated. It uses flexible criteria — e.g. usernames, email addresses, IP addresses, and/or login attempts within specific timeframes — to assess if access is genuinely authorized.
 
-Each interaction generates an encrypted code, or "client footprint", which POWER CAPTCHA stores and analyzes. For future attempts, it can, for example, increase the challenge level or temporarily block further actions. With customizable settings based on your license, POWER CAPTCHA adapts to your specific security needs. You can also configure it as a no-captcha option. 
+Each interaction generates an encrypted code, or "client footprint", which POWER CAPTCHA stores and analyzes. For future attempts, it can, for example, increase the challenge level or temporarily block further actions. With customizable settings based on your license, POWER CAPTCHA adapts to your specific security needs. You can also configure it as a no-captcha option.
 
 = GDPR-COMPLIANT, ACCESSIBLE, AND BUILT IN GERMANY =
 
@@ -28,9 +28,9 @@ POWER CAPTCHA is cookie-free, GDPR-compliant, and easy to integrate with most sy
 
 = Supported Plugins and Forms =
 
-* **WordPress** Login 
-* **WordPress** Registration 
-* **WordPress** Lost Password 
+* **WordPress** Login
+* **WordPress** Registration
+* **WordPress** Lost Password
 * **WooCommerce** Login
 * **WooCommerce** Registration
 * **WooCommerce** Lost Password
@@ -44,7 +44,7 @@ POWER CAPTCHA is cookie-free, GDPR-compliant, and easy to integrate with most sy
 
 To use POWER CAPTCHA, you need an API Key. Select a plan on <a href="https://power-captcha.com/en/power-captcha-shop-licenses/">power-captcha.com</a>, add your domain in the customer area on our website, and obtain your API Key.
 
-### Installation from within WordPress 
+### Installation from within WordPress
 
 1. Go to *Plugins* > *Add New* in your WordPress dashboard.
 2. Search for "POWER CAPTCHA".
@@ -76,7 +76,7 @@ Depending on your license, you can adapt POWER CAPTCHA to your individual needs.
 
 = How to get support =
 
-You use POWER CAPTCHA and have questions about the installation or a technical problem? You can contact our support team <a href="https://power-captcha.com/en/contact-support/">here</a>. 
+You use POWER CAPTCHA and have questions about the installation or a technical problem? You can contact our support team <a href="https://power-captcha.com/en/contact-support/">here</a>.
 
 == Screenshots ==
 
@@ -93,8 +93,8 @@ You use POWER CAPTCHA and have questions about the installation or a technical p
 
 = 1.2.4 =
 * Updated JavaScript library to v1.2.6
-* Introduced SHA-256 hashing of username  
-* Fixed a WordPress warning due to loading text domain too early  
+* Introduced SHA-256 hashing of username
+* Fixed a WordPress warning due to loading text domain too early
 
 = 1.2.3 =
 * Improved preview rendering in the Elementor Editor
