@@ -2,7 +2,7 @@
 Contributors: powercaptcha
 Tags: captcha, security, protection, bot, spam
 Requires at least: 6.0
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 8.0
 Stable tag: 1.2.5
 License: GPL v2 or later
