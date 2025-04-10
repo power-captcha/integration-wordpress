@@ -42,7 +42,7 @@ POWER CAPTCHA is cookie-free, GDPR-compliant, and easy to integrate with most sy
 
 == Installation ==
 
-To use POWER CAPTCHA, you need an API Key. Select a plan on <a href="https://power-captcha.com/en/power-captcha-shop-licenses/">power-captcha.com</a>, add your domain in the customer area on our website, and obtain your API Key.
+To use POWER CAPTCHA, you need an API Key. Select a plan on <a href="https://power-captcha.com/en/power-captcha-plans/">power-captcha.com</a>, add your domain in the customer area on our website, and obtain your API Key.
 
 ### Installation from within WordPress
 
@@ -68,11 +68,11 @@ To use POWER CAPTCHA, you need an API Key. Select a plan on <a href="https://pow
 
 = How to start with POWER CAPTCHA =
 
-To install the application, first select a license on <a href="https://power-captcha.com/en/power-captcha-plans-and-additional-options/">POWER CAPTCHA</a>. With your license, you’ll automatically receive an API key to access our interfaces. Then, follow the step-by-step instructions in the "Installation" tab to integrate POWER CAPTCHA into your website.
+To install the application, first select a license on <a href="https://power-captcha.com/en/power-captcha-plans/">POWER CAPTCHA</a>. With your license, you’ll automatically receive an API key to access our interfaces. Then, follow the step-by-step instructions in the "Installation" tab to integrate POWER CAPTCHA into your website.
 
 = How to configure POWER CAPTCHA to your needs =
 
-Depending on your license, you can adapt POWER CAPTCHA to your individual needs. Your can find examples and configuration options to effectively protect your forms and login areas on <a href="https://power-captcha.com/en/power-captcha-feature-details/#Konfiguration">our website</a>.
+Depending on your license, you can adapt POWER CAPTCHA to your individual needs. Your can find examples and configuration options to effectively protect your forms and login areas on <a href="https://power-captcha.com/en/power-captcha-features-in-detail/#Configuration">our website</a>.
 
 = How to get support =
 
