@@ -30,6 +30,9 @@ final class Power_Captcha {
 	const SETTING_NAME_API_ERROR_POLICY = 'powercaptcha_api_error_policy';
 	const ERROR_POLICY_GRANT_ACCESS     = 'grant_access';
 	const ERROR_POLICY_BLOCK_ACCESS     = 'block_access';
+	const SETTING_NAME_LANGUAGE_MODE    = 'powercaptcha_language_mode';
+	const LANGUAGE_MODE_WORDPRESS       = 'wordpress';
+	const LANGUAGE_MODE_BROWSER         = 'browser';
 
 	// integration settings
 	const SETTING_SECTION_INTEGRATION = 'powercaptcha_setting_section_integration';
@@ -140,7 +143,7 @@ final class Power_Captcha {
 				array(
 					'ajaxurl'                    => admin_url( 'admin-ajax.php' ),
 					'action_integration_setting' => self::AJAX_ACTION_NAME_INTEGRATION_SETTING,
-					'wp_locale'                  => get_locale(),
+					'wp_locale'                  => $this->is_use_wordpress_locale() ? get_locale() : 'browser',
 					'is_debug'                   => ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ),
 				)
 			) . ';',
@@ -235,6 +238,14 @@ final class Power_Captcha {
 			$secret_key = $this->key_overwrites[ $integration_id ]['secret_key'];
 		}
 		return $secret_key;
+	}
+
+	public function get_language_mode(): string {
+		return get_option( self::SETTING_NAME_LANGUAGE_MODE, self::LANGUAGE_MODE_WORDPRESS );
+	}
+
+	public function is_use_wordpress_locale(): bool {
+		return self::LANGUAGE_MODE_WORDPRESS === $this->get_language_mode();
 	}
 
 	public function get_check_mode(): string {

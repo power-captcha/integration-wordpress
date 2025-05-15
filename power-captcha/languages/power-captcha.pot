@@ -2,14 +2,14 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: POWER CAPTCHA 1.2.4\n"
+"Project-Id-Version: POWER CAPTCHA 1.2.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/power-captcha\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-12T13:26:22+01:00\n"
+"POT-Creation-Date: 2025-05-15T10:41:37+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: power-captcha\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: power-captcha.php
 #: admin/class-admin-settings.php:48
 #: admin/class-admin-settings.php:49
-#: admin/class-admin-settings.php:407
+#: admin/class-admin-settings.php:434
 #: integrations/contact-form-7/class-contact-form-7-integration.php:60
 #: integrations/contact-form-7/class-contact-form-7-integration.php:71
 #: integrations/elementor/class-elementor-form-power-captcha-field.php:49
@@ -40,147 +40,171 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: admin/class-admin-settings.php:161
+#: admin/class-admin-settings.php:170
 msgid "General settings"
 msgstr ""
 
-#: admin/class-admin-settings.php:169
+#: admin/class-admin-settings.php:178
 msgid "Integration settings"
 msgstr ""
 
-#: admin/class-admin-settings.php:177
+#: admin/class-admin-settings.php:186
 msgid "Captcha settings"
 msgstr ""
 
-#: admin/class-admin-settings.php:185
+#: admin/class-admin-settings.php:194
 msgid "On-premises settings"
 msgstr ""
 
-#: admin/class-admin-settings.php:198
+#: admin/class-admin-settings.php:207
 msgid "API Key"
 msgstr ""
 
 #. translators: %s: link to power captcha customer area
-#: admin/class-admin-settings.php:201
+#: admin/class-admin-settings.php:210
 msgid "Enter your POWER CAPTCHA API Key. You can find your API Key in our %s."
 msgstr ""
 
-#: admin/class-admin-settings.php:202
-#: admin/class-admin-settings.php:213
-#: admin/class-admin-settings.php:402
+#: admin/class-admin-settings.php:211
+#: admin/class-admin-settings.php:222
+#: admin/class-admin-settings.php:429
 msgid "https://power-captcha.com/en/my-account/api-keys/"
 msgstr ""
 
-#: admin/class-admin-settings.php:202
-#: admin/class-admin-settings.php:213
-#: admin/class-admin-settings.php:402
+#: admin/class-admin-settings.php:211
+#: admin/class-admin-settings.php:222
+#: admin/class-admin-settings.php:429
 msgid "customer area"
 msgstr ""
 
-#: admin/class-admin-settings.php:209
+#: admin/class-admin-settings.php:218
 msgid "Secret Key"
 msgstr ""
 
 #. translators: %s link to power captcha customer area
-#: admin/class-admin-settings.php:212
+#: admin/class-admin-settings.php:221
 msgid "Enter your POWER CAPTCHA Secret Key. You can find your Secret Key in our %s."
 msgstr ""
 
-#: admin/class-admin-settings.php:223
-msgid "Automatic (default)"
-msgstr ""
-
-#: admin/class-admin-settings.php:224
-msgid "The widget is always displayed and the security check starts automatically as soon as the form is filled in or after the corresponding field (e.g. user name or email address) has been filled in.  A click on the widget is only necessary if it is required to solve a captcha."
-msgstr ""
-
-#: admin/class-admin-settings.php:227
-msgid "Hidden"
-msgstr ""
-
-#: admin/class-admin-settings.php:228
-msgid "The widget is not displayed initially and the security check starts automatically as soon as the form is filled in or after the corresponding field (e.g. user name or e-mail address) has been filled in. The widget is only displayed if it is required to solve a captcha."
-msgstr ""
-
-#: admin/class-admin-settings.php:231
-msgid "Manual"
-msgstr ""
-
 #: admin/class-admin-settings.php:232
-msgid "The widget is always displayed and the security check is only starts when the widget is clicked. The click is always required."
+msgid "Use WordPress site language (default)"
+msgstr ""
+
+#: admin/class-admin-settings.php:233
+msgid "POWER CAPTCHA uses the language set by the WordPress site or a multilingual plugin."
 msgstr ""
 
 #: admin/class-admin-settings.php:236
-msgid "Check mode"
+msgid "Use browser language"
 msgstr ""
 
 #: admin/class-admin-settings.php:237
-msgid "Configure the display of the widget and the behaviour of the security check."
+msgid "POWER CAPTCHA uses the visitor's browser language, adapting individually to their browser settings."
 msgstr ""
 
-#: admin/class-admin-settings.php:245
-msgid "Grant access (default)"
+#: admin/class-admin-settings.php:241
+msgid "Language"
 msgstr ""
 
-#: admin/class-admin-settings.php:246
-msgid "Access is granted if an API error occurs."
-msgstr ""
-
-#: admin/class-admin-settings.php:249
-msgid "Block access"
+#: admin/class-admin-settings.php:242
+msgid "Choose which language should be used for POWER CAPTCHA."
 msgstr ""
 
 #: admin/class-admin-settings.php:250
-msgid "Access is blocked if an API error occurs. An error message is displayed requesting the user to try again later."
+msgid "Automatic (default)"
+msgstr ""
+
+#: admin/class-admin-settings.php:251
+msgid "The widget is always displayed and the security check starts automatically as soon as the form is filled in or after the corresponding field (e.g. user name or email address) has been filled in.  A click on the widget is only necessary if it is required to solve a captcha."
 msgstr ""
 
 #: admin/class-admin-settings.php:254
-msgid "API Error Policy"
+msgid "Hidden"
 msgstr ""
 
 #: admin/class-admin-settings.php:255
-msgid "Configure the behaviour in the case of errors during token verification via the POWER CAPTCHA API (e.g. connection problems to the API or incorrect configuration)."
+msgid "The widget is not displayed initially and the security check starts automatically as soon as the form is filled in or after the corresponding field (e.g. user name or e-mail address) has been filled in. The widget is only displayed if it is required to solve a captcha."
+msgstr ""
+
+#: admin/class-admin-settings.php:258
+msgid "Manual"
+msgstr ""
+
+#: admin/class-admin-settings.php:259
+msgid "The widget is always displayed and the security check is only starts when the widget is clicked. The click is always required."
+msgstr ""
+
+#: admin/class-admin-settings.php:263
+msgid "Check mode"
+msgstr ""
+
+#: admin/class-admin-settings.php:264
+msgid "Configure the display of the widget and the behaviour of the security check."
+msgstr ""
+
+#: admin/class-admin-settings.php:272
+msgid "Grant access (default)"
+msgstr ""
+
+#: admin/class-admin-settings.php:273
+msgid "Access is granted if an API error occurs."
 msgstr ""
 
 #: admin/class-admin-settings.php:276
-msgid "Endpoint base URL (optional)"
+msgid "Block access"
 msgstr ""
 
 #: admin/class-admin-settings.php:277
+msgid "Access is blocked if an API error occurs. An error message is displayed requesting the user to try again later."
+msgstr ""
+
+#: admin/class-admin-settings.php:281
+msgid "API Error Policy"
+msgstr ""
+
+#: admin/class-admin-settings.php:282
+msgid "Configure the behaviour in the case of errors during token verification via the POWER CAPTCHA API (e.g. connection problems to the API or incorrect configuration)."
+msgstr ""
+
+#: admin/class-admin-settings.php:303
+msgid "Endpoint base URL (optional)"
+msgstr ""
+
+#: admin/class-admin-settings.php:304
 msgid "Only required if you have an on-premises version with self-hosted POWER CAPTCHA endpoint."
 msgstr ""
 
-#: admin/class-admin-settings.php:283
+#: admin/class-admin-settings.php:310
 msgid "JavaScript base URL (optional)"
 msgstr ""
 
-#: admin/class-admin-settings.php:284
+#: admin/class-admin-settings.php:311
 msgid "Only required if you have an on-premises version with self-hosted POWER CAPTCHA JavaScript."
 msgstr ""
 
 #. translators: %s: link to power captcha customer area
-#: admin/class-admin-settings.php:401
+#: admin/class-admin-settings.php:428
 msgid "To activate POWER CAPTCHA, an API Key and a Secret Key are required. You can find both in our %s."
 msgstr ""
 
 #. translators: %s: link to power captcha Shop page
-#: admin/class-admin-settings.php:406
+#: admin/class-admin-settings.php:433
 msgid "If you don't have an API Key yet, you can create one on %s."
 msgstr ""
 
-#: admin/class-admin-settings.php:407
+#: admin/class-admin-settings.php:434
 msgid "https://power-captcha.com/en/power-captcha-shop-licenses/"
 msgstr ""
 
-#: admin/class-admin-settings.php:413
-msgid "In these settings, you can adjust the widget display, the security check behavior, and how errors during token verification are handled."
+#: admin/class-admin-settings.php:440
+msgid "In these settings, you can adjust the language, the widget display, the security check behavior, and how errors during token verification are handled."
 msgstr ""
 
-#: admin/class-admin-settings.php:419
+#: admin/class-admin-settings.php:446
 msgid "Specify which sections or plugins should be protected with POWER CAPTCHA."
 msgstr ""
 
-#: admin/class-admin-settings.php:425
+#: admin/class-admin-settings.php:452
 msgid "These settings are only relevant if you are running a self-hosted POWER CAPTCHA instance. Otherwise you can leave these settings empty."
 msgstr ""
 

@@ -1,7 +1,7 @@
 window.PowerCaptchaWp = (function (conf) {
 	// private access
 	let autoCaptchas                 = [];
-	const wp_locale                  = conf.wp_locale || undefined;
+	const wp_locale                  = conf.wp_locale === 'browser' ? undefined : conf.wp_locale;
 	const wp_script_debug            = conf.wp_script_debug || false;
 	const integrationSettingPromises = {};
 
