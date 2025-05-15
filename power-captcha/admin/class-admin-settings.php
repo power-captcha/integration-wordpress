@@ -114,6 +114,15 @@ class Admin_Settings {
 		// captcha settings
 		register_setting(
 			powercaptcha()::SETTING_GROUP_NAME,
+			powercaptcha()::SETTING_NAME_LANGUAGE_MODE,
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => array( $this, 'sanitize_language_mode' ),
+				'default'           => powercaptcha()::LANGUAGE_MODE_WORDPRESS,
+			)
+		);
+		register_setting(
+			powercaptcha()::SETTING_GROUP_NAME,
 			powercaptcha()::SETTING_NAME_CHECK_MODE,
 			array(
 				'type'              => 'string',
@@ -215,6 +224,24 @@ class Admin_Settings {
 		);
 
 		// captcha settings
+		$this->add_setting_radio_field(
+			powercaptcha()::SETTING_SECTION_CAPTCHA,
+			powercaptcha()::SETTING_NAME_LANGUAGE_MODE,
+			array(
+				powercaptcha()::LANGUAGE_MODE_WORDPRESS => array(
+					'label'       => __( 'Use WordPress site language (default)', 'power-captcha' ),
+					'description' => __( 'POWER CAPTCHA uses the language set by the WordPress site or a multilingual plugin.', 'power-captcha' ),
+				),
+				powercaptcha()::LANGUAGE_MODE_BROWSER   => array(
+					'label'       => __( 'Use browser language', 'power-captcha' ),
+					'description' => __( 'POWER CAPTCHA uses the visitor\'s browser language, adapting individually to their browser settings.', 'power-captcha' ),
+				),
+			),
+			powercaptcha()::LANGUAGE_MODE_WORDPRESS,
+			__( 'Language', 'power-captcha' ),
+			__( 'Choose which language should be used for POWER CAPTCHA.', 'power-captcha' )
+		);
+
 		$this->add_setting_radio_field(
 			powercaptcha()::SETTING_SECTION_CAPTCHA,
 			powercaptcha()::SETTING_NAME_CHECK_MODE,
@@ -410,7 +437,7 @@ class Admin_Settings {
 
 	public function captcha_setting_section_description_content() {
 		echo '<p>' .
-			esc_html__( 'In these settings, you can adjust the widget display, the security check behavior, and how errors during token verification are handled.', 'power-captcha' )
+			esc_html__( 'In these settings, you can adjust the language, the widget display, the security check behavior, and how errors during token verification are handled.', 'power-captcha' )
 			. '</p>';
 	}
 
@@ -428,6 +455,10 @@ class Admin_Settings {
 
 	public function sanitize_checkbox( $input ) {
 		return ( isset( $input ) && true === boolval( $input ) ? true : false );
+	}
+
+	public function sanitize_language_mode( $input ) {
+		return ( in_array( $input, array( powercaptcha()::LANGUAGE_MODE_WORDPRESS, powercaptcha()::LANGUAGE_MODE_BROWSER ), true ) ? $input : powercaptcha()::LANGUAGE_MODE_WORDPRESS );
 	}
 
 	public function sanitize_check_mode( $input ) {
