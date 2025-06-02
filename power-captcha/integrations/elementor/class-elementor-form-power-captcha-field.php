@@ -22,7 +22,7 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 	/**
 	 * For compability with elementor before v3.28.0.
 	 */
-	public $depended_scripts = array( 'powercaptcha-wp', 'powercaptcha-elementor' );
+	public $depended_scripts = array( 'powercaptcha-elementor' );
 
 	private Elementor_Form_Integration $power_captcha_integration;
 
@@ -182,7 +182,7 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 	}
 
 	public function get_script_depends(): array {
-		return array( 'powercaptcha-wp', 'powercaptcha-elementor' );
+		return array( 'powercaptcha-elementor' );
 	}
 
 	/**

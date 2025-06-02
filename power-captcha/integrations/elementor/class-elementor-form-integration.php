@@ -20,8 +20,7 @@ class Elementor_Form_Integration extends Integration {
 	}
 
 	public function init() {
-
-		add_action( 'wp_enqueue_scripts', array( $this, 'register_field_script' ) );
+		add_action( 'elementor/frontend/before_register_scripts', array( $this, 'register_field_script' ) );
 		add_action( 'elementor_pro/forms/fields/register', array( $this, 'register_field' ) );
 	}
 
@@ -42,8 +41,9 @@ class Elementor_Form_Integration extends Integration {
 	}
 
 	public function register_field_script() {
-		// register addditional javascript for elementor forms
-		// note: the javascript is enqueued via the elementor field (get_script_depends() in power-captcha-field.php)
+		// The method get_script_depends() in power-captcha-field.php does not work reliably
+		// when the "Element Caching" feature in Elementor is enabled.
+		// Therefore the JavaScript is also enqueued in register_field() via the elementor/frontend/before_enqueue_scripts hook.
 		wp_register_script(
 			'powercaptcha-elementor',
 			plugin_dir_url( __FILE__ ) . 'public/power-captcha-elementor.js',
@@ -53,6 +53,7 @@ class Elementor_Form_Integration extends Integration {
 		);
 
 		// register preview script
+		// the script is enqueued via enqueue_editor_preview_scripts in power-captcha-field.php
 		wp_register_script(
 			'powercaptcha-elementor-preview',
 			plugin_dir_url( __FILE__ ) . 'public/power-captcha-elementor-preview.js',
@@ -69,8 +70,14 @@ class Elementor_Form_Integration extends Integration {
 	 * @return void
 	 */
 	public function register_field( $form_fields_registrar ) {
+		add_action( 'elementor/frontend/before_enqueue_scripts', array( $this, 'enqueue_field_script' ) );
+
 		require_once __DIR__ . '/class-elementor-form-power-captcha-field.php';
 
 		$form_fields_registrar->register( new Elementor_Form_Power_Captcha_Field( $this ) );
+	}
+
+	public function enqueue_field_script() {
+		wp_enqueue_script( 'powercaptcha-elementor' );
 	}
 }
