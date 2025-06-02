@@ -4,7 +4,7 @@ Tags: captcha, security, protection, bot, spam
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 8.0
-Stable tag: 1.2.6
+Stable tag: 1.2.7
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0
 
@@ -86,6 +86,10 @@ You use POWER CAPTCHA and have questions about the installation or a technical p
 4. Individual configuration of the widget display
 
 == Changelog ==
+
+= 1.2.7 =
+* Fixed an issue where the captcha was not reset after an invalid submission in some Elementor Forms.
+* Fixed compatibility issues with Elementor’s "Element Caching" feature.
 
 = 1.2.6 =
 * Added option to choose between WordPress site language and visitor's browser language for captcha localization
