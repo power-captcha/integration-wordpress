@@ -43,7 +43,7 @@ class Elementor_Form_Integration extends Integration {
 
 	public function register_field_script() {
 		// register addditional javascript for elementor forms
-		// note: the javascript is enqueued via the elementor field ($depended_scripts in power-captcha-field.php)
+		// note: the javascript is enqueued via the elementor field (get_script_depends() in power-captcha-field.php)
 		wp_register_script(
 			'powercaptcha-elementor',
 			plugin_dir_url( __FILE__ ) . 'public/power-captcha-elementor.js',
