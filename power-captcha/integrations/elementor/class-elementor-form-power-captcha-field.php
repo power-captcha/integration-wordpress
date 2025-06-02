@@ -19,7 +19,10 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 
 	const FIELD_CONTROL_PC_USERNAME_ID = 'field_pc_username_id';
 
-	public $depended_scripts = array( 'powercaptcha-wp', 'powercaptcha-elementor' );
+	/**
+	 * For compability with elementor before v3.28.0.
+	 */
+	public $depended_scripts = array( 'powercaptcha-elementor' );
 
 	private Elementor_Form_Integration $power_captcha_integration;
 
@@ -104,9 +107,14 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 		}
 
 		$verification = $this->power_captcha_integration->verify_token( $username_hash );
+
+		// add information to response, that the token was verified.
+		// this information is used in power-captcha-elementor.js to reset the captcha.
+		$ajax_handler->add_response_data( 'powercaptcha_elementor_verificiation_success', $verification->is_success() );
+
 		if ( false === $verification->is_success() ) {
-			// TODO find a way to display the error message in frontend
-			$ajax_handler->add_error( $field['id'], $verification->get_user_message() );
+			$ajax_handler->add_error_message( $verification->get_user_message() ); // message is displayed below the form
+			$ajax_handler->add_error( $field['id'], $verification->get_user_message() ); // stops the submission
 			return;
 		}
 	}
@@ -171,6 +179,10 @@ class Elementor_Form_Power_Captcha_Field extends \ElementorPro\Modules\Forms\Fie
 		);
 
 		$widget->update_control( 'form_fields', $control_data );
+	}
+
+	public function get_script_depends(): array {
+		return array( 'powercaptcha-elementor' );
 	}
 
 	/**
